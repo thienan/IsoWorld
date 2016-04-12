@@ -63,13 +63,11 @@ class GameScene: SKScene {
 
   //3
   let tiles = [
-    [1, 0, 0, 0, 0, 0, 1],
-    [1 ,0, 0, 0, 0, 0, 0],
-    [1 ,0, 0, 0, 0, 0, 0],
-    [1 ,0, 0, 0, 0, 0, 0],
-    [1 ,0, 0, 0, 0, 0, 0],
-    [1 ,0, 0, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0, 0, 0]
+    [1, 0, 1, 0, 1, 0, 0],
+    [0 ,0, 0, 0, 0, 0, 0],
+    [1 ,0, 1, 0, 1, 0, 0],
+    [0 ,0, 0, 0, 0, 0, 0],
+    [1 ,0, 1, 0, 1, 0, 0]
   ]
   let tileSize = (width:32, height:32)
 
@@ -222,6 +220,6 @@ class GameScene: SKScene {
 }
 
 //Create the scene and add it to the view
-let scene:SKScene = GameScene(size: CGSizeMake(1024, 1024))
+let scene:SKScene = GameScene(size: CGSizeMake(1024, 2048))
 scene.scaleMode = SKSceneScaleMode.AspectFit
 view.presentScene(scene)
