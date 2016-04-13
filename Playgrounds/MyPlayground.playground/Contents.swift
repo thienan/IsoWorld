@@ -1,13 +1,10 @@
-//: Playground - noun: a place where people can play
-
 import SpriteKit
 import XCPlayground
 
-//Create the SpriteKit View
 let view:SKView = SKView(frame: CGRectMake(0, 0, 1024, 768))
-
-//Add it to the TimeLine
 XCPlaygroundPage.currentPage.liveView = view
+
+
 
 func + (left: CGPoint, right: CGPoint) -> CGPoint {
   return CGPoint(x: left.x + right.x, y: left.y + right.y)
@@ -63,15 +60,15 @@ class GameScene: SKScene {
 
   //3
   let tiles = [
-    [1, 0, 1, 0, 1, 0, 0],
-    [0 ,0, 0, 0, 0, 0, 0],
-    [1 ,0, 1, 0, 1, 0, 0],
-    [0 ,0, 0, 0, 0, 0, 0],
-    [1 ,0, 1, 0, 1, 0, 0]
+    [6, 5, 2, 0, 0],
+    [5, 5, 2, 0, 0],
+    [2, 2, 2, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0]
   ]
   let tileSize = (width:32, height:32)
 
-  //4
+  //2
   override init(size: CGSize) {
 
     view2D = SKSpriteNode()
@@ -86,12 +83,12 @@ class GameScene: SKScene {
 
     let deviceScale = self.size.width/667
 
-    view2D.position = CGPoint(x:-self.size.width*0.45, y:self.size.height*0.17)
+    view2D.position = CGPoint(x:-self.size.width*0.25, y:self.size.height*0.17)
     view2D.xScale = deviceScale
     view2D.yScale = deviceScale
     addChild(view2D)
 
-    viewIso.position = CGPoint(x:self.size.width*0.12, y:self.size.height*0.12)
+    viewIso.position = CGPoint(x: 50, y: 50)
     viewIso.xScale = deviceScale
     viewIso.yScale = deviceScale
     addChild(viewIso)
@@ -119,7 +116,11 @@ class GameScene: SKScene {
       let row = tiles[i];
 
       for j in 0..<row.count {
-        let tileInt = row[j]
+        var tileInt = row[j]
+
+        if (tileInt > 1) {
+          tileInt = 1
+        }
 
         //1
         let tile = Tile(rawValue: tileInt)!
@@ -182,44 +183,42 @@ class GameScene: SKScene {
       let row = tiles[i];
 
       for j in 0..<row.count {
-        let tileInt = row[j]
+        var tileInt = row[j]
+
+        if (tileInt > 1) {
+          tileInt = 1
+        }
 
         let tile = Tile(rawValue: tileInt)!
 
-        if (tile.rawValue == Tile.Wall.rawValue) {
+        //        if (tile.rawValue == Tile.Wall.rawValue) {
 
-          //1
-          let pointx = point2DToIso(CGPoint(x: (j*tileSize.width) + tileSize.height * 2, y: -(i*tileSize.height + tileSize.height * 2)))
+        let index = tileSize.height
 
-          //2
+        for int in (0..<row[j] + 1).reverse() {
+
+          let x = (j*tileSize.width) + index * int
+
+          let y = -(i*tileSize.height + index  * int)
+
+          print("index = \(int) height: \(row[j]) x: \(x) y: \(y)")
+
+          let pointx = point2DToIso(CGPoint(x: x, y: y))
           placeTileIso(("iso_"+tile.image), withPosition:pointx)
 
-          //1
-          let point = point2DToIso(CGPoint(x: (j*tileSize.width) + tileSize.height, y: -(i*tileSize.height + tileSize.height)))
-
-          //2
-          placeTileIso(("iso_"+tile.image), withPosition:point)
-
-          //1
-          let pointy = point2DToIso(CGPoint(x: (j*tileSize.width), y: -(i*tileSize.height)))
-
-          //2
-          placeTileIso(("iso_"+tile.image), withPosition:pointy)
-
-        } else {
-          
-          //1
-          let pointx = point2DToIso(CGPoint(x: (j*tileSize.width) + tileSize.height * 2, y: -(i*tileSize.height + tileSize.height * 2)))
-          
-          //2
-          placeTileIso(("iso_"+tile.image), withPosition:pointx)
         }
+
+//        let pointx = point2DToIso(CGPoint(x: (j*tileSize.width) + tileSize.height, y: -(i*tileSize.height + tileSize.height)))
+//                  
+//
+//        placeTileIso(("iso_ground"), withPosition:pointx)
+
+
       }
     }
   }
 }
 
-//Create the scene and add it to the view
-let scene:SKScene = GameScene(size: CGSizeMake(1024, 2048))
+let scene:SKScene = GameScene(size: CGSizeMake(2048, 1024))
 scene.scaleMode = SKSceneScaleMode.AspectFit
 view.presentScene(scene)

@@ -5,31 +5,31 @@ import GameplayKit
 
 let array = [1, 2, 3, 4, 4, 1, 2, 3, 4, 4, 1, 2, 3, 4, 4, 1, 2, 3, 4, 4, 3].sort()
 
-let arraySize = array.count
+var reversedSorted = [Int]()
 
-extension Array {
-  func split() -> [[Element]] {
+for (index, item) in array.reverse().enumerate() {
+  reversedSorted.append(item)
+}
 
-    let columns = round(Double(self.count) / 2)
-    let rows = round(Double(self.count) / columns)
+print(reversedSorted)
 
-    let ct = self.count
-    let half = ct / Int(rows)
-    let leftSplit = self[0 ..< half]
-    let rightSplit = self[half ..< ct]
-    return [Array(leftSplit), Array(rightSplit)]
+let coumns = Int(round(sqrt(Double(reversedSorted.count))))
+
+var arrayx = Array<Array<Int>>()
+for column in 0..<coumns {
+  arrayx.append(Array(count:coumns, repeatedValue:Int()))
+}
+
+var index = 0
+for i in (0..<coumns) {
+  for j in (0..<coumns) {
+    if (reversedSorted.indices.contains(index)) {
+      arrayx[i][j] = reversedSorted[index]
+      index += 1
+    } else {
+      arrayx[i][j] = 0
+    }
   }
 }
 
-// Split array
-
-let arrays = array.split()
-
-for i in (0 ..< arrays.count) {
-  let row = arrays[i]
-
-  for j in (0 ..< row.count) {
-    print("\(i,j)")
-  }
-}
-
+arrayx
