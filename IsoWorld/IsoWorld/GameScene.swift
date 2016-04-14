@@ -78,7 +78,7 @@ class GameScene: SKScene {
   }
 
 
-  func point2DToIso(p:CGPoint) -> CGPoint {
+  func point2DToIso(p:CGPoint, inverse: Bool) -> CGPoint {
 
     //invert y pre conversion
     var point = p * CGPoint(x:1, y:-1)
@@ -87,7 +87,11 @@ class GameScene: SKScene {
     point = CGPoint(x:(point.x - point.y), y: ((point.x + point.y) / 2))
 
     //invert y post conversion
-    point = point * CGPoint(x:1, y:-1)
+    if (!inverse) {
+      point = point * CGPoint(x:1, y:-1)
+    } else {
+      point = point * CGPoint(x:1, y:-1)
+    }
 
     return point
 
@@ -144,20 +148,20 @@ class GameScene: SKScene {
 
             print("index = \(0) height: \(row[j]) xxx: \(xxx) yyy: \(yyy)")
 
-            let pointxxx = point2DToIso(CGPoint(x: xxx, y: yyy))
+            let pointxxx = point2DToIso(CGPoint(x: xxx, y: yyy), inverse: false)
             placeTileIso(("iso_wall"), withPosition:pointxxx)
 
 
           if (row[j] > 1) {
 
             if (j > 0 || i > 0) {
-                for indexs in (0..<row[j]).reverse() {
-                    let xx = ((j*tileSize.width) + index * indexs)
-                    let yy = -(i*tileSize.height + index  * indexs)
+                for indexs in (0..<row[j]){
+                    let xx = ((j*tileSize.width) + index * (-indexs))
+                    let yy = -(i*tileSize.height + index  * (-indexs ))
 
                     print("index = \(0) height: \(row[j]) xx: \(xx) yy: \(yy)")
 
-                    let pointxx = point2DToIso(CGPoint(x: xx, y: yy))
+                    let pointxx = point2DToIso(CGPoint(x: xx, y: yy), inverse: false)
                     placeTileIso(("iso_wall"), withPosition:pointxx)
                 }
             } else {
@@ -167,7 +171,7 @@ class GameScene: SKScene {
 
                     print("index = \(0) height: \(row[j]) xx: \(xx) yy: \(yy)")
 
-                    let pointxx = point2DToIso(CGPoint(x: xx, y: yy))
+                    let pointxx = point2DToIso(CGPoint(x: xx, y: yy), inverse: false)
                     placeTileIso(("iso_wall"), withPosition:pointxx)
                 }
             }
