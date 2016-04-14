@@ -50,11 +50,11 @@ class GameScene: SKScene {
   let viewIso:SKSpriteNode
 
   let tiles = [
-    [9, 1, 1, 1, 1],
+    [9, 1, 2, 1, 9],
+    [1, 0, 1, 0, 0],
+    [1, 1, 1, 0, 0],
     [1, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0]
+    [9, 0, 0, 0, 0]
   ]
 
   let tileSize = (width:32, height:32)
@@ -150,14 +150,26 @@ class GameScene: SKScene {
 
           if (row[j] > 1) {
 
-            for indexs in (1..<row[j]) {
-              let xx = -((j*tileSize.width) + index * indexs)
-              let yy = (i*tileSize.height + index  * indexs)
+            if (j > 0) {
+                for indexs in (1..<row[j]).reverse() {
+                    let xx = -((j*tileSize.width) + index * indexs)
+                    let yy = (i*tileSize.height + index  * indexs)
 
-              print("index = \(0) height: \(row[j]) xx: \(xx) yy: \(yy)")
+                    print("index = \(0) height: \(row[j]) xx: \(xx) yy: \(yy)")
 
-              let pointxx = point2DToIso(CGPoint(x: xx, y: yy))
-              placeTileIso(("iso_wall"), withPosition:pointxx)
+                    let pointxx = point2DToIso(CGPoint(x: xx, y: yy))
+                    placeTileIso(("iso_wall"), withPosition:pointxx)
+                }
+            } else {
+                for indexs in (1..<row[j]) {
+                    let xx = -((j*tileSize.width) + index * indexs)
+                    let yy = (i*tileSize.height + index  * indexs)
+
+                    print("index = \(0) height: \(row[j]) xx: \(xx) yy: \(yy)")
+
+                    let pointxx = point2DToIso(CGPoint(x: xx, y: yy))
+                    placeTileIso(("iso_wall"), withPosition:pointxx)
+                }
             }
           }
 
