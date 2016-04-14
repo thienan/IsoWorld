@@ -8,24 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		064236871CBCC2C100E05D75 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064236861CBCC2C100E05D75 /* AppDelegate.swift */; };
-		064236891CBCC2C100E05D75 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 064236881CBCC2C100E05D75 /* GameScene.sks */; };
 		0642368B1CBCC2C100E05D75 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0642368A1CBCC2C100E05D75 /* GameScene.swift */; };
 		0642368D1CBCC2C100E05D75 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0642368C1CBCC2C100E05D75 /* GameViewController.swift */; };
 		064236901CBCC2C100E05D75 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0642368E1CBCC2C100E05D75 /* Main.storyboard */; };
 		064236921CBCC2C100E05D75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 064236911CBCC2C100E05D75 /* Assets.xcassets */; };
 		064236951CBCC2C100E05D75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 064236931CBCC2C100E05D75 /* LaunchScreen.storyboard */; };
+		0642369D1CBCDE8900E05D75 /* sprites.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 0642369C1CBCDE8900E05D75 /* sprites.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		064236831CBCC2C100E05D75 /* IsoWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IsoWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		064236861CBCC2C100E05D75 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		064236881CBCC2C100E05D75 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		0642368A1CBCC2C100E05D75 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		0642368C1CBCC2C100E05D75 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		0642368F1CBCC2C100E05D75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		064236911CBCC2C100E05D75 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		064236941CBCC2C100E05D75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		064236961CBCC2C100E05D75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0642369C1CBCDE8900E05D75 /* sprites.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = sprites.atlas; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,8 +58,8 @@
 		064236851CBCC2C100E05D75 /* IsoWorld */ = {
 			isa = PBXGroup;
 			children = (
+				0642369C1CBCDE8900E05D75 /* sprites.atlas */,
 				064236861CBCC2C100E05D75 /* AppDelegate.swift */,
-				064236881CBCC2C100E05D75 /* GameScene.sks */,
 				0642368A1CBCC2C100E05D75 /* GameScene.swift */,
 				0642368C1CBCC2C100E05D75 /* GameViewController.swift */,
 				0642368E1CBCC2C100E05D75 /* Main.storyboard */,
@@ -102,6 +102,7 @@
 				TargetAttributes = {
 					064236821CBCC2C100E05D75 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = HB6CG5MHV3;
 					};
 				};
 			};
@@ -128,9 +129,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				064236891CBCC2C100E05D75 /* GameScene.sks in Resources */,
 				064236951CBCC2C100E05D75 /* LaunchScreen.storyboard in Resources */,
 				064236921CBCC2C100E05D75 /* Assets.xcassets in Resources */,
+				0642369D1CBCDE8900E05D75 /* sprites.atlas in Resources */,
 				064236901CBCC2C100E05D75 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -188,6 +189,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: rinat.muhamedgaliev@gmail.com (2ADZVPVB55)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -233,6 +235,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: rinat.muhamedgaliev@gmail.com (2ADZVPVB55)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -257,10 +260,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = IsoWorld/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.rmuhamedgaliev.IsoWorld;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -268,10 +274,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = IsoWorld/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.rmuhamedgaliev.IsoWorld;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -294,6 +303,7 @@
 				0642369B1CBCC2C100E05D75 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
