@@ -50,11 +50,11 @@ class GameScene: SKScene {
   let viewIso:SKSpriteNode
 
   let tiles = [
-    [9, 1, 1, 1, 9],
-    [1, 0, 1, 0, 0],
-    [1, 1, 1, 0, 0],
-    [1, 0, 0, 0, 0],
-    [2, 0, 0, 0, 0]
+    [9, 8, 1, 1, 9],
+    [8, 8, 1, 1, 1],
+    [1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1],
+    [2, 1, 8, 1, 1]
   ]
 
   let tileSize = (width:32, height:32)
