@@ -50,11 +50,11 @@ class GameScene: SKScene {
   let viewIso:SKSpriteNode
 
   let tiles = [
-    [9, 1, 2, 1, 9],
+    [9, 1, 1, 1, 9],
     [1, 0, 1, 0, 0],
     [1, 1, 1, 0, 0],
     [1, 0, 0, 0, 0],
-    [9, 0, 0, 0, 0]
+    [2, 0, 0, 0, 0]
   ]
 
   let tileSize = (width:32, height:32)
@@ -81,13 +81,13 @@ class GameScene: SKScene {
   func point2DToIso(p:CGPoint) -> CGPoint {
 
     //invert y pre conversion
-    var point = p * CGPoint(x:-1, y:1)
+    var point = p * CGPoint(x:1, y:-1)
 
     //convert using algorithm
     point = CGPoint(x:(point.x - point.y), y: ((point.x + point.y) / 2))
 
     //invert y post conversion
-    point = point * CGPoint(x:-1, y:1)
+    point = point * CGPoint(x:1, y:-1)
 
     return point
 
@@ -150,10 +150,10 @@ class GameScene: SKScene {
 
           if (row[j] > 1) {
 
-            if (j > 0) {
-                for indexs in (1..<row[j]).reverse() {
-                    let xx = -((j*tileSize.width) + index * indexs)
-                    let yy = (i*tileSize.height + index  * indexs)
+            if (j > 0 || i > 0) {
+                for indexs in (0..<row[j]).reverse() {
+                    let xx = ((j*tileSize.width) + index * indexs)
+                    let yy = -(i*tileSize.height + index  * indexs)
 
                     print("index = \(0) height: \(row[j]) xx: \(xx) yy: \(yy)")
 
