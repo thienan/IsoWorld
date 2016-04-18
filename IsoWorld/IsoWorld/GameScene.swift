@@ -43,11 +43,14 @@ enum Tile: Int {
 
 class GameScene: SKScene {
 
+  private var _scaleOffset: CGFloat = 1.0
+  private var _panOffset = CGPointZero
+  let viewIso:SKSpriteNode
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  let viewIso:SKSpriteNode
 
   let tiles = [
     [9, 8, 0, 0, 0],
@@ -163,5 +166,14 @@ class GameScene: SKScene {
         }
         }
     }
+  }
+
+  func onPinchStart( centroid: CGPoint, scale: CGFloat ) {
+    _scaleOffset = viewIso.xScale
+  }
+
+  func onPinchMove( centroid: CGPoint, scale: CGFloat ) {
+    viewIso.xScale = (scale - 1.0) + _scaleOffset
+    viewIso.yScale = (scale - 1.0) + _scaleOffset
   }
 }
