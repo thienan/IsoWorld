@@ -176,4 +176,12 @@ class GameScene: SKScene {
     viewIso.xScale = (scale - 1.0) + _scaleOffset
     viewIso.yScale = (scale - 1.0) + _scaleOffset
   }
+
+  func onPan(gestureRecognizer: UIPanGestureRecognizer) {
+    print(self.viewIso.position)
+
+    let position = gestureRecognizer.locationInView(self.view)
+    self.viewIso.position = position
+  }
+
 }

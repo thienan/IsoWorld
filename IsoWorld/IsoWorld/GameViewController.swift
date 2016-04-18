@@ -16,7 +16,11 @@ class GameViewController: UIViewController {
 
     let recognizer = UIPinchGestureRecognizer(target: self, action: #selector(GameViewController.pinchGesture(_:)))
     recognizer.delaysTouchesBegan = true
-    skView.addGestureRecognizer(recognizer);
+    skView.addGestureRecognizer(recognizer)
+
+    let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(GameViewController.onPan(_:)))
+    panGestureRecognizer.delaysTouchesBegan = true
+    skView.addGestureRecognizer(panGestureRecognizer)
 
     skView.presentScene(scene)
 
@@ -34,6 +38,10 @@ class GameViewController: UIViewController {
     default:
       self.gameScene.onPinchMove( centroid, scale: scale )
     }
+  }
+
+  func onPan(gestureRecognizer: UIPanGestureRecognizer) {
+    self.gameScene.onPan(gestureRecognizer)
   }
 
   override func prefersStatusBarHidden() -> Bool {
