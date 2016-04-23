@@ -60,7 +60,6 @@ class GameScene: SKScene {
     viewIso = SKSpriteNode()
     super.init(size: size)
     self.view?.ignoresSiblingOrder = true
-//    self.backgroundColor = UIColor.whiteColor()
   }
 
 
