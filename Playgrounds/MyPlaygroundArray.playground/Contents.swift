@@ -3,15 +3,26 @@
 import Foundation
 import GameplayKit
 
-let array = [1, 2, 3, 4, 4, 1, 2, 3, 4, 4, 1, 2, 3, 4, 4, 1, 2, 3, 4, 4, 3].sort()
+let MAX : UInt32 = 100
+let MIN : UInt32 = 1
+
+func randomNumber() -> Int {
+    return Int(arc4random_uniform(MAX) + MIN)
+}
+
+var randomNumbers = [Int]()
+
+for index in 1...1000 {
+    randomNumbers.append(randomNumber() / 10)
+}
+
+let array = randomNumbers.sort()
 
 var reversedSorted = [Int]()
 
 for (index, item) in array.reverse().enumerate() {
   reversedSorted.append(item)
 }
-
-print(reversedSorted)
 
 let coumns = Int(round(sqrt(Double(reversedSorted.count))))
 
@@ -21,15 +32,34 @@ for column in 0..<coumns {
 }
 
 var index = 0
+//for i in (1..<coumns) {
+//  for j in (1..<coumns) {
+//    if (reversedSorted.indices.contains(index)) {
+//      arrayx[i][i] = reversedSorted[index]
+//      index += 1
+//    } else {
+//      arrayx[i][j] = 0
+//    }
+//  }
+//}
+
 for i in (0..<coumns) {
-  for j in (0..<coumns) {
-    if (reversedSorted.indices.contains(index)) {
-      arrayx[i][j] = reversedSorted[index]
-      index += 1
-    } else {
-      arrayx[i][j] = 0
+    for j in (0..<i + 1) {
+        arrayx[i - j][j] = reversedSorted[index]
+        index += 1
     }
-  }
 }
 
-arrayx
+for i in (1..<coumns) {
+    for j in (i..<coumns) {
+            if (reversedSorted.indices.contains(index)) {
+                arrayx[coumns - j + i - 1][j] = reversedSorted[index]
+                index += 1
+            } else {
+                arrayx[coumns - j + i - 1][j] = 0
+            }
+
+    }
+}
+
+print(arrayx)
