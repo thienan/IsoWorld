@@ -52,7 +52,7 @@ class GameScene: SKScene {
   }
 
 
-    let tiles = [[10, 10, 10, 10, 10, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8, 8, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 4], [10, 10, 10, 10, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8, 8, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 4, 4], [10, 10, 10, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8, 8, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 4, 4, 4], [10, 10, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8, 8, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4], [10, 9, 9, 9, 9, 9, 9, 9, 9, 9, 8, 8, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4, 3], [9, 9, 9, 9, 9, 9, 9, 9, 9, 8, 8, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4, 3, 3], [9, 9, 9, 9, 9, 9, 9, 9, 8, 8, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3], [9, 9, 9, 9, 9, 9, 9, 8, 8, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 2], [9, 9, 9, 9, 9, 9, 8, 8, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 2, 2], [9, 9, 9, 9, 9, 9, 8, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2, 2], [9, 9, 9, 9, 9, 8, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2], [9, 9, 9, 9, 8, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1], [9, 9, 9, 8, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, 1], [9, 9, 8, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, 1, 1], [9, 8, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1], [8, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1], [8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 0], [8, 8, 8, 8, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0], [8, 8, 8, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0], [8, 8, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0], [8, 7, 7, 7, 7, 6, 6, 6, 5, 5, 5, 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0], [7, 7, 7, 7, 6, 6, 6, 5, 5, 5, 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0], [7, 7, 7, 6, 6, 6, 5, 5, 5, 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0], [7, 7, 6, 6, 6, 5, 5, 5, 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0], [7, 6, 6, 6, 5, 5, 5, 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], [6, 6, 6, 5, 5, 5, 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], [6, 6, 5, 5, 5, 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [6, 6, 5, 5, 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [6, 5, 5, 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [5, 5, 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [5, 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+    let tiles = [[9, 9, 9, 9, 9, 8, 7, 7, 6, 5], [9, 9, 9, 9, 8, 7, 7, 6, 5, 4], [9, 9, 9, 8, 8, 7, 6, 5, 4, 3], [9, 9, 8, 8, 7, 6, 5, 4, 3, 2], [9, 8, 8, 7, 6, 5, 5, 3, 2, 1], [9, 8, 7, 6, 5, 5, 3, 2, 1, 1], [8, 7, 6, 6, 5, 3, 2, 2, 1, 1], [7, 6, 6, 5, 4, 2, 2, 1, 1, 0], [6, 6, 5, 4, 2, 2, 1, 1, 0, 0], [6, 5, 4, 2, 2, 1, 1, 0, 0, 0]]
 
   let tileSize = (width:32, height:32)
 
@@ -60,6 +60,7 @@ class GameScene: SKScene {
     viewIso = SKSpriteNode()
     super.init(size: size)
     self.view?.ignoresSiblingOrder = true
+    self.backgroundColor = UIColor.whiteColor()
   }
 
 
@@ -94,10 +95,12 @@ class GameScene: SKScene {
 
   }
 
-  func placeTileIso(image:String, withPosition:CGPoint) {
+  func placeTileIso(image:String, withPosition:CGPoint, withId id: String) {
     let tileSprite = SKSpriteNode(imageNamed: image)
     tileSprite.position = withPosition
     tileSprite.anchorPoint = CGPoint(x:0, y:0)
+    tileSprite.name = id
+//    tileSprite.userInteractionEnabled = true
     viewIso.addChild(tileSprite)
   }
 
@@ -119,7 +122,7 @@ class GameScene: SKScene {
                 let yyy = -(i*tileSize.height + index  * 0)
 
                 let pointxxx = point2DToIso(CGPoint(x: xxx, y: yyy), inverse: false)
-                placeTileIso(("iso_" + tile.image), withPosition:pointxxx)
+                placeTileIso(("iso_" + tile.image), withPosition:pointxxx, withId: String(row[j]))
 
 
 
@@ -131,7 +134,7 @@ class GameScene: SKScene {
                     let yy = -(i*tileSize.height + index  * (-indexs ))
 
                     let pointxx = point2DToIso(CGPoint(x: xx, y: yy), inverse: false)
-                    placeTileIso(("iso_" + tile.image), withPosition:pointxx)
+                    placeTileIso(("iso_" + tile.image), withPosition:pointxx, withId: String(row[j]))
                 }
             } else {
                 for indexs in (1..<row[j]) {
@@ -141,7 +144,7 @@ class GameScene: SKScene {
                     print("index = \(0) height: \(row[j]) xx: \(xx) yy: \(yy)")
 
                     let pointxx = point2DToIso(CGPoint(x: xx, y: yy), inverse: false)
-                    placeTileIso(("iso_" + tile.image), withPosition:pointxx)
+                    placeTileIso(("iso_" + tile.image), withPosition:pointxx, withId: String(row[j]))
                 }
             }
           }
@@ -152,11 +155,25 @@ class GameScene: SKScene {
           print("index = \(0) height: \(row[j]) xxx: \(xxx) yyy: \(yyy)")
 
           let pointxxx = point2DToIso(CGPoint(x: xxx, y: yyy), inverse: false)
-          placeTileIso(("iso_" + tile.image), withPosition:pointxxx)
+          placeTileIso(("iso_" + tile.image), withPosition:pointxxx, withId: String(row[j]))
         }
         }
     }
   }
+
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        for touch in touches {
+            let nodeAtTouch = self.nodeAtPoint(touch.locationInNode(self))
+
+            if let name = nodeAtTouch.name {
+                if let number = Int(name) {
+                    print(number)
+
+                    nodeAtTouch.hidden = true
+                }
+            }
+        }
+    }
 
   func onPinchStart( centroid: CGPoint, scale: CGFloat ) {
     _scaleOffset = viewIso.xScale
