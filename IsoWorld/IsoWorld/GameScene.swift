@@ -45,7 +45,7 @@ class GameScene: SKScene {
 
   private var _scaleOffset: CGFloat = 1.0
   private var _panOffset = CGPointZero
-  let viewIso:SKSpriteNode
+  let viewIso: SKSpriteNode
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -63,11 +63,8 @@ class GameScene: SKScene {
     self.backgroundColor = UIColor.whiteColor()
   }
 
-
   override func didMoveToView(view: SKView) {
-
     let deviceScale = self.size.width/667
-
     viewIso.position = CGPoint(x: 200, y: 200)
     viewIso.xScale = deviceScale
     viewIso.yScale = deviceScale
@@ -77,31 +74,24 @@ class GameScene: SKScene {
   }
 
   func point2DToIso(p:CGPoint, inverse: Bool) -> CGPoint {
-
     //invert y pre conversion
     var point = p * CGPoint(x:1, y:-1)
-
     //convert using algorithm
     point = CGPoint(x:(point.x - point.y), y: ((point.x + point.y) / 2))
-
     //invert y post conversion
     if (!inverse) {
       point = point * CGPoint(x:1, y:-1)
     } else {
       point = point * CGPoint(x:1, y:-1)
     }
-
     return point
-
   }
 
-  func placeTileIso(image:String, withPosition:CGPoint, withId id: String) {
+  func placeTileIso(image:String, withPosition:CGPoint) -> SKSpriteNode {
     let tileSprite = SKSpriteNode(imageNamed: image)
     tileSprite.position = withPosition
     tileSprite.anchorPoint = CGPoint(x:0, y:0)
-    tileSprite.name = id
-//    tileSprite.userInteractionEnabled = true
-    viewIso.addChild(tileSprite)
+    return tileSprite
   }
 
   func placeAllTilesIso() {
@@ -109,6 +99,10 @@ class GameScene: SKScene {
       let row = tiles[i];
       for j in 0..<row.count {
         var tileInt = row[j]
+
+        let column = SKSpriteNode()
+        column.name = String(tileInt)
+
         if (tileInt > 1) {
           tileInt = 1
         }
@@ -117,46 +111,34 @@ class GameScene: SKScene {
 
         if (tileInt > 0) {
           let index = tileSize.height
-
                 let xxx = ((j*tileSize.width) + index * 0)
                 let yyy = -(i*tileSize.height + index  * 0)
-
                 let pointxxx = point2DToIso(CGPoint(x: xxx, y: yyy), inverse: false)
-                placeTileIso(("iso_" + tile.image), withPosition:pointxxx, withId: String(row[j]))
-
-
-
+                column.addChild(placeTileIso(("iso_" + tile.image), withPosition:pointxxx))
           if (row[j] > 1) {
-
             if (j > 0 || i > 0) {
                 for indexs in (0..<row[j]){
                     let xx = ((j*tileSize.width) + index * (-indexs))
                     let yy = -(i*tileSize.height + index  * (-indexs ))
-
                     let pointxx = point2DToIso(CGPoint(x: xx, y: yy), inverse: false)
-                    placeTileIso(("iso_" + tile.image), withPosition:pointxx, withId: String(row[j]))
+                    column.addChild(placeTileIso(("iso_" + tile.image), withPosition:pointxx))
                 }
             } else {
                 for indexs in (1..<row[j]) {
                     let xx = -((j*tileSize.width) + index * indexs)
                     let yy = (i*tileSize.height + index  * indexs)
-
-                    print("index = \(0) height: \(row[j]) xx: \(xx) yy: \(yy)")
-
                     let pointxx = point2DToIso(CGPoint(x: xx, y: yy), inverse: false)
-                    placeTileIso(("iso_" + tile.image), withPosition:pointxx, withId: String(row[j]))
+                    column.addChild(placeTileIso(("iso_" + tile.image), withPosition:pointxx))
                 }
             }
           }
         } else {
           let xxx = ((j*tileSize.width) + tileSize.height * 0)
           let yyy = -(i*tileSize.height + tileSize.height  * 0)
-
-          print("index = \(0) height: \(row[j]) xxx: \(xxx) yyy: \(yyy)")
-
           let pointxxx = point2DToIso(CGPoint(x: xxx, y: yyy), inverse: false)
-          placeTileIso(("iso_" + tile.image), withPosition:pointxxx, withId: String(row[j]))
+          column.addChild(placeTileIso(("iso_" + tile.image), withPosition:pointxxx))
         }
+            viewIso.addChild(column)
         }
     }
   }
@@ -164,12 +146,12 @@ class GameScene: SKScene {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         for touch in touches {
             let nodeAtTouch = self.nodeAtPoint(touch.locationInNode(self))
-
-            if let name = nodeAtTouch.name {
-                if let number = Int(name) {
-                    print(number)
-
-                    nodeAtTouch.hidden = true
+            if let parent = nodeAtTouch.parent {
+                if let name = parent.name {
+                    if let number = Int(name) {
+                        print(number)
+                        parent.hidden = true
+                    }
                 }
             }
         }

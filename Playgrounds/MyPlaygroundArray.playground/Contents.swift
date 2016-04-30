@@ -12,7 +12,7 @@ func randomNumber() -> Int {
 
 var randomNumbers = [Int]()
 
-for index in 1...1000 {
+for index in 1...100 {
     randomNumbers.append(randomNumber() / 10)
 }
 
@@ -32,16 +32,6 @@ for column in 0..<coumns {
 }
 
 var index = 0
-//for i in (1..<coumns) {
-//  for j in (1..<coumns) {
-//    if (reversedSorted.indices.contains(index)) {
-//      arrayx[i][i] = reversedSorted[index]
-//      index += 1
-//    } else {
-//      arrayx[i][j] = 0
-//    }
-//  }
-//}
 
 for i in (0..<coumns) {
     for j in (0..<i + 1) {
@@ -63,3 +53,15 @@ for i in (1..<coumns) {
 }
 
 print(arrayx)
+
+var arr = [[Int](arrayLiteral: coumns * 2)]
+
+for i in (0..<arrayx.count) {
+    for j in (0..<arrayx.count) {
+        if (j > arrayx[i].count) {
+            arr[i][j] = arrayx[i][j]
+        }
+    }
+}
+
+print(arr)
