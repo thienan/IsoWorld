@@ -2,6 +2,7 @@
 
 import Foundation
 import GameplayKit
+import SpriteKit
 
 let MAX : UInt32 = 100
 let MIN : UInt32 = 1
