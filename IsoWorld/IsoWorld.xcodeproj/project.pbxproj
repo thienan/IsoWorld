@@ -135,10 +135,11 @@
 			<string>064236991CBCC2C100E05D75</string>
 			<key>buildPhases</key>
 			<array>
+				<string>06B00BC81CDC7BBD00DD7C47</string>
 				<string>0642367F1CBCC2C100E05D75</string>
 				<string>064236801CBCC2C100E05D75</string>
 				<string>064236811CBCC2C100E05D75</string>
-				<string>23E10D6B8A65EC2858293B6A</string>
+				<string>55FE15A19C0CECF20611EFCA</string>
 			</array>
 			<key>buildRules</key>
 			<array/>
@@ -385,7 +386,7 @@
 				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
 				<string>YES</string>
 				<key>CODE_SIGN_IDENTITY</key>
-				<string>iPhone Developer</string>
+				<string>iPhone Developer: rinat.muhamedgaliev@gmail.com (2ADZVPVB55)</string>
 				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
 				<string>iPhone Developer</string>
 				<key>COPY_PHASE_STRIP</key>
@@ -427,8 +428,6 @@
 				<string>YES</string>
 				<key>ONLY_ACTIVE_ARCH</key>
 				<string>YES</string>
-				<key>PROVISIONING_PROFILE</key>
-				<string></string>
 				<key>SDKROOT</key>
 				<string>iphoneos</string>
 				<key>SWIFT_OPTIMIZATION_LEVEL</key>
@@ -474,7 +473,7 @@
 				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
 				<string>YES</string>
 				<key>CODE_SIGN_IDENTITY</key>
-				<string>iPhone Developer</string>
+				<string>iPhone Developer: rinat.muhamedgaliev@gmail.com (2ADZVPVB55)</string>
 				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
 				<string>iPhone Developer</string>
 				<key>COPY_PHASE_STRIP</key>
@@ -505,8 +504,6 @@
 				<string>9.3</string>
 				<key>MTL_ENABLE_DEBUG_INFO</key>
 				<string>NO</string>
-				<key>PROVISIONING_PROFILE</key>
-				<string></string>
 				<key>SDKROOT</key>
 				<string>iphoneos</string>
 				<key>VALIDATE_PRODUCT</key>
@@ -601,7 +598,34 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>23E10D6B8A65EC2858293B6A</key>
+		<key>06B00BC81CDC7BBD00DD7C47</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Increment build number</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>status=$(git status --porcelain)
+plist=${INFOPLIST_FILE}
+if [[ "${#status}" != 0 ]] &amp;&amp; [[ $status != *"M ${plist}"* ]]; then
+    buildNumber=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "${PROJECT_DIR}/${plist}")
+    buildNumber=$(($buildNumber + 1))
+    /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "${PROJECT_DIR}/${plist}"
+fi</string>
+		</dict>
+		<key>55FE15A19C0CECF20611EFCA</key>
 		<dict>
 			<key>buildActionMask</key>
 			<string>2147483647</string>
