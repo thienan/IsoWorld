@@ -64,7 +64,18 @@ class GameScene: SKScene {
     self.backgroundColor = UIColor.whiteColor()
 
 
-    let scores = [[10, 9, 9, 9, 8, 8, 7, 7, 6, 5], [10, 9, 9, 9, 8, 7, 7, 6, 5, 4], [9, 9, 9, 8, 7, 7, 6, 5, 4, 3], [9, 9, 8, 7,11, 6, 5, 4, 3, 2], [9, 8, 7, 7, 6, 5, 4, 3, 2, 2], [8, 7, 7, 6, 5, 4, 4, 3, 2, 1], [8, 7, 6, 5, 4, 4, 3, 2, 1, 0], [7, 6, 5, 4, 4, 3, 2, 1, 0, 0], [6, 5, 4, 4, 3, 2, 1, 1, 0, 0], [6, 5, 4, 3, 2, 1, 1, 0, 0, 0]]
+    let scores = [
+      [10, 9, 9, 9, 8, 8, 7, 7, 6, 5],
+      [10, 9, 9, 9, 8, 7, 7, 6, 5, 4],
+      [9, 9, 9, 8, 7, 7, 6, 5, 4, 3],
+      [9, 9, 8, 7,11, 6, 5, 4, 3, 2],
+      [9, 8, 7, 7, 6, 5, 4, 3, 2, 2],
+      [8, 7, 7, 6, 5, 4, 4, 3, 2, 1],
+      [8, 7, 6, 5, 4, 4, 3, 2, 1, 0],
+      [7, 6, 5, 4, 4, 3, 2, 1, 0, 0],
+      [6, 5, 4, 4, 3, 2, 1, 1, 0, 0],
+      [6, 5, 4, 3, 2, 1, 1, 0, 0, 0]
+    ]
 
     for i in 0..<scores.count {
       let row = scores[i]
@@ -74,7 +85,7 @@ class GameScene: SKScene {
 
         var me = false
 
-        if (tileInt == 11) {
+        if tileInt == 11 {
           tileInt = 8
           me = true
         }
@@ -116,7 +127,7 @@ class GameScene: SKScene {
     let tileSprite = SKSpriteNode(texture: texture)
     tileSprite.position = withPosition
 
-    if (color != UIColor.clearColor()) {
+    if color != UIColor.clearColor() {
       tileSprite.colorBlendFactor = 1.0
       tileSprite.color = color
     }
@@ -142,7 +153,7 @@ class GameScene: SKScene {
 
         var color = UIColor.clearColor()
 
-        if (row[j].me) {
+        if row[j].me {
           color = UIColor.redColor()
         }
 
@@ -187,7 +198,7 @@ class GameScene: SKScene {
             let nodeAtTouch = self.nodeAtPoint(touch.locationInNode(self))
             if let parent = nodeAtTouch.parent as? UserNode {
                 if let name = parent.name {
-                    if let number = Int(name) {
+                    if Int(name) != nil {
                         print(parent.userObj)
                     }
                 }

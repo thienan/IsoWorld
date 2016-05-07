@@ -29,5 +29,5 @@ class UserScore {
     self.score = score
     self.me = me
   }
-  
+
 }

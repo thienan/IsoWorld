@@ -17,7 +17,6 @@
 		06B00BD01CDCA57E00DD7C47 /* UserScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B00BCF1CDCA57E00DD7C47 /* UserScore.swift */; };
 		06B00BD51CDCAEC700DD7C47 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06B00BD41CDCAEC700DD7C47 /* SwiftyJSON.framework */; };
 		06B00BDE1CDCBD4F00DD7C47 /* IsoWorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B00BDD1CDCBD4F00DD7C47 /* IsoWorldTests.swift */; };
-		06B00BE61CDCBF8E00DD7C47 /* EVReflection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06B00BE51CDCBF8E00DD7C47 /* EVReflection.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,7 +44,6 @@
 		06B00BDB1CDCBD4E00DD7C47 /* IsoWorldTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IsoWorldTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		06B00BDD1CDCBD4F00DD7C47 /* IsoWorldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoWorldTests.swift; sourceTree = "<group>"; };
 		06B00BDF1CDCBD4F00DD7C47 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		06B00BE51CDCBF8E00DD7C47 /* EVReflection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EVReflection.framework; path = Carthage/Build/iOS/EVReflection.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +51,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06B00BE61CDCBF8E00DD7C47 /* EVReflection.framework in Frameworks */,
 				06B00BD51CDCAEC700DD7C47 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,7 +135,6 @@
 		06B00BD11CDCAD7D00DD7C47 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				06B00BE51CDCBF8E00DD7C47 /* EVReflection.framework */,
 				06B00BD41CDCAEC700DD7C47 /* SwiftyJSON.framework */,
 			);
 			name = Frameworks;
@@ -276,7 +272,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/EVReflection.framework",
 			);
 			name = Carthage;
 			outputPaths = (
@@ -369,7 +364,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: rinat.muhamedgaliev@gmail.com (2ADZVPVB55)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Rinat Muhamedgaliev (HB6CG5MHV3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -416,7 +411,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: rinat.muhamedgaliev@gmail.com (2ADZVPVB55)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Rinat Muhamedgaliev (HB6CG5MHV3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -442,8 +437,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Rinat Muhamedgaliev (HB6CG5MHV3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rinat Muhamedgaliev (HB6CG5MHV3)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -452,7 +447,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.rmuhamedgaliev.IsoWorld;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "55e004ae-4112-4c35-91c1-0c58afe884c9";
 			};
 			name = Debug;
 		};
@@ -460,8 +455,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Rinat Muhamedgaliev (HB6CG5MHV3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rinat Muhamedgaliev (HB6CG5MHV3)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -470,7 +465,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.rmuhamedgaliev.IsoWorld;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "55e004ae-4112-4c35-91c1-0c58afe884c9";
 			};
 			name = Release;
 		};
@@ -527,6 +522,7 @@
 				06B00BE41CDCBD4F00DD7C47 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

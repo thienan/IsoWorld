@@ -1,0 +1,4 @@
+exclude:
+  - '**Tests.swift'
+  - Carthage
+  - Pods
