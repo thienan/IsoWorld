@@ -1,46 +1,5 @@
 import SpriteKit
 
-func + (left: CGPoint, right: CGPoint) -> CGPoint {
-  return CGPoint(x: left.x + right.x, y: left.y + right.y)
-}
-
-func - (left: CGPoint, right: CGPoint) -> CGPoint {
-  return  CGPoint(x: left.x - right.x, y: left.y - right.y)
-}
-
-func * (point: CGPoint, scalar: CGPoint) -> CGPoint {
-  return  CGPoint(x: point.x * scalar.x, y: point.y * scalar.y)
-}
-
-func / (point: CGPoint, scalar: CGPoint) -> CGPoint {
-  return  CGPoint(x: point.x / scalar.x, y: point.y / scalar.y)
-}
-
-enum Tile: Int {
-
-  case Ground
-  case Wall
-
-  var description: String {
-    switch self {
-    case Ground:
-      return "Ground"
-    case Wall:
-      return "Wall"
-    }
-  }
-
-  var image: String {
-    switch self {
-    case Ground:
-      return "ground"
-    case Wall:
-      return "wall"
-
-    }
-  }
-}
-
 class GameScene: SKScene {
 
   private var scaleOffset: CGFloat = 1.0
@@ -53,48 +12,46 @@ class GameScene: SKScene {
 
   var users = Array<Array<UserScore>>()
 
-
-
   let tileSize = (width: 32, height: 32)
 
   override init(size: CGSize) {
-    viewIso = SKSpriteNode()
-    super.init(size: size)
-    self.view?.ignoresSiblingOrder = true
-    self.backgroundColor = UIColor.whiteColor()
+  viewIso = SKSpriteNode()
+  super.init(size: size)
+  self.view?.ignoresSiblingOrder = true
+  self.backgroundColor = UIColor.whiteColor()
 
 
-    let scores = [
-      [10, 9, 9, 9, 8, 8, 7, 7, 6, 5],
-      [10, 9, 9, 9, 8, 7, 7, 6, 5, 4],
-      [9, 9, 9, 8, 7, 7, 6, 5, 4, 3],
-      [9, 9, 8, 7,11, 6, 5, 4, 3, 2],
-      [9, 8, 7, 7, 6, 5, 4, 3, 2, 2],
-      [8, 7, 7, 6, 5, 4, 4, 3, 2, 1],
-      [8, 7, 6, 5, 4, 4, 3, 2, 1, 0],
-      [7, 6, 5, 4, 4, 3, 2, 1, 0, 0],
-      [6, 5, 4, 4, 3, 2, 1, 1, 0, 0],
-      [6, 5, 4, 3, 2, 1, 1, 0, 0, 0]
-    ]
+  let scores = [
+    [10, 9, 9, 9, 8, 8, 7, 7, 6, 5],
+    [10, 9, 9, 9, 8, 7, 7, 6, 5, 4],
+    [9, 9, 9, 8, 7, 7, 6, 5, 4, 3],
+    [9, 9, 8, 7,11, 6, 5, 4, 3, 2],
+    [9, 8, 7, 7, 6, 5, 4, 3, 2, 2],
+    [8, 7, 7, 6, 5, 4, 4, 3, 2, 1],
+    [8, 7, 6, 5, 4, 4, 3, 2, 1, 0],
+    [7, 6, 5, 4, 4, 3, 2, 1, 0, 0],
+    [6, 5, 4, 4, 3, 2, 1, 1, 0, 0],
+    [6, 5, 4, 3, 2, 1, 1, 0, 0, 0]
+  ]
 
-    for i in 0..<scores.count {
-      let row = scores[i]
-      users.append(Array(count: scores.count, repeatedValue: UserScore()))
-      for j in 0..<row.count {
-        var tileInt = row[j]
+  for i in 0..<scores.count {
+    let row = scores[i]
+    users.append(Array(count: scores.count, repeatedValue: UserScore()))
+    for j in 0..<row.count {
+    var tileInt = row[j]
 
-        var me = false
+    var me = false
 
-        if tileInt == 11 {
-          tileInt = 8
-          me = true
-        }
-
-        let user = UserScore(name: "Rinat-\(tileInt)", score: tileInt, me: me)
-
-        users[i][j] = user
-      }
+    if tileInt == 11 {
+      tileInt = 8
+      me = true
     }
+
+    let user = UserScore(name: "Rinat-\(tileInt)", score: tileInt, me: me)
+
+    users[i][j] = user
+    }
+  }
 
   }
 
@@ -126,10 +83,13 @@ class GameScene: SKScene {
     let texture = SKTexture(imageNamed: image)
     let tileSprite = SKSpriteNode(texture: texture)
     tileSprite.position = withPosition
+    tileSprite.colorBlendFactor = 1.0
+    tileSprite.alpha = 1.0
 
     if color != UIColor.clearColor() {
-      tileSprite.colorBlendFactor = 1.0
       tileSprite.color = color
+    } else {
+      tileSprite.color = UIColor.yellowColor()
     }
 
     tileSprite.anchorPoint =  CGPoint(x: 0, y: 0)
@@ -144,6 +104,9 @@ class GameScene: SKScene {
 
         let column = UserNode()
         column.name =  String(tileInt)
+        column.colorBlendFactor = 1.0
+        column.alpha = 1.0
+        column.color = UIColor.blueColor()
 
         if tileInt > 1 {
           tileInt = 1
@@ -155,29 +118,31 @@ class GameScene: SKScene {
 
         if row[j].me {
           color = UIColor.redColor()
+        } else {
+          color = UIColor.clearColor()
         }
 
         if tileInt > 0 {
           let index = tileSize.height
-                let xxx = (j*tileSize.width) + index * 0
-                let yyy = -(i*tileSize.height + index  * 0)
-                let pointxxx = point2DToIso(CGPoint(x: xxx, y: yyy), inverse: false)
-                column.addChild(placeTileIso(("iso_" + tile.image), withPosition: pointxxx, color: color))
+          let xxx = (j*tileSize.width) + index * 0
+          let yyy = -(i*tileSize.height + index  * 0)
+          let pointxxx = point2DToIso(CGPoint(x: xxx, y: yyy), inverse: false)
+          column.addChild(placeTileIso(("iso_" + tile.image), withPosition: pointxxx, color: color))
           if row[j].score > 1 {
             if j > 0 || i > 0 {
-                for indexs in (0..<row[j].score) {
-                    let xx = (j*tileSize.width) + index * (-indexs)
-                    let yy = -(i*tileSize.height + index  * (-indexs))
-                    let pointxx = point2DToIso(CGPoint(x: xx, y: yy), inverse: false)
-                    column.addChild(placeTileIso(("iso_" + tile.image), withPosition: pointxx, color: color))
-                }
+              for indexs in (0..<row[j].score) {
+                let xx = (j*tileSize.width) + index * (-indexs)
+                let yy = -(i*tileSize.height + index  * (-indexs))
+                let pointxx = point2DToIso(CGPoint(x: xx, y: yy), inverse: false)
+                column.addChild(placeTileIso(("iso_" + tile.image), withPosition: pointxx, color: color))
+              }
             } else {
-                for indexs in (1..<row[j].score) {
-                    let xx = -((j*tileSize.width) + index * indexs)
-                    let yy = i*tileSize.height + index  * indexs
-                    let pointxx = point2DToIso(CGPoint(x: xx, y: yy), inverse: false)
-                    column.addChild(placeTileIso(("iso_" + tile.image), withPosition: pointxx, color: color))
-                }
+              for indexs in (1..<row[j].score) {
+                let xx = -((j*tileSize.width) + index * indexs)
+                let yy = i*tileSize.height + index  * indexs
+                let pointxx = point2DToIso(CGPoint(x: xx, y: yy), inverse: false)
+                column.addChild(placeTileIso(("iso_" + tile.image), withPosition: pointxx, color: color))
+              }
             }
           }
         } else {
@@ -186,25 +151,29 @@ class GameScene: SKScene {
           let pointxxx = point2DToIso(CGPoint(x: xxx, y: yyy), inverse: false)
           column.addChild(placeTileIso(("iso_" + tile.image), withPosition: pointxxx, color: color))
         }
-
+        
         column.userObj = row[j]
         viewIso.addChild(column)
-        }
+      }
     }
   }
 
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        for touch in touches {
-            let nodeAtTouch = self.nodeAtPoint(touch.locationInNode(self))
-            if let parent = nodeAtTouch.parent as? UserNode {
-                if let name = parent.name {
-                    if Int(name) != nil {
-                        print(parent.userObj)
-                    }
-                }
+  override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    for touch in touches {
+      let nodeAtTouch = self.nodeAtPoint(touch.locationInNode(self))
+      if let parent = nodeAtTouch.parent as? UserNode {
+        if let name = parent.name {
+          if Int(name) != nil {
+            print(parent.userObj)
+
+            for element in (parent.children as? [SKSpriteNode])! {
+              element.color = UIColor.blueColor()
             }
+          }
         }
+      }
     }
+  }
 
   func onPinchStart(centroid: CGPoint, scale: CGFloat) {
     scaleOffset = viewIso.xScale

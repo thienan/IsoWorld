@@ -12,6 +12,7 @@ import SpriteKit
 class UserNode: SKSpriteNode {
 
   var userObj: UserScore?
+  
 
 }
 
@@ -24,10 +25,10 @@ class UserScore {
   init() {}
 
   init(name: String, score: Int, me: Bool) {
-    self.name = name
-    self.photo = "photo"
-    self.score = score
-    self.me = me
+  self.name = name
+  self.photo = "photo"
+  self.score = score
+  self.me = me
   }
 
 }
