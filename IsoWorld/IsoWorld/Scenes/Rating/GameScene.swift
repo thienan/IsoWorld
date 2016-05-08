@@ -6,6 +6,8 @@ class GameScene: SKScene {
   private var panOffset = CGPointZero
   let viewIso: SKSpriteNode
 
+  var selectedObj: SKSpriteNode?
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -135,6 +137,14 @@ class GameScene: SKScene {
         if let name = parent.name {
           if Int(name) != nil {
             print(parent.userObj)
+
+            if let selected = selectedObj {
+              for element in (selected.children as? [SKSpriteNode])! {
+                element.color = UIColor.yellowColor()
+              }
+            }
+
+            selectedObj = parent
 
             for element in (parent.children as? [SKSpriteNode])! {
               element.color = UIColor.blueColor()
