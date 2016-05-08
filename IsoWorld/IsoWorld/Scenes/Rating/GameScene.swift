@@ -10,49 +10,19 @@ class GameScene: SKScene {
     fatalError("init(coder:) has not been implemented")
   }
 
+  let userService = UserService()
   var users = Array<Array<UserScore>>()
 
   let tileSize = (width: 32, height: 32)
 
   override init(size: CGSize) {
-  viewIso = SKSpriteNode()
-  super.init(size: size)
-  self.view?.ignoresSiblingOrder = true
-  self.backgroundColor = UIColor.whiteColor()
+    viewIso = SKSpriteNode()
+    super.init(size: size)
+    self.view?.ignoresSiblingOrder = true
+    self.backgroundColor = UIColor.whiteColor()
 
-
-  let scores = [
-    [10, 9, 9, 9, 8, 8, 7, 7, 6, 5],
-    [10, 9, 9, 9, 8, 7, 7, 6, 5, 4],
-    [9, 9, 9, 8, 7, 7, 6, 5, 4, 3],
-    [9, 9, 8, 7,11, 6, 5, 4, 3, 2],
-    [9, 8, 7, 7, 6, 5, 4, 3, 2, 2],
-    [8, 7, 7, 6, 5, 4, 4, 3, 2, 1],
-    [8, 7, 6, 5, 4, 4, 3, 2, 1, 0],
-    [7, 6, 5, 4, 4, 3, 2, 1, 0, 0],
-    [6, 5, 4, 4, 3, 2, 1, 1, 0, 0],
-    [6, 5, 4, 3, 2, 1, 1, 0, 0, 0]
-  ]
-
-  for i in 0..<scores.count {
-    let row = scores[i]
-    users.append(Array(count: scores.count, repeatedValue: UserScore()))
-    for j in 0..<row.count {
-    var tileInt = row[j]
-
-    var me = false
-
-    if tileInt == 11 {
-      tileInt = 8
-      me = true
-    }
-
-    let user = UserScore(name: "Rinat-\(tileInt)", score: tileInt, me: me)
-
-    users[i][j] = user
-    }
-  }
-
+    let scores = userService.loadUserRating()
+    users = userService.convertUserScoresToMatrix(fromVector: scores)
   }
 
   override func didMoveToView(view: SKView) {

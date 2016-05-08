@@ -19,6 +19,8 @@
 		06B00BDE1CDCBD4F00DD7C47 /* IsoWorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B00BDD1CDCBD4F00DD7C47 /* IsoWorldTests.swift */; };
 		644029851CDFADE200961B0D /* IsometricMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644029841CDFADE200961B0D /* IsometricMath.swift */; };
 		644029871CDFADFC00961B0D /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644029861CDFADFC00961B0D /* Tile.swift */; };
+		6440298A1CDFBE2000961B0D /* UserScores.plist in Resources */ = {isa = PBXBuildFile; fileRef = 644029891CDFBE2000961B0D /* UserScores.plist */; };
+		644029901CDFD18D00961B0D /* RatingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6440298F1CDFD18D00961B0D /* RatingService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		06B00BDF1CDCBD4F00DD7C47 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		644029841CDFADE200961B0D /* IsometricMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsometricMath.swift; sourceTree = "<group>"; };
 		644029861CDFADFC00961B0D /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
+		644029891CDFBE2000961B0D /* UserScores.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserScores.plist; sourceTree = "<group>"; };
+		6440298F1CDFD18D00961B0D /* RatingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +95,8 @@
 		064236851CBCC2C100E05D75 /* IsoWorld */ = {
 			isa = PBXGroup;
 			children = (
+				6440298E1CDFD17700961B0D /* Services */,
+				644029881CDFBDCC00961B0D /* Supporting Files */,
 				644029831CDFADC300961B0D /* Extensions */,
 				06B00BCE1CDCA4A400DD7C47 /* Models */,
 				06B00BC91CDC838700DD7C47 /* Scenes */,
@@ -161,6 +167,22 @@
 				644029841CDFADE200961B0D /* IsometricMath.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		644029881CDFBDCC00961B0D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				644029891CDFBE2000961B0D /* UserScores.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6440298E1CDFD17700961B0D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				6440298F1CDFD18D00961B0D /* RatingService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,6 +273,7 @@
 				064236951CBCC2C100E05D75 /* LaunchScreen.storyboard in Resources */,
 				064236921CBCC2C100E05D75 /* Assets.xcassets in Resources */,
 				0642369D1CBCDE8900E05D75 /* sprites.atlas in Resources */,
+				6440298A1CDFBE2000961B0D /* UserScores.plist in Resources */,
 				064236901CBCC2C100E05D75 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -315,6 +338,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				644029901CDFD18D00961B0D /* RatingService.swift in Sources */,
 				644029851CDFADE200961B0D /* IsometricMath.swift in Sources */,
 				06B00BCD1CDC843000DD7C47 /* GameScene.swift in Sources */,
 				06B00BD01CDCA57E00DD7C47 /* UserScore.swift in Sources */,
