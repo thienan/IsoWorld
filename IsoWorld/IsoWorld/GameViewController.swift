@@ -34,6 +34,10 @@ class GameViewController: UIViewController {
     let scale = gestureRecognizer.scale
     let centroid = gestureRecognizer.locationInView(self.view)
 
+//    if (scale > 1.0) {
+//      
+//    }
+
     switch gestureRecognizer.state {
     case .Began:
       self.gameScene.onPinchStart(centroid, scale: scale)

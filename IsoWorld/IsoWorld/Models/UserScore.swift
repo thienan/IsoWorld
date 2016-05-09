@@ -12,7 +12,6 @@ import SpriteKit
 class UserNode: SKSpriteNode {
 
   var userObj: UserScore?
-  
 
 }
 

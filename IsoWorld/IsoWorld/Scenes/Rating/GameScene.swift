@@ -4,14 +4,9 @@ class GameScene: SKScene {
 
   private var scaleOffset: CGFloat = 1.0
   private var panOffset = CGPointZero
-  let viewIso: SKSpriteNode
+  private let viewIso: SKSpriteNode
 
-  var selectedObj: SKSpriteNode?
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
+  var selectedObj: UserNode?
   let userService = UserService()
   var users = Array<Array<UserScore>>()
 
@@ -26,6 +21,10 @@ class GameScene: SKScene {
     let scores = userService.loadUserRating()
     users = userService.convertUserScoresToMatrix(fromVector: scores)
   }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   override func didMoveToView(view: SKView) {
     let deviceScale = self.size.width/667
@@ -35,20 +34,6 @@ class GameScene: SKScene {
     addChild(viewIso)
 
     placeAllTilesIso()
-  }
-
-  func point2DToIso(p: CGPoint, inverse: Bool) -> CGPoint {
-    // invert y pre conversion
-    var point = p * CGPoint(x: 1, y: -1)
-    // convert using algorithm
-    point =  CGPoint(x: (point.x - point.y), y: ((point.x + point.y) / 2))
-    // invert y post conversion
-    if !inverse {
-      point = point * CGPoint(x: 1, y: -1)
-    } else {
-      point = point * CGPoint(x: 1, y: -1)
-    }
-    return point
   }
 
   func placeTileIso(image: String, withPosition: CGPoint, color: UIColor) -> SKSpriteNode {
@@ -61,7 +46,7 @@ class GameScene: SKScene {
     if color != UIColor.clearColor() {
       tileSprite.color = color
     } else {
-      tileSprite.color = UIColor.yellowColor()
+      tileSprite.color = UIColor.whiteColor()
     }
 
     tileSprite.anchorPoint =  CGPoint(x: 0, y: 0)
@@ -137,22 +122,31 @@ class GameScene: SKScene {
       if let parent = nodeAtTouch.parent as? UserNode {
         if let name = parent.name {
           if Int(name) != nil {
-            print(parent.userObj)
 
-            if let selected = selectedObj {
-              for element in (selected.children as? [SKSpriteNode])! {
-                element.color = UIColor.yellowColor()
-              }
-            }
-
-            selectedObj = parent
-
-            for element in (parent.children as? [SKSpriteNode])! {
-              element.color = UIColor.blueColor()
-            }
+            deselectColumn()
+            selectColumn(parent)
           }
         }
       }
+    }
+  }
+
+  func deselectColumn() {
+    if let selected = selectedObj {
+      for element in (selected.children as? [SKSpriteNode])! {
+        if (selected.userObj?.me == true) {
+          element.color = UIColor.redColor()
+        } else {
+          element.color = UIColor.whiteColor()
+        }
+      }
+    }
+  }
+
+  func selectColumn(column: UserNode) {
+    self.selectedObj = column
+    for element in (column.children as? [SKSpriteNode])! {
+      element.color = UIColor.blueColor()
     }
   }
 
@@ -161,8 +155,13 @@ class GameScene: SKScene {
   }
 
   func onPinchMove(centroid: CGPoint, scale: CGFloat) {
-    viewIso.xScale = (scale - 1.0) + scaleOffset
-    viewIso.yScale = (scale - 1.0) + scaleOffset
+    let xScale = (scale - 1.0) + scaleOffset
+    let yScale = (scale - 1.0) + scaleOffset
+
+    if (xScale > 0 && yScale > 0) {
+      self.viewIso.xScale = xScale
+      self.viewIso.yScale = yScale
+    }
   }
 
   func onPan(gestureRecognizer: UIPanGestureRecognizer) {

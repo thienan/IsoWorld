@@ -38,7 +38,7 @@ class UserService: UserServiceDelegate {
 
   func convertUserScoresToMatrix(fromVector vector: [UserScore]) -> [[UserScore]] {
 
-    let coumns = Int(round(sqrt(Double(vector.count))))
+    let coumns = (Int(round(sqrt(Double(vector.count)))) + 1) * 2
 
     var arrayx = Array<Array<UserScore>>()
 
@@ -50,7 +50,11 @@ class UserService: UserServiceDelegate {
 
     for i in (0..<coumns) {
       for j in (0..<i + 1) {
-        arrayx[i - j][j] = vector[index]
+        if (vector.indices.contains(index)) {
+          arrayx[i - j][j] = vector[index]
+        } else {
+          arrayx[i - j][j] = UserScore()
+        }
         index += 1
       }
     }
