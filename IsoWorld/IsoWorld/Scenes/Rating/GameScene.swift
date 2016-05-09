@@ -69,6 +69,7 @@ class GameScene: SKScene {
   }
 
   func placeAllTilesIso() {
+    
     for i in 0..<users.count {
       let row = users[i]
       for j in 0..<row.count {
