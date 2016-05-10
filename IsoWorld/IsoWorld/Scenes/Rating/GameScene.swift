@@ -10,6 +10,8 @@ class GameScene: SKScene {
   let userService = UserService()
   var users = Array<Array<UserScore>>()
 
+  var userName: SKLabelNode!
+
   let tileSize = (width: 32, height: 32)
 
   override init(size: CGSize) {
@@ -20,6 +22,13 @@ class GameScene: SKScene {
 
     let scores = userService.loadUserRating()
     users = userService.convertUserScoresToMatrix(fromVector: scores)
+
+    self.userName = SKLabelNode()
+    self.userName.fontColor = UIColor.blackColor()
+    self.userName.fontSize = 30
+    self.userName.position = CGPoint(x: 100, y: size.height - 35)
+
+    self.addChild(userName)
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -147,6 +156,7 @@ class GameScene: SKScene {
     self.selectedObj = column
     for element in (column.children as? [SKSpriteNode])! {
       element.color = UIColor.blueColor()
+      self.userName.text = column.userObj?.name
     }
   }
 
