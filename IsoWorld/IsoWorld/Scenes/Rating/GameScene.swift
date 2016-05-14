@@ -67,42 +67,36 @@ class GameScene: SKScene {
     for i in 0..<users.count {
       let row = users[i]
       for j in 0..<row.count {
-
         let visible = getVisibleIndex(users, indexI: i, indexJ: j)
         let tileInt = row[j].score
         let color = getColumnColor(row[j])
         let tile = Tile(rawValue: tileInt > 0 ? 1 : 0)!
         let column = getCoumn(row[j])
-
-        if isColumn(tileInt) {
-          let point = getCoordinatesByIndex(i, indexJ: j, index: 0, inversed: false)
-          column.addChild(placeTileIso(("iso_" + tile.image), withPosition: point, color: color))
-          if row[j].score > 1 {
-            if j > 0 || i > 0 {
-              for indexs in (0..<row[j].score) {
-                if indexs >= visible {
-                  let point = getCoordinatesByIndex(i, indexJ: j, index: -indexs, inversed: false)
-                  column.addChild(placeTileIso(("iso_" + tile.image), withPosition: point, color: color))
-                }
-              }
-            } else {
-              for indexs in (1..<row[j].score) {
-                if indexs >= visible {
-                  let point = getCoordinatesByIndex(i, indexJ: j, index: indexs, inversed: true)
-                  column.addChild(placeTileIso(("iso_" + tile.image), withPosition: point, color: color))
-                }
-              }
-            }
+        let point = getCoordinatesByIndex(i, indexJ: j, index: 0, inversed: false)
+        column.addChild(placeTileIso(("iso_" + tile.image), withPosition: point, color: color))
+        if row[j].score > 1 {
+          if j > 0 || i > 0 {
+            let data = getDrawableNodeIndex(row[j].score, visible: visible)
+            let point = getCoordinatesByIndex(i, indexJ: j, index: -data, inversed: false)
+            column.addChild(placeTileIso(("iso_" + tile.image), withPosition: point, color: color))
+          } else {
+            let data = getDrawableNodeIndex(row[j].score, visible: visible)
+            let point = getCoordinatesByIndex(i, indexJ: j, index: data, inversed: true)
+            column.addChild(placeTileIso(("iso_" + tile.image), withPosition: point, color: color))
           }
-        } else {
-//          MARK: Ground
-          let point = getCoordinatesByIndex(i, indexJ: j, index: 0, inversed: false)
-          column.addChild(placeTileIso(("iso_" + tile.image), withPosition: point, color: color))
         }
-
         column.userObj = row[j]
         viewIso.addChild(column)
       }
+    }
+  }
+
+  func getDrawableNodeIndex(score: Int, visible: Int) -> Int {
+    let rangeArray = Array((1..<score))
+    if visible > 0 {
+      return rangeArray[(visible - 1)]
+    } else {
+      return rangeArray[(rangeArray[0] - visible) - 1]
     }
   }
 
@@ -166,7 +160,6 @@ class GameScene: SKScene {
       if let parent = nodeAtTouch.parent as? UserNode {
         if let name = parent.name {
           if Int(name) != nil {
-
             deselectColumn()
             selectColumn(parent)
           }
