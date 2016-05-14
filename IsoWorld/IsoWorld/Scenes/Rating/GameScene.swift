@@ -68,86 +68,96 @@ class GameScene: SKScene {
       let row = users[i]
       for j in 0..<row.count {
 
-        var right = 0
-        if users.indices.contains(i + 1) {
-          right = users[i + 1][j].score
-        }
+        let visible = getVisibleIndex(users, indexI: i, indexJ: j)
+        let tileInt = row[j].score
+        let color = getColumnColor(row[j])
+        let tile = Tile(rawValue: tileInt > 0 ? 1 : 0)!
+        let column = getCoumn(row[j])
 
-        var down = 0
-        if users[i].indices.contains(j + 1) {
-          down = users[i][j + 1].score
-        }
-
-        let visible = min(right, down)
-
-        var tileInt = row[j].score
-
-        let column = UserNode()
-        column.name =  String(tileInt)
-        column.colorBlendFactor = 1.0
-        column.alpha = 1.0
-        column.color = UIColor.blueColor()
-
-        if tileInt > 1 {
-          tileInt = 1
-        }
-
-        let tile = Tile(rawValue: tileInt)!
-
-        var color = UIColor.clearColor()
-
-        if row[j].me {
-          color = UIColor.redColor()
-        } else {
-          color = UIColor.clearColor()
-        }
-
-        if tileInt > 0 {
-
-          let index = tileSize.height
-          let xxx = (j*tileSize.width) + index * 0
-          let yyy = -(i*tileSize.height + index  * 0)
-          let pointxxx = point2DToIso(CGPoint(x: xxx, y: yyy), inverse: false)
-          column.addChild(placeTileIso(("iso_" + tile.image), withPosition: pointxxx, color: color))
-
+        if isColumn(tileInt) {
+          let point = getCoordinatesByIndex(i, indexJ: j, index: 0, inversed: false)
+          column.addChild(placeTileIso(("iso_" + tile.image), withPosition: point, color: color))
           if row[j].score > 1 {
             if j > 0 || i > 0 {
               for indexs in (0..<row[j].score) {
-
-                if (indexs >= visible - 1) {
-                  let xx = (j*tileSize.width) + index * (-indexs)
-                  let yy = -(i*tileSize.height + index  * (-indexs))
-                  let pointxx = point2DToIso(CGPoint(x: xx, y: yy), inverse: false)
-                  column.addChild(placeTileIso(("iso_" + tile.image), withPosition: pointxx, color: color))
+                if indexs >= visible {
+                  let point = getCoordinatesByIndex(i, indexJ: j, index: -indexs, inversed: false)
+                  column.addChild(placeTileIso(("iso_" + tile.image), withPosition: point, color: color))
                 }
-
               }
             } else {
               for indexs in (1..<row[j].score) {
-
-                if (indexs >= visible) {
-                  let xx = -((j*tileSize.width) + index * indexs)
-                  let yy = i*tileSize.height + index  * indexs
-                  let pointxx = point2DToIso(CGPoint(x: xx, y: yy), inverse: false)
-                  column.addChild(placeTileIso(("iso_" + tile.image), withPosition: pointxx, color: color))
+                if indexs >= visible {
+                  let point = getCoordinatesByIndex(i, indexJ: j, index: indexs, inversed: true)
+                  column.addChild(placeTileIso(("iso_" + tile.image), withPosition: point, color: color))
                 }
-
               }
             }
           }
         } else {
 //          MARK: Ground
-          let xxx = (j*tileSize.width) + tileSize.height * 0
-          let yyy = -(i*tileSize.height + tileSize.height  * 0)
-          let pointxxx = point2DToIso(CGPoint(x: xxx, y: yyy), inverse: false)
-          column.addChild(placeTileIso(("iso_" + tile.image), withPosition: pointxxx, color: color))
-
+          let point = getCoordinatesByIndex(i, indexJ: j, index: 0, inversed: false)
+          column.addChild(placeTileIso(("iso_" + tile.image), withPosition: point, color: color))
         }
 
         column.userObj = row[j]
         viewIso.addChild(column)
       }
     }
+  }
+
+  func getColumnColor(userScore: UserScore) -> SKColor {
+    var color = UIColor.clearColor()
+    if userScore.me {
+      color = UIColor.redColor()
+    } else {
+      color = UIColor.clearColor()
+    }
+    return color
+  }
+
+  func getCoumn(userScore: UserScore) -> UserNode {
+    let column = UserNode()
+    column.name =  String(userScore.score)
+    column.colorBlendFactor = 1.0
+    column.alpha = 1.0
+    return column
+  }
+
+  func isColumn(value: Int) -> Bool {
+    var status = false
+    if value > 0 {
+      status = true
+    }
+    return status
+  }
+
+  func getCoordinatesByIndex(indexI: Int, indexJ: Int, index: Int, inversed: Bool) -> CGPoint {
+    var x = 0
+    var y = 0
+    if !inversed {
+      x = (indexJ * tileSize.width) + tileSize.height * index
+      y = -(indexI * tileSize.height + tileSize.height  * index)
+    } else {
+      x = -((indexJ * tileSize.width) + tileSize.height * index)
+      y = indexI * tileSize.height + tileSize.height  * index
+    }
+    let point = CGPoint(x: x, y: y)
+    return point2DToIso(point)
+  }
+
+  func getVisibleIndex(userScores: Array<Array<UserScore>>, indexI: Int, indexJ: Int) -> Int {
+    var right = 0
+    if userScores.indices.contains(indexI + 1) {
+      right = userScores[indexI + 1][indexJ].score
+    }
+
+    var down = 0
+    if users[indexI].indices.contains(indexJ + 1) {
+      down = userScores[indexI][indexJ + 1].score
+    }
+
+    return min(right, down) - 1
   }
 
   override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
