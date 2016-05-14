@@ -42,7 +42,7 @@ class UserService: UserServiceDelegate {
 
     var arrayx = Array<Array<UserScore>>()
 
-    for column in 0..<coumns {
+    for _ in 0..<coumns {
       arrayx.append(Array(count:coumns, repeatedValue:UserScore()))
     }
 

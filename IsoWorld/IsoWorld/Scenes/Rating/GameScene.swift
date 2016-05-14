@@ -67,6 +67,19 @@ class GameScene: SKScene {
     for i in 0..<users.count {
       let row = users[i]
       for j in 0..<row.count {
+
+        var right = 0
+        if users.indices.contains(i + 1) {
+          right = users[i + 1][j].score
+        }
+
+        var down = 0
+        if users[i].indices.contains(j + 1) {
+          down = users[i][j + 1].score
+        }
+
+        let visible = min(right, down)
+
         var tileInt = row[j].score
 
         let column = UserNode()
@@ -90,35 +103,47 @@ class GameScene: SKScene {
         }
 
         if tileInt > 0 {
+
           let index = tileSize.height
           let xxx = (j*tileSize.width) + index * 0
           let yyy = -(i*tileSize.height + index  * 0)
           let pointxxx = point2DToIso(CGPoint(x: xxx, y: yyy), inverse: false)
           column.addChild(placeTileIso(("iso_" + tile.image), withPosition: pointxxx, color: color))
+
           if row[j].score > 1 {
             if j > 0 || i > 0 {
               for indexs in (0..<row[j].score) {
-                let xx = (j*tileSize.width) + index * (-indexs)
-                let yy = -(i*tileSize.height + index  * (-indexs))
-                let pointxx = point2DToIso(CGPoint(x: xx, y: yy), inverse: false)
-                column.addChild(placeTileIso(("iso_" + tile.image), withPosition: pointxx, color: color))
+
+                if (indexs >= visible - 1) {
+                  let xx = (j*tileSize.width) + index * (-indexs)
+                  let yy = -(i*tileSize.height + index  * (-indexs))
+                  let pointxx = point2DToIso(CGPoint(x: xx, y: yy), inverse: false)
+                  column.addChild(placeTileIso(("iso_" + tile.image), withPosition: pointxx, color: color))
+                }
+
               }
             } else {
               for indexs in (1..<row[j].score) {
-                let xx = -((j*tileSize.width) + index * indexs)
-                let yy = i*tileSize.height + index  * indexs
-                let pointxx = point2DToIso(CGPoint(x: xx, y: yy), inverse: false)
-                column.addChild(placeTileIso(("iso_" + tile.image), withPosition: pointxx, color: color))
+
+                if (indexs >= visible) {
+                  let xx = -((j*tileSize.width) + index * indexs)
+                  let yy = i*tileSize.height + index  * indexs
+                  let pointxx = point2DToIso(CGPoint(x: xx, y: yy), inverse: false)
+                  column.addChild(placeTileIso(("iso_" + tile.image), withPosition: pointxx, color: color))
+                }
+
               }
             }
           }
         } else {
+//          MARK: Ground
           let xxx = (j*tileSize.width) + tileSize.height * 0
           let yyy = -(i*tileSize.height + tileSize.height  * 0)
           let pointxxx = point2DToIso(CGPoint(x: xxx, y: yyy), inverse: false)
           column.addChild(placeTileIso(("iso_" + tile.image), withPosition: pointxxx, color: color))
+
         }
-        
+
         column.userObj = row[j]
         viewIso.addChild(column)
       }
