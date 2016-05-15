@@ -11,6 +11,7 @@ class GameScene: SKScene {
   var users = Array<Array<UserScore>>()
 
   var userName: SKLabelNode!
+  var userAvatar: SKSpriteNode!
 
   let tileSize = (width: 32, height: 32)
 
@@ -26,9 +27,23 @@ class GameScene: SKScene {
     self.userName = SKLabelNode()
     self.userName.fontColor = UIColor.blackColor()
     self.userName.fontSize = 30
-    self.userName.position = CGPoint(x: 100, y: size.height - 35)
-
+    self.userName.position = CGPoint(
+      x: 200,
+      y: size.height - 35
+    )
+    self.userName.zPosition = 200
     self.addChild(userName)
+
+    self.userAvatar = SKSpriteNode()
+    self.userAvatar.position = CGPoint(
+      x: 60,
+      y: size.height - 70
+    )
+    userAvatar.size.height = 80
+    userAvatar.size.width = 90
+    userAvatar.color = UIColor.redColor()
+    userAvatar.zPosition = 200
+    self.addChild(userAvatar)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -193,6 +208,9 @@ class GameScene: SKScene {
     for element in (column.children as? [SKSpriteNode])! {
       element.color = UIColor.blueColor()
       self.userName.text = column.userObj?.name
+
+      let texture = SKTexture(imageNamed: (column.userObj?.photo)!)
+      self.userAvatar.texture = texture
     }
   }
 
