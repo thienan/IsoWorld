@@ -29,9 +29,10 @@ class UserService: UserServiceDelegate {
     var scores = [UserScore]()
 
     for score in scoreArray! {
-      let userScore = UserScore(fromDictionary: score as! NSDictionary)
+      let userScore = UserScore(fromDictionary: (score as? NSDictionary)!)
       scores.append(userScore)
     }
+    scores = scores.sort {$0.score > $1.score}
 
     return scores
   }
@@ -43,14 +44,14 @@ class UserService: UserServiceDelegate {
     var arrayx = Array<Array<UserScore>>()
 
     for _ in 0..<coumns {
-      arrayx.append(Array(count:coumns, repeatedValue:UserScore()))
+      arrayx.append(Array(count: coumns, repeatedValue: UserScore()))
     }
 
     var index = 0
 
     for i in (0..<coumns) {
       for j in (0..<i + 1) {
-        if (vector.indices.contains(index)) {
+        if vector.indices.contains(index) {
           arrayx[i - j][j] = vector[index]
         } else {
           arrayx[i - j][j] = UserScore()
@@ -61,19 +62,15 @@ class UserService: UserServiceDelegate {
 
     for i in (1..<coumns) {
       for j in (i..<coumns) {
-        if (vector.indices.contains(index)) {
+        if vector.indices.contains(index) {
           arrayx[coumns - j + i - 1][j] = vector[index]
           index += 1
         } else {
           arrayx[coumns - j + i - 1][j] = UserScore()
         }
-        
       }
     }
-
     return arrayx
   }
 
 }
-
-

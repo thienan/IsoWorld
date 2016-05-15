@@ -30,7 +30,7 @@ class GameScene: SKScene {
 
     self.addChild(userName)
   }
-  
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -63,7 +63,6 @@ class GameScene: SKScene {
   }
 
   func placeAllTilesIso() {
-    
     for i in 0..<users.count {
       let row = users[i]
       for j in 0..<row.count {
@@ -74,15 +73,22 @@ class GameScene: SKScene {
         let column = getCoumn(row[j])
         let point = getCoordinatesByIndex(i, indexJ: j, index: 0, inversed: false)
         column.addChild(placeTileIso(("iso_" + tile.image), withPosition: point, color: color))
+
+
+
         if row[j].score > 1 {
           if j > 0 || i > 0 {
-            let data = getDrawableNodeIndex(row[j].score, visible: visible)
-            let point = getCoordinatesByIndex(i, indexJ: j, index: -data, inversed: false)
-            column.addChild(placeTileIso(("iso_" + tile.image), withPosition: point, color: color))
+            let spriteIndexes = getDrawableNodeIndex(1, score: row[j].score, visible: visible)
+            for index in spriteIndexes {
+              let point = getCoordinatesByIndex(i, indexJ: j, index: -index, inversed: false)
+              column.addChild(placeTileIso(("iso_" + tile.image), withPosition: point, color: color))
+            }
           } else {
-            let data = getDrawableNodeIndex(row[j].score, visible: visible)
-            let point = getCoordinatesByIndex(i, indexJ: j, index: data, inversed: true)
-            column.addChild(placeTileIso(("iso_" + tile.image), withPosition: point, color: color))
+            let spriteIndexes = getDrawableNodeIndex(0, score: row[j].score, visible: visible)
+            for index in spriteIndexes {
+              let point = getCoordinatesByIndex(i, indexJ: j, index: -index, inversed: false)
+              column.addChild(placeTileIso(("iso_" + tile.image), withPosition: point, color: color))
+            }
           }
         }
         column.userObj = row[j]
@@ -91,12 +97,14 @@ class GameScene: SKScene {
     }
   }
 
-  func getDrawableNodeIndex(score: Int, visible: Int) -> Int {
-    let rangeArray = Array((1..<score))
+  func getDrawableNodeIndex(startIndex: Int, score: Int, visible: Int) -> Array<Int> {
+    let rangeArray = Array(startIndex..<score + 1)
     if visible > 0 {
-      return rangeArray[(visible - 1)]
+      let index = rangeArray.indexOf(visible)!..<rangeArray.count
+      return Array(index)
     } else {
-      return rangeArray[(rangeArray[0] - visible) - 1]
+      let index = 1..<rangeArray.count
+      return Array(index)
     }
   }
 
@@ -151,7 +159,7 @@ class GameScene: SKScene {
       down = userScores[indexI][indexJ + 1].score
     }
 
-    return min(right, down) - 1
+    return min(right, down)
   }
 
   override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -171,7 +179,7 @@ class GameScene: SKScene {
   func deselectColumn() {
     if let selected = selectedObj {
       for element in (selected.children as? [SKSpriteNode])! {
-        if (selected.userObj?.me == true) {
+        if selected.userObj?.me == true {
           element.color = UIColor.redColor()
         } else {
           element.color = UIColor.whiteColor()
@@ -196,7 +204,7 @@ class GameScene: SKScene {
     let xScale = (scale - 1.0) + scaleOffset
     let yScale = (scale - 1.0) + scaleOffset
 
-    if (xScale > 0 && yScale > 0) {
+    if xScale > 0 && yScale > 0 {
       self.viewIso.xScale = xScale
       self.viewIso.yScale = yScale
     }
@@ -207,6 +215,7 @@ class GameScene: SKScene {
     let x = gestureRecognizer.locationInView(self.view).x
 
     self.viewIso.position =  CGPoint(x: x, y: y)
+
   }
 
 }

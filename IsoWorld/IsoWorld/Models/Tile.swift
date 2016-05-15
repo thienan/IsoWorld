@@ -28,7 +28,6 @@ enum Tile: Int {
       return "ground"
     case Wall:
       return "wall"
-      
     }
   }
 }

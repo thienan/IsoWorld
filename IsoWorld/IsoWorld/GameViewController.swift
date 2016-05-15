@@ -15,6 +15,7 @@ class GameViewController: UIViewController {
     skView!.showsNodeCount = true
     skView!.ignoresSiblingOrder = true
     scene.scaleMode = .ResizeFill
+    scene.size = (skView?.bounds.size)!
 
     let recognizer = UIPinchGestureRecognizer(target: self, action: #selector(GameViewController.pinchGesture(_:)))
     recognizer.delaysTouchesBegan = true
@@ -25,23 +26,16 @@ class GameViewController: UIViewController {
     skView!.addGestureRecognizer(panGestureRecognizer)
 
     skView!.presentScene(scene)
-    
     self.gameScene = scene
   }
-
 
   func pinchGesture(gestureRecognizer: UIPinchGestureRecognizer) {
     let scale = gestureRecognizer.scale
     let centroid = gestureRecognizer.locationInView(self.view)
 
-//    if (scale > 1.0) {
-//      
-//    }
-
     switch gestureRecognizer.state {
     case .Began:
       self.gameScene.onPinchStart(centroid, scale: scale)
-
     default:
       self.gameScene.onPinchMove(centroid, scale: scale)
     }
