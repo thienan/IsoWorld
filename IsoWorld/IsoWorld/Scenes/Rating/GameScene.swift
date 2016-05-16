@@ -20,10 +20,8 @@ class GameScene: SKScene {
     super.init(size: size)
     self.view?.ignoresSiblingOrder = true
     self.backgroundColor = UIColor.whiteColor()
-
     let scores = userService.loadUserRating()
     users = userService.convertUserScoresToMatrix(fromVector: scores)
-
     self.userName = SKLabelNode()
     self.userName.fontColor = UIColor.blackColor()
     self.userName.fontSize = 30
@@ -88,8 +86,6 @@ class GameScene: SKScene {
         let column = getCoumn(row[j])
         let point = getCoordinatesByIndex(i, indexJ: j, index: 0, inversed: false)
         column.addChild(placeTileIso(("iso_" + tile.image), withPosition: point, color: color))
-
-
 
         if row[j].score > 1 {
           if j > 0 || i > 0 {
@@ -208,7 +204,6 @@ class GameScene: SKScene {
     for element in (column.children as? [SKSpriteNode])! {
       element.color = UIColor.blueColor()
       self.userName.text = column.userObj?.name
-
       let texture = SKTexture(imageNamed: (column.userObj?.photo)!)
       self.userAvatar.texture = texture
     }
@@ -221,7 +216,6 @@ class GameScene: SKScene {
   func onPinchMove(centroid: CGPoint, scale: CGFloat) {
     let xScale = (scale - 1.0) + scaleOffset
     let yScale = (scale - 1.0) + scaleOffset
-
     if xScale > 0 && yScale > 0 {
       self.viewIso.xScale = xScale
       self.viewIso.yScale = yScale
