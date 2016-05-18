@@ -20,6 +20,7 @@ class UserScore {
   dynamic var photo: String = "photo"
   dynamic var score: Int = 0
   dynamic var me: Bool = false
+  dynamic var time: Int = 0
 
   init() {}
 
@@ -45,6 +46,10 @@ class UserScore {
 
     if let me = dictionary["me"] as? Bool {
       self.me = me
+    }
+
+    if let time = dictionary["time"] as? Int {
+      self.time = time
     }
   }
 

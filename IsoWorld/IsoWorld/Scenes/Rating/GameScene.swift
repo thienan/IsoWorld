@@ -120,11 +120,21 @@ class GameScene: SKScene {
   }
 
   func getColumnColor(userScore: UserScore) -> SKColor {
-    var color = UIColor.clearColor()
+    var color = SKColor.clearColor()
     if userScore.me {
-      color = UIColor.redColor()
+      color = SKColor.yellowColor()
     } else {
-      color = UIColor.clearColor()
+      if userScore.score > 0 {
+        if userScore.time >= 0 && userScore.time < 21 {
+          color = SKColor.blueColor()
+        } else if userScore.time > 20 && userScore.time < 41 {
+          color = SKColor.greenColor()
+        } else if userScore.time > 40 {
+          color = SKColor.redColor()
+        }
+      } else {
+        color = SKColor.clearColor()
+      }
     }
     return color
   }
@@ -191,9 +201,9 @@ class GameScene: SKScene {
     if let selected = selectedObj {
       for element in (selected.children as? [SKSpriteNode])! {
         if selected.userObj?.me == true {
-          element.color = UIColor.redColor()
+          element.color = UIColor.yellowColor()
         } else {
-          element.color = UIColor.whiteColor()
+          element.color = getColumnColor(selected.userObj!)
         }
       }
     }
@@ -202,7 +212,7 @@ class GameScene: SKScene {
   func selectColumn(column: UserNode) {
     self.selectedObj = column
     for element in (column.children as? [SKSpriteNode])! {
-      element.color = UIColor.blueColor()
+      element.color = UIColor.cyanColor()
       self.userName.text = column.userObj?.name
       let texture = SKTexture(imageNamed: (column.userObj?.photo)!)
       self.userAvatar.texture = texture

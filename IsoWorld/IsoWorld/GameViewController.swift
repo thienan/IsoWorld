@@ -6,7 +6,6 @@ class GameViewController: UIViewController {
 
   var scene = MenuScene()
 
-
   override func viewDidLoad() {
     super.viewDidLoad()
 

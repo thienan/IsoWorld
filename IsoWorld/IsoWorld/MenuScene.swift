@@ -25,11 +25,9 @@ class MenuScene: SKScene {
     self.newGameLabel = SKLabelNode()
     self.newGameLabel?.fontSize = 36
     self.newGameLabel?.fontColor = UIColor.whiteColor()
-    self.newGameLabel?.text = "NEW_GAME".localized
-    self.newGameLabel?.name = "new_game"
-
+    self.newGameLabel?.text = "RATING".localized
+    self.newGameLabel?.name = "rating"
     self.newGameLabel?.position = CGPoint(x: CGRectGetMidX((self.scene?.frame)!), y: CGRectGetMidY((self.scene?.frame)!) - 100)
-
     self.addChild(newGameLabel!)
   }
 
@@ -42,7 +40,7 @@ class MenuScene: SKScene {
       let nodeAtTouch = self.nodeAtPoint(touch.locationInNode(self))
       if nodeAtTouch.name == "title" {
         print("Title")
-      } else if nodeAtTouch.name == "new_game" {
+      } else if nodeAtTouch.name == "rating" {
 
         let scene = GameScene(size: view!.bounds.size)
         let skView = self.view
@@ -62,7 +60,6 @@ class MenuScene: SKScene {
 
         skView!.presentScene(scene)
         self.gameScene = scene
-        
       }
     }
   }
@@ -82,6 +79,5 @@ class MenuScene: SKScene {
   func onPan(gestureRecognizer: UIPanGestureRecognizer) {
     self.gameScene.onPan(gestureRecognizer)
   }
-
 
 }
