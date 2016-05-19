@@ -71,27 +71,27 @@ class Rating: SKScene {
       let row = users[i]
       for j in 0..<row.count {
         let visible = getVisibleIndex(users, indexI: i, indexJ: j)
-        let tileInt = row[j].score
+//        let tileInt = row[j].score
         let texture = getColumnTexture(row[j])
-        let tile = Tile(rawValue: tileInt > 0 ? 1 : 0)!
         let column = getCoumn(row[j])
-        let point = getCoordinatesByIndex(i, indexJ: j, index: 0, inversed: false)
-        column.addChild(placeTileIso(point,withTexture: texture))
 
-        if row[j].score > 1 {
+        if row[j].score > 0 {
           if j > 0 || i > 0 {
             let spriteIndexes = getDrawableNodeIndex(1, score: row[j].score, visible: visible)
             for index in spriteIndexes {
               let point = getCoordinatesByIndex(i, indexJ: j, index: -index, inversed: false)
-              column.addChild(placeTileIso(point,withTexture: texture))
+              column.addChild(placeTileIso(point, withTexture: texture))
             }
           } else {
             let spriteIndexes = getDrawableNodeIndex(0, score: row[j].score, visible: visible)
             for index in spriteIndexes {
               let point = getCoordinatesByIndex(i, indexJ: j, index: -index, inversed: false)
-              column.addChild(placeTileIso(point,withTexture: texture))
+              column.addChild(placeTileIso(point, withTexture: texture))
             }
           }
+        } else {
+          let point = getCoordinatesByIndex(i, indexJ: j, index: 0, inversed: false)
+          column.addChild(placeTileIso(point, withTexture: texture))
         }
         column.userObj = row[j]
         viewIso.addChild(column)
@@ -100,7 +100,7 @@ class Rating: SKScene {
   }
 
   func getDrawableNodeIndex(startIndex: Int, score: Int, visible: Int) -> Array<Int> {
-    let rangeArray = Array(startIndex..<score + 1)
+    let rangeArray = Array(startIndex..<score + 2)
     if visible > 0 {
       let index = rangeArray.indexOf(visible)!..<rangeArray.count
       return Array(index)
