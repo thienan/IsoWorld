@@ -1,6 +1,6 @@
 import SpriteKit
 
-class GameScene: SKScene {
+class Rating: SKScene {
 
   private var scaleOffset: CGFloat = 1.0
   private var panOffset = CGPointZero
