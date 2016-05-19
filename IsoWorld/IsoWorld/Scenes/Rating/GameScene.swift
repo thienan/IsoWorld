@@ -58,19 +58,10 @@ class Rating: SKScene {
     placeAllTilesIso()
   }
 
-  func placeTileIso(image: String, withPosition: CGPoint, color: UIColor) -> SKSpriteNode {
-    let texture = SKTexture(imageNamed: image)
+  func placeTileIso(withPosition: CGPoint, withTexture texture: SKTexture) -> SKSpriteNode {
     let tileSprite = SKSpriteNode(texture: texture)
     tileSprite.position = withPosition
-    tileSprite.colorBlendFactor = 1.0
     tileSprite.alpha = 1.0
-
-    if color != UIColor.clearColor() {
-      tileSprite.color = color
-    } else {
-      tileSprite.color = UIColor.whiteColor()
-    }
-
     tileSprite.anchorPoint =  CGPoint(x: 0, y: 0)
     return tileSprite
   }
@@ -81,24 +72,24 @@ class Rating: SKScene {
       for j in 0..<row.count {
         let visible = getVisibleIndex(users, indexI: i, indexJ: j)
         let tileInt = row[j].score
-        let color = getColumnColor(row[j])
+        let texture = getColumnTexture(row[j])
         let tile = Tile(rawValue: tileInt > 0 ? 1 : 0)!
         let column = getCoumn(row[j])
         let point = getCoordinatesByIndex(i, indexJ: j, index: 0, inversed: false)
-        column.addChild(placeTileIso(("iso_" + tile.image), withPosition: point, color: color))
+        column.addChild(placeTileIso(point,withTexture: texture))
 
         if row[j].score > 1 {
           if j > 0 || i > 0 {
             let spriteIndexes = getDrawableNodeIndex(1, score: row[j].score, visible: visible)
             for index in spriteIndexes {
               let point = getCoordinatesByIndex(i, indexJ: j, index: -index, inversed: false)
-              column.addChild(placeTileIso(("iso_" + tile.image), withPosition: point, color: color))
+              column.addChild(placeTileIso(point,withTexture: texture))
             }
           } else {
             let spriteIndexes = getDrawableNodeIndex(0, score: row[j].score, visible: visible)
             for index in spriteIndexes {
               let point = getCoordinatesByIndex(i, indexJ: j, index: -index, inversed: false)
-              column.addChild(placeTileIso(("iso_" + tile.image), withPosition: point, color: color))
+              column.addChild(placeTileIso(point,withTexture: texture))
             }
           }
         }
@@ -119,24 +110,24 @@ class Rating: SKScene {
     }
   }
 
-  func getColumnColor(userScore: UserScore) -> SKColor {
-    var color = SKColor.clearColor()
+  func getColumnTexture(userScore: UserScore) -> SKTexture {
+    var texture = SKTexture(imageNamed: "iso_wall_blue")
     if userScore.me {
-      color = SKColor.yellowColor()
+      texture = SKTexture(imageNamed: "iso_wall_yellow")
     } else {
       if userScore.score > 0 {
-        if userScore.time >= 0 && userScore.time < 21 {
-          color = SKColor.blueColor()
+        if userScore.time > 0 && userScore.time < 21 {
+          texture = SKTexture(imageNamed: "iso_wall_blue")
         } else if userScore.time > 20 && userScore.time < 41 {
-          color = SKColor.greenColor()
+          texture = SKTexture(imageNamed: "iso_wall_green")
         } else if userScore.time > 40 {
-          color = SKColor.redColor()
+          texture = SKTexture(imageNamed: "iso_wall_red")
         }
       } else {
-        color = SKColor.clearColor()
+        texture = SKTexture(imageNamed: "iso_ground")
       }
     }
-    return color
+    return texture
   }
 
   func getCoumn(userScore: UserScore) -> UserNode {
@@ -203,7 +194,7 @@ class Rating: SKScene {
         if selected.userObj?.me == true {
           element.color = UIColor.yellowColor()
         } else {
-          element.color = getColumnColor(selected.userObj!)
+//          element.color = getColumnTexture(selected.userObj!)
         }
       }
     }

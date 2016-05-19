@@ -25,9 +25,9 @@ enum Tile: Int {
   var image: String {
     switch self {
     case Ground:
-      return "ground"
+      return "iso_ground"
     case Wall:
-      return "wall"
+      return "iso_wall"
     }
   }
 }
