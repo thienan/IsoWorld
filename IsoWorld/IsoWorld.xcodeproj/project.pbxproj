@@ -32,6 +32,14 @@
 		648F853E1CEE0B4700FC70FA /* Defined.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F85361CEE0B4700FC70FA /* Defined.swift */; };
 		648F85411CEE0B4700FC70FA /* StickHeroGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F85391CEE0B4700FC70FA /* StickHeroGameScene.swift */; };
 		648F85421CEE0B4700FC70FA /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648F853A1CEE0B4700FC70FA /* Tools.swift */; };
+		64C9B8191CEF5E5500AEA123 /* bg_country.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 64C9B8111CEF5E5500AEA123 /* bg_country.mp3 */; };
+		64C9B81A1CEF5E5500AEA123 /* dead.wav in Resources */ = {isa = PBXBuildFile; fileRef = 64C9B8121CEF5E5500AEA123 /* dead.wav */; };
+		64C9B81B1CEF5E5500AEA123 /* fall.wav in Resources */ = {isa = PBXBuildFile; fileRef = 64C9B8131CEF5E5500AEA123 /* fall.wav */; };
+		64C9B81C1CEF5E5500AEA123 /* highScore.wav in Resources */ = {isa = PBXBuildFile; fileRef = 64C9B8141CEF5E5500AEA123 /* highScore.wav */; };
+		64C9B81D1CEF5E5500AEA123 /* kick.wav in Resources */ = {isa = PBXBuildFile; fileRef = 64C9B8151CEF5E5500AEA123 /* kick.wav */; };
+		64C9B81E1CEF5E5500AEA123 /* stick_grow_loop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 64C9B8161CEF5E5500AEA123 /* stick_grow_loop.wav */; };
+		64C9B81F1CEF5E5500AEA123 /* touch_mid.wav in Resources */ = {isa = PBXBuildFile; fileRef = 64C9B8171CEF5E5500AEA123 /* touch_mid.wav */; };
+		64C9B8201CEF5E5500AEA123 /* victory.wav in Resources */ = {isa = PBXBuildFile; fileRef = 64C9B8181CEF5E5500AEA123 /* victory.wav */; };
 		64FF9F4D1CEE3FB9008D94F6 /* button_retry_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F481CEE3FB9008D94F6 /* button_retry_down.png */; };
 		64FF9F4E1CEE3FB9008D94F6 /* button_retry_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F491CEE3FB9008D94F6 /* button_retry_up.png */; };
 		64FF9F4F1CEE3FB9008D94F6 /* human1.png in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F4A1CEE3FB9008D94F6 /* human1.png */; };
@@ -39,14 +47,6 @@
 		64FF9F511CEE3FB9008D94F6 /* stick_background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F4C1CEE3FB9008D94F6 /* stick_background.jpg */; };
 		64FF9F541CEE3FC2008D94F6 /* StarExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F521CEE3FC2008D94F6 /* StarExplosion.sks */; };
 		64FF9F551CEE3FC2008D94F6 /* starParticle.png in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F531CEE3FC2008D94F6 /* starParticle.png */; };
-		64FF9F681CEE40B5008D94F6 /* bg_country.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F601CEE40B5008D94F6 /* bg_country.mp3 */; };
-		64FF9F691CEE40B5008D94F6 /* dead.wav in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F611CEE40B5008D94F6 /* dead.wav */; };
-		64FF9F6A1CEE40B5008D94F6 /* fall.wav in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F621CEE40B5008D94F6 /* fall.wav */; };
-		64FF9F6B1CEE40B5008D94F6 /* highScore.wav in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F631CEE40B5008D94F6 /* highScore.wav */; };
-		64FF9F6C1CEE40B5008D94F6 /* kick.wav in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F641CEE40B5008D94F6 /* kick.wav */; };
-		64FF9F6D1CEE40B5008D94F6 /* stick_grow_loop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F651CEE40B5008D94F6 /* stick_grow_loop.wav */; };
-		64FF9F6E1CEE40B5008D94F6 /* touch_mid.wav in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F661CEE40B5008D94F6 /* touch_mid.wav */; };
-		64FF9F6F1CEE40B5008D94F6 /* victory.wav in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F671CEE40B5008D94F6 /* victory.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +93,14 @@
 		648F85361CEE0B4700FC70FA /* Defined.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defined.swift; sourceTree = "<group>"; };
 		648F85391CEE0B4700FC70FA /* StickHeroGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickHeroGameScene.swift; sourceTree = "<group>"; };
 		648F853A1CEE0B4700FC70FA /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
+		64C9B8111CEF5E5500AEA123 /* bg_country.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bg_country.mp3; sourceTree = "<group>"; };
+		64C9B8121CEF5E5500AEA123 /* dead.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dead.wav; sourceTree = "<group>"; };
+		64C9B8131CEF5E5500AEA123 /* fall.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fall.wav; sourceTree = "<group>"; };
+		64C9B8141CEF5E5500AEA123 /* highScore.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = highScore.wav; sourceTree = "<group>"; };
+		64C9B8151CEF5E5500AEA123 /* kick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = kick.wav; sourceTree = "<group>"; };
+		64C9B8161CEF5E5500AEA123 /* stick_grow_loop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = stick_grow_loop.wav; sourceTree = "<group>"; };
+		64C9B8171CEF5E5500AEA123 /* touch_mid.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = touch_mid.wav; sourceTree = "<group>"; };
+		64C9B8181CEF5E5500AEA123 /* victory.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = victory.wav; sourceTree = "<group>"; };
 		64FF9F481CEE3FB9008D94F6 /* button_retry_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_retry_down.png; sourceTree = "<group>"; };
 		64FF9F491CEE3FB9008D94F6 /* button_retry_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_retry_up.png; sourceTree = "<group>"; };
 		64FF9F4A1CEE3FB9008D94F6 /* human1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = human1.png; sourceTree = "<group>"; };
@@ -100,14 +108,6 @@
 		64FF9F4C1CEE3FB9008D94F6 /* stick_background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = stick_background.jpg; sourceTree = "<group>"; };
 		64FF9F521CEE3FC2008D94F6 /* StarExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StarExplosion.sks; sourceTree = "<group>"; };
 		64FF9F531CEE3FC2008D94F6 /* starParticle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = starParticle.png; sourceTree = "<group>"; };
-		64FF9F601CEE40B5008D94F6 /* bg_country.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bg_country.mp3; path = "../../../../../boxer/Stick-Hero-Swift/Assets/Sound/bg_country.mp3"; sourceTree = "<group>"; };
-		64FF9F611CEE40B5008D94F6 /* dead.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = dead.wav; path = "../../../../../boxer/Stick-Hero-Swift/Assets/Sound/dead.wav"; sourceTree = "<group>"; };
-		64FF9F621CEE40B5008D94F6 /* fall.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = fall.wav; path = "../../../../../boxer/Stick-Hero-Swift/Assets/Sound/fall.wav"; sourceTree = "<group>"; };
-		64FF9F631CEE40B5008D94F6 /* highScore.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = highScore.wav; path = "../../../../../boxer/Stick-Hero-Swift/Assets/Sound/highScore.wav"; sourceTree = "<group>"; };
-		64FF9F641CEE40B5008D94F6 /* kick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = kick.wav; path = "../../../../../boxer/Stick-Hero-Swift/Assets/Sound/kick.wav"; sourceTree = "<group>"; };
-		64FF9F651CEE40B5008D94F6 /* stick_grow_loop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = stick_grow_loop.wav; path = "../../../../../boxer/Stick-Hero-Swift/Assets/Sound/stick_grow_loop.wav"; sourceTree = "<group>"; };
-		64FF9F661CEE40B5008D94F6 /* touch_mid.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = touch_mid.wav; path = "../../../../../boxer/Stick-Hero-Swift/Assets/Sound/touch_mid.wav"; sourceTree = "<group>"; };
-		64FF9F671CEE40B5008D94F6 /* victory.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = victory.wav; path = "../../../../../boxer/Stick-Hero-Swift/Assets/Sound/victory.wav"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -294,14 +294,14 @@
 		64FF9F471CEE3F94008D94F6 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				64FF9F601CEE40B5008D94F6 /* bg_country.mp3 */,
-				64FF9F611CEE40B5008D94F6 /* dead.wav */,
-				64FF9F621CEE40B5008D94F6 /* fall.wav */,
-				64FF9F631CEE40B5008D94F6 /* highScore.wav */,
-				64FF9F641CEE40B5008D94F6 /* kick.wav */,
-				64FF9F651CEE40B5008D94F6 /* stick_grow_loop.wav */,
-				64FF9F661CEE40B5008D94F6 /* touch_mid.wav */,
-				64FF9F671CEE40B5008D94F6 /* victory.wav */,
+				64C9B8111CEF5E5500AEA123 /* bg_country.mp3 */,
+				64C9B8121CEF5E5500AEA123 /* dead.wav */,
+				64C9B8131CEF5E5500AEA123 /* fall.wav */,
+				64C9B8141CEF5E5500AEA123 /* highScore.wav */,
+				64C9B8151CEF5E5500AEA123 /* kick.wav */,
+				64C9B8161CEF5E5500AEA123 /* stick_grow_loop.wav */,
+				64C9B8171CEF5E5500AEA123 /* touch_mid.wav */,
+				64C9B8181CEF5E5500AEA123 /* victory.wav */,
 			);
 			name = Sounds;
 			path = ../Assets/Sound;
@@ -393,25 +393,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				64FF9F691CEE40B5008D94F6 /* dead.wav in Resources */,
-				64FF9F681CEE40B5008D94F6 /* bg_country.mp3 in Resources */,
-				64FF9F6F1CEE40B5008D94F6 /* victory.wav in Resources */,
+				64C9B81A1CEF5E5500AEA123 /* dead.wav in Resources */,
+				64C9B8191CEF5E5500AEA123 /* bg_country.mp3 in Resources */,
+				64C9B8201CEF5E5500AEA123 /* victory.wav in Resources */,
 				64FF9F501CEE3FB9008D94F6 /* human2.png in Resources */,
-				64FF9F6D1CEE40B5008D94F6 /* stick_grow_loop.wav in Resources */,
-				64FF9F6A1CEE40B5008D94F6 /* fall.wav in Resources */,
+				64C9B81E1CEF5E5500AEA123 /* stick_grow_loop.wav in Resources */,
+				64C9B81B1CEF5E5500AEA123 /* fall.wav in Resources */,
 				64FF9F4F1CEE3FB9008D94F6 /* human1.png in Resources */,
 				64FF9F4D1CEE3FB9008D94F6 /* button_retry_down.png in Resources */,
-				64FF9F6C1CEE40B5008D94F6 /* kick.wav in Resources */,
+				64C9B81D1CEF5E5500AEA123 /* kick.wav in Resources */,
 				064236951CBCC2C100E05D75 /* LaunchScreen.storyboard in Resources */,
 				64FF9F511CEE3FB9008D94F6 /* stick_background.jpg in Resources */,
 				64FF9F551CEE3FC2008D94F6 /* starParticle.png in Resources */,
 				6467F2D31CE8FE0E00251B2B /* Localizable.strings in Resources */,
 				64FF9F4E1CEE3FB9008D94F6 /* button_retry_up.png in Resources */,
 				064236921CBCC2C100E05D75 /* Assets.xcassets in Resources */,
-				64FF9F6B1CEE40B5008D94F6 /* highScore.wav in Resources */,
+				64C9B81C1CEF5E5500AEA123 /* highScore.wav in Resources */,
 				0642369D1CBCDE8900E05D75 /* sprites.atlas in Resources */,
 				6440298A1CDFBE2000961B0D /* UserScores.plist in Resources */,
-				64FF9F6E1CEE40B5008D94F6 /* touch_mid.wav in Resources */,
+				64C9B81F1CEF5E5500AEA123 /* touch_mid.wav in Resources */,
 				064236901CBCC2C100E05D75 /* Main.storyboard in Resources */,
 				64FF9F541CEE3FC2008D94F6 /* StarExplosion.sks in Resources */,
 			);

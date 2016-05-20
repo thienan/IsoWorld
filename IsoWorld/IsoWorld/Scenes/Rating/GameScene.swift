@@ -62,6 +62,8 @@ class Rating: SKScene {
     let tileSprite = SKSpriteNode(texture: texture)
     tileSprite.position = withPosition
     tileSprite.alpha = 1.0
+    tileSprite.colorBlendFactor = 1.0
+    tileSprite.color = SKColor.whiteColor()
     tileSprite.anchorPoint =  CGPoint(x: 0, y: 0)
     return tileSprite
   }
@@ -191,11 +193,7 @@ class Rating: SKScene {
   func deselectColumn() {
     if let selected = selectedObj {
       for element in (selected.children as? [SKSpriteNode])! {
-        if selected.userObj?.me == true {
-          element.color = UIColor.yellowColor()
-        } else {
-//          element.color = getColumnTexture(selected.userObj!)
-        }
+        element.color = UIColor.whiteColor()
       }
     }
   }
