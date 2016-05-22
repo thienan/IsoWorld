@@ -36,8 +36,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
   var isBegin = false
   var isEnd = false
-  var leftIsland: SKShapeNode?
-  var rightIsland: SKShapeNode?
+  var leftIsland: SKSpriteNode?
+  var rightIsland: SKSpriteNode?
 
   var nextLeftStartX: CGFloat = 0
   var bridgeHeight: CGFloat = 0
@@ -336,32 +336,30 @@ private extension GameScene {
     return bridge
   }
 
-  func loadIslands(animate: Bool, startLeftPoint: CGFloat) -> SKShapeNode {
+  func loadIslands(animate: Bool, startLeftPoint: CGFloat) -> SKSpriteNode {
     let max: Int = Int(IslandMaxWidth / 10)
     let min: Int = Int(IslandMinWidth / 10)
     let width: CGFloat = CGFloat(randomInRange(min...max) * 10)
     let height: CGFloat = IslandHeight
-    let island = SKShapeNode(rectOfSize: CGSizeMake(width, height))
-    island.fillColor = SKColor.blackColor()
-    island.strokeColor = SKColor.blackColor()
+    let texture = SKTexture(imageNamed: "stone")
+    let island = SKSpriteNode(texture: texture)
+    island.size = CGSizeMake(width, height)
     island.zPosition = GameSceneZposition.IslandZposition.rawValue
     island.name = GameSceneChildName.IslandName.rawValue
 
     if animate {
       island.position = CGPointMake(DefinedScreenWidth / 2, -DefinedScreenHeight / 2 + height / 2)
-
-      island.runAction(SKAction.moveToX(-DefinedScreenWidth / 2 + width / 2 + startLeftPoint, duration: 0.3), completion: {[unowned self] () -> Void in
+      island.runAction(
+        SKAction.moveToX(-DefinedScreenWidth / 2 + width / 2 + startLeftPoint, duration: 0.3),
+        completion: {[unowned self] () -> Void in
         self.isBegin = false
         self.isEnd = false
-        })
-
+      })
     } else {
       island.position = CGPointMake(-DefinedScreenWidth / 2 + width / 2 + startLeftPoint, -DefinedScreenHeight / 2 + height / 2)
     }
     addChild(island)
-
     nextLeftStartX = width + startLeftPoint
-
     return island
   }
 
