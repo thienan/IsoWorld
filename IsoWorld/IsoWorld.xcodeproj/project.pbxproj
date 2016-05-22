@@ -33,6 +33,7 @@
 		64A56FC01CF20405005FCC3D /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A56FBF1CF20405005FCC3D /* Hero.swift */; };
 		64A56FC21CF20D2F005FCC3D /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 64A56FC11CF20D2F005FCC3D /* background.png */; };
 		64A56FC41CF20F50005FCC3D /* stone.png in Resources */ = {isa = PBXBuildFile; fileRef = 64A56FC31CF20F50005FCC3D /* stone.png */; };
+		64A56FC61CF21443005FCC3D /* bridge.png in Resources */ = {isa = PBXBuildFile; fileRef = 64A56FC51CF21443005FCC3D /* bridge.png */; };
 		64B8B1821CF1934E00BD6E5D /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B8B1811CF1934E00BD6E5D /* Game.swift */; };
 		64B8B1841CF1940400BD6E5D /* SKActionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B8B1831CF1940400BD6E5D /* SKActionExtension.swift */; };
 		64B8B1861CF1943A00BD6E5D /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B8B1851CF1943A00BD6E5D /* UIColorExtension.swift */; };
@@ -95,6 +96,7 @@
 		64A56FBF1CF20405005FCC3D /* Hero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
 		64A56FC11CF20D2F005FCC3D /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		64A56FC31CF20F50005FCC3D /* stone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stone.png; sourceTree = "<group>"; };
+		64A56FC51CF21443005FCC3D /* bridge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bridge.png; sourceTree = "<group>"; };
 		64B8B1811CF1934E00BD6E5D /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Game.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		64B8B1831CF1940400BD6E5D /* SKActionExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKActionExtension.swift; sourceTree = "<group>"; };
 		64B8B1851CF1943A00BD6E5D /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 		64FF9F451CEE3F80008D94F6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				64A56FC51CF21443005FCC3D /* bridge.png */,
 				64A56FC31CF20F50005FCC3D /* stone.png */,
 				64A56FC11CF20D2F005FCC3D /* background.png */,
 				64FF9F481CEE3FB9008D94F6 /* button_retry_down.png */,
@@ -400,6 +403,7 @@
 				6467F2D31CE8FE0E00251B2B /* Localizable.strings in Resources */,
 				64A56FC21CF20D2F005FCC3D /* background.png in Resources */,
 				64FF9F4E1CEE3FB9008D94F6 /* button_retry_up.png in Resources */,
+				64A56FC61CF21443005FCC3D /* bridge.png in Resources */,
 				064236921CBCC2C100E05D75 /* Assets.xcassets in Resources */,
 				64C9B81C1CEF5E5500AEA123 /* highScore.wav in Resources */,
 				0642369D1CBCDE8900E05D75 /* sprites.atlas in Resources */,

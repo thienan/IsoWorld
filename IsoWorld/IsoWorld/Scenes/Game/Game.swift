@@ -326,7 +326,8 @@ private extension GameScene {
   func loadBridge() -> SKSpriteNode {
     let hero = heroObj.getHeroNodeFromParent()
 
-    let bridge = SKSpriteNode(color: SKColor.blackColor(), size: CGSizeMake(12, 1))
+    let texture = SKTexture(imageNamed: "bridge")
+    let bridge = SKSpriteNode(texture: texture, size: CGSizeMake(12, 1))
     bridge.zPosition = GameSceneZposition.BridgeZposition.rawValue
     bridge.name = GameSceneChildName.BridgeName.rawValue
     bridge.anchorPoint = CGPointMake(0.5, 0)
