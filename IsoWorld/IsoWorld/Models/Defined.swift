@@ -4,7 +4,7 @@ import CoreGraphics
 let DefinedScreenWidth: CGFloat = 1536
 let DefinedScreenHeight: CGFloat = 2048
 
-enum StickHeroGameSceneChildName: String {
+enum GameSceneChildName: String {
     case HeroName = "hero"
     case StickName = "stick"
     case StackName = "stack"
@@ -17,14 +17,14 @@ enum StickHeroGameSceneChildName: String {
     case HighScoreName = "highscore"
 }
 
-enum StickHeroGameSceneActionKey: String {
+enum GameSceneActionKey: String {
     case WalkAction = "walk"
     case StickGrowAudioAction = "stick_grow_audio"
     case StickGrowAction = "stick_grow"
     case HeroScaleAction = "hero_scale"
 }
 
-enum StickHeroGameSceneEffectAudioName: String {
+enum GameSceneEffectAudioName: String {
     case DeadAudioName = "dead.wav"
     case StickGrowAudioName = "stick_grow_loop.wav"
     case StickGrowOverAudioName = "kick.wav"
@@ -34,7 +34,7 @@ enum StickHeroGameSceneEffectAudioName: String {
     case HighScoreAudioName = "highScore.wav"
 }
 
-enum StickHeroGameSceneZposition: CGFloat {
+enum GameSceneZposition: CGFloat {
     case BackgroundZposition = 0
     case StackZposition = 30
     case StackMidZposition = 35

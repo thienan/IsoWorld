@@ -50,7 +50,7 @@ class MenuScene: SKScene {
     for touch in touches {
       let nodeAtTouch = self.nodeAtPoint(touch.locationInNode(self))
       if nodeAtTouch.name == "game" {
-        let scene = StickHeroGameScene(size: CGSizeMake(DefinedScreenWidth, DefinedScreenHeight))
+        let scene = GameScene(size: CGSizeMake(DefinedScreenWidth, DefinedScreenHeight))
 
         // Configure the view.
         let skView = self.view
