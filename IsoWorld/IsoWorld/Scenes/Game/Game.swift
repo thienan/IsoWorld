@@ -358,6 +358,18 @@ private extension GameScene {
     scoreBand.horizontalAlignmentMode = .Center
 
     addChild(scoreBand)
+
+    let backButton = SKSpriteNode()
+    backButton.name = "back"
+    backButton.position = CGPointMake(-470, DefinedScreenHeight / 2 - 150)
+    backButton.texture = SKTexture(imageNamed: "left_arrow")
+    backButton.zPosition = 10000
+    backButton.colorBlendFactor = 1.0
+    backButton.alpha = 1.0
+    backButton.color = UIColor.whiteColor()
+    backButton.size.height = 90
+    backButton.size.width = 120
+    addChild(backButton)
   }
 
   func loadScoreBackground() {
