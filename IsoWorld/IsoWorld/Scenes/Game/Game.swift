@@ -24,20 +24,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
   }
 
-  let StackHeight: CGFloat = 400.0
-  let StackMaxWidth: CGFloat = 300.0
-  let StackMinWidth: CGFloat = 100.0
+  let IslandHeight: CGFloat = 400.0
+  let IslandMaxWidth: CGFloat = 300.0
+  let IslandMinWidth: CGFloat = 100.0
   let gravity: CGFloat = -100.0
-  let StackGapMinWidth: Int = 80
+  let IslandGapMinWidth: Int = 80
   let HeroSpeed: CGFloat = 760
 
   var isBegin = false
   var isEnd = false
-  var leftStack: SKShapeNode?
-  var rightStack: SKShapeNode?
+  var leftIsland: SKShapeNode?
+  var rightIsland: SKShapeNode?
 
   var nextLeftStartX: CGFloat = 0
-  var stickHeight: CGFloat = 0
+  var bridgeHeight: CGFloat = 0
 
   lazy var playAbleRect: CGRect = {
 
@@ -106,15 +106,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     if !isBegin && !isEnd {
       isBegin = true
 
-      let stick = loadStick()
+      let bridge = loadBridge()
       let hero = childNodeWithName(GameSceneChildName.HeroName.rawValue) as? SKSpriteNode
 
-      let action = SKAction.resizeToHeight(CGFloat(DefinedScreenHeight - StackHeight), duration: 1.5)
-      stick.runAction(action, withKey: GameSceneActionKey.StickGrowAction.rawValue)
+      let action = SKAction.resizeToHeight(CGFloat(DefinedScreenHeight - IslandHeight), duration: 1.5)
+      bridge.runAction(action, withKey: GameSceneActionKey.BridgeGrowAction.rawValue)
 
       let scaleAction = SKAction.sequence([SKAction.scaleYTo(0.9, duration: 0.05), SKAction.scaleYTo(1, duration: 0.05)])
-      let loopAction = SKAction.group([SKAction.playSoundFileNamed(GameSceneEffectAudioName.StickGrowAudioName.rawValue, waitForCompletion: true)])
-      stick.runAction(SKAction.repeatActionForever(loopAction), withKey: GameSceneActionKey.StickGrowAudioAction.rawValue)
+      let loopAction = SKAction.group([SKAction.playSoundFileNamed(GameSceneEffectAudioName.BridgeGrowAudioName.rawValue, waitForCompletion: true)])
+      bridge.runAction(SKAction.repeatActionForever(loopAction), withKey: GameSceneActionKey.BridgeGrowAudioAction.rawValue)
       hero!.runAction(SKAction.repeatActionForever(scaleAction), withKey: GameSceneActionKey.HeroScaleAction.rawValue)
 
       return
@@ -130,17 +130,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       hero!.removeActionForKey(GameSceneActionKey.HeroScaleAction.rawValue)
       hero!.runAction(SKAction.scaleYTo(1, duration: 0.04))
 
-      let stick = childNodeWithName(GameSceneChildName.StickName.rawValue) as? SKSpriteNode
-      stick!.removeActionForKey(GameSceneActionKey.StickGrowAction.rawValue)
-      stick!.removeActionForKey(GameSceneActionKey.StickGrowAudioAction.rawValue)
-      stick!.runAction(SKAction.playSoundFileNamed(GameSceneEffectAudioName.StickGrowOverAudioName.rawValue, waitForCompletion: false))
+      let bridge = childNodeWithName(GameSceneChildName.BridgeName.rawValue) as? SKSpriteNode
+      bridge!.removeActionForKey(GameSceneActionKey.BridgeGrowAction.rawValue)
+      bridge!.removeActionForKey(GameSceneActionKey.BridgeGrowAudioAction.rawValue)
+      bridge!.runAction(SKAction.playSoundFileNamed(GameSceneEffectAudioName.BridgeGrowOverAudioName.rawValue, waitForCompletion: false))
 
-      stickHeight = stick!.size.height
+      bridgeHeight = bridge!.size.height
 
       let action = SKAction.rotateToAngle(CGFloat(-M_PI / 2), duration: 0.4, shortestUnitArc: true)
-      let playFall = SKAction.playSoundFileNamed(GameSceneEffectAudioName.StickFallAudioName.rawValue, waitForCompletion: false)
+      let playFall = SKAction.playSoundFileNamed(GameSceneEffectAudioName.BridgeFallAudioName.rawValue, waitForCompletion: false)
 
-      stick!.runAction(SKAction.sequence([SKAction.waitForDuration(0.2), action, playFall]), completion: {[unowned self] () -> Void in
+      bridge!.runAction(SKAction.sequence([SKAction.waitForDuration(0.2), action, playFall]), completion: {[unowned self] () -> Void in
         self.heroGo(self.checkPass())
         })
     }
@@ -151,13 +151,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     loadTip()
     loadGameOverLayer()
 
-    leftStack = loadStacks(false, startLeftPoint: playAbleRect.origin.x)
-    self.removeMidTouch(false, left: true)
+    leftIsland = loadIslands(false, startLeftPoint: playAbleRect.origin.x)
     loadHero()
 
-    let maxGap = Int(playAbleRect.width - StackMaxWidth - (leftStack?.frame.size.width)!)
-    let gap = CGFloat(randomInRange(StackGapMinWidth...maxGap))
-    rightStack = loadStacks(false, startLeftPoint: nextLeftStartX + gap)
+    let maxGap = Int(playAbleRect.width - IslandMaxWidth - (leftIsland?.frame.size.width)!)
+    let gap = CGFloat(randomInRange(IslandGapMinWidth...maxGap))
+    rightIsland = loadIslands(false, startLeftPoint: nextLeftStartX + gap)
 
     gameOver = false
   }
@@ -171,49 +170,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   }
 
   private func checkPass() -> Bool {
-    let stick = childNodeWithName(GameSceneChildName.StickName.rawValue) as? SKSpriteNode
+    let bridge = childNodeWithName(GameSceneChildName.BridgeName.rawValue) as? SKSpriteNode
 
-    let rightPoint = DefinedScreenWidth / 2 + stick!.position.x + self.stickHeight
+    let rightPoint = DefinedScreenWidth / 2 + bridge!.position.x + self.bridgeHeight
 
     guard rightPoint < self.nextLeftStartX else {
       return false
     }
 
-    guard CGRectIntersectsRect((leftStack?.frame)!, stick!.frame)
-      && CGRectIntersectsRect((rightStack?.frame)!, stick!.frame) else {
+    guard CGRectIntersectsRect((leftIsland?.frame)!, bridge!.frame)
+      && CGRectIntersectsRect((rightIsland?.frame)!, bridge!.frame) else {
       return false
     }
 
-    self.checkTouchMidStack()
-
     return true
-  }
-
-  private func checkTouchMidStack() {
-    let stick = childNodeWithName(GameSceneChildName.StickName.rawValue) as? SKSpriteNode
-    let stackMid = rightStack!.childNodeWithName(GameSceneChildName.StackMidName.rawValue) as? SKShapeNode
-
-    let newPoint = stackMid!.convertPoint(CGPointMake(-10, 10), toNode: self)
-
-    if (stick!.position.x + self.stickHeight) >= newPoint.x
-      && (stick!.position.x + self.stickHeight) <= newPoint.x + 20 {
-      loadPerfect()
-      self.runAction(SKAction.playSoundFileNamed(GameSceneEffectAudioName.StickTouchMidAudioName.rawValue, waitForCompletion: false))
-    }
-
-  }
-
-  private func removeMidTouch(animate: Bool, left: Bool) {
-
-    let stack = left ? leftStack : rightStack
-    let mid = stack!.childNodeWithName(GameSceneChildName.StackMidName.rawValue) as? SKShapeNode
-    if animate {
-      mid!.runAction(SKAction.fadeAlphaTo(0, duration: 0.3))
-    }
-    else {
-      mid!.removeFromParent()
-    }
-
   }
 
   private func heroGo(pass: Bool) {
@@ -221,16 +191,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let hero = childNodeWithName(GameSceneChildName.HeroName.rawValue) as? SKSpriteNode
 
     guard pass else {
-      let stick = childNodeWithName(GameSceneChildName.StickName.rawValue) as? SKSpriteNode
+      let bridge = childNodeWithName(GameSceneChildName.BridgeName.rawValue) as? SKSpriteNode
 
-      let dis: CGFloat = stick!.position.x + self.stickHeight
-      let disGap = nextLeftStartX - (DefinedScreenWidth / 2 - abs(hero!.position.x)) - (rightStack?.frame.size.width)! / 2
+      let dis: CGFloat = bridge!.position.x + self.bridgeHeight
+      let disGap = nextLeftStartX - (DefinedScreenWidth / 2 - abs(hero!.position.x)) - (rightIsland?.frame.size.width)! / 2
 
       let move = SKAction.moveToX(dis, duration: NSTimeInterval(abs(disGap / HeroSpeed)))
 
       hero!.runAction(walkAction, withKey: GameSceneActionKey.WalkAction.rawValue)
       hero!.runAction(move, completion: {[unowned self] () -> Void in
-        stick!.runAction(SKAction.rotateToAngle(CGFloat(-M_PI), duration: 0.4))
+        bridge!.runAction(SKAction.rotateToAngle(CGFloat(-M_PI), duration: 0.4))
 
         hero!.physicsBody!.affectedByGravity = true
         hero!.runAction(SKAction.playSoundFileNamed(GameSceneEffectAudioName.DeadAudioName.rawValue, waitForCompletion: false))
@@ -244,7 +214,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     let dis: CGFloat = -DefinedScreenWidth / 2 + nextLeftStartX - hero!.size.width / 2 - 20
-    let disGap = nextLeftStartX - (DefinedScreenWidth / 2 - abs(hero!.position.x)) - (rightStack?.frame.size.width)! / 2
+    let disGap = nextLeftStartX - (DefinedScreenWidth / 2 - abs(hero!.position.x)) - (rightIsland?.frame.size.width)! / 2
 
     let move = SKAction.moveToX(dis, duration: NSTimeInterval(abs(disGap / HeroSpeed)))
 
@@ -253,31 +223,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
       hero!.runAction(SKAction.playSoundFileNamed(GameSceneEffectAudioName.VictoryAudioName.rawValue, waitForCompletion: false))
       hero!.removeActionForKey(GameSceneActionKey.WalkAction.rawValue)
-      self.moveStackAndCreateNew()
+      self.moveIslandAndCreateNew()
     }
   }
 
-  private func moveStackAndCreateNew() {
-    let action = SKAction.moveBy(CGVectorMake(-nextLeftStartX + (rightStack?.frame.size.width)! + playAbleRect.origin.x - 2, 0), duration: 0.3)
-    rightStack?.runAction(action)
-    self.removeMidTouch(true, left: false)
+  private func moveIslandAndCreateNew() {
+    let action = SKAction.moveBy(CGVectorMake(-nextLeftStartX + (rightIsland?.frame.size.width)! + playAbleRect.origin.x - 2, 0), duration: 0.3)
+    rightIsland?.runAction(action)
 
     let hero = childNodeWithName(GameSceneChildName.HeroName.rawValue) as? SKSpriteNode
-    let stick = childNodeWithName(GameSceneChildName.StickName.rawValue) as? SKSpriteNode
+    let bridge = childNodeWithName(GameSceneChildName.BridgeName.rawValue) as? SKSpriteNode
 
     hero!.runAction(action)
-    stick!.runAction(SKAction.group([SKAction.moveBy(CGVectorMake(-DefinedScreenWidth, 0), duration: 0.5), SKAction.fadeAlphaTo(0, duration: 0.3)])) { () -> Void in
-      stick!.removeFromParent()
+    bridge!.runAction(SKAction.group([SKAction.moveBy(CGVectorMake(-DefinedScreenWidth, 0), duration: 0.5), SKAction.fadeAlphaTo(0, duration: 0.3)])) { () -> Void in
+      bridge!.removeFromParent()
     }
 
-    leftStack?.runAction(SKAction.moveBy(CGVectorMake(-DefinedScreenWidth, 0), duration: 0.5), completion: {[unowned self] () -> Void in
-      self.leftStack?.removeFromParent()
+    leftIsland?.runAction(SKAction.moveBy(CGVectorMake(-DefinedScreenWidth, 0), duration: 0.5), completion: {[unowned self] () -> Void in
+      self.leftIsland?.removeFromParent()
 
-      let maxGap = Int(self.playAbleRect.width - (self.rightStack?.frame.size.width)! - self.StackMaxWidth)
-      let gap = CGFloat(self.randomInRange(self.StackGapMinWidth...maxGap))
+      let maxGap = Int(self.playAbleRect.width - (self.rightIsland?.frame.size.width)! - self.IslandMaxWidth)
+      let gap = CGFloat(self.randomInRange(self.IslandGapMinWidth...maxGap))
 
-      self.leftStack = self.rightStack
-      self.rightStack = self.loadStacks(true, startLeftPoint: self.playAbleRect.origin.x + (self.rightStack?.frame.size.width)! + gap)
+      self.leftIsland = self.rightIsland
+      self.rightIsland = self.loadIslands(true, startLeftPoint: self.playAbleRect.origin.x + (self.rightIsland?.frame.size.width)! + gap)
       })
   }
 
@@ -292,7 +261,7 @@ private extension GameScene {
   func loadBackground() {
 
     guard let _ = childNodeWithName("background") as? SKSpriteNode else {
-      let texture = SKTexture(image: UIImage(named: "stick_background.jpg")!)
+      let texture = SKTexture(image: UIImage(named: "background.jpg")!)
       let node = SKSpriteNode(texture: texture)
       node.size = texture.size()
       node.zPosition = GameSceneZposition.BackgroundZposition.rawValue
@@ -306,7 +275,7 @@ private extension GameScene {
   func loadHero() {
     let hero = SKSpriteNode(imageNamed: "human1")
     hero.name = GameSceneChildName.HeroName.rawValue
-    hero.position = CGPointMake(-DefinedScreenWidth / 2 + nextLeftStartX - hero.size.width / 2 - 20, -DefinedScreenHeight / 2 + StackHeight + hero.size.height / 2 - 4)
+    hero.position = CGPointMake(-DefinedScreenWidth / 2 + nextLeftStartX - hero.size.width / 2 - 20, -DefinedScreenHeight / 2 + IslandHeight + hero.size.height / 2 - 4)
     hero.zPosition = GameSceneZposition.HeroZposition.rawValue
     hero.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(16, 18))
     hero.physicsBody?.affectedByGravity = false
@@ -355,54 +324,46 @@ private extension GameScene {
 
   }
 
-  func loadStick() -> SKSpriteNode {
+  func loadBridge() -> SKSpriteNode {
     let hero = childNodeWithName(GameSceneChildName.HeroName.rawValue) as? SKSpriteNode
 
-    let stick = SKSpriteNode(color: SKColor.blackColor(), size: CGSizeMake(12, 1))
-    stick.zPosition = GameSceneZposition.StickZposition.rawValue
-    stick.name = GameSceneChildName.StickName.rawValue
-    stick.anchorPoint = CGPointMake(0.5, 0)
-    stick.position = CGPointMake(hero!.position.x + hero!.size.width / 2 + 18, hero!.position.y - hero!.size.height / 2)
-    addChild(stick)
+    let bridge = SKSpriteNode(color: SKColor.blackColor(), size: CGSizeMake(12, 1))
+    bridge.zPosition = GameSceneZposition.BridgeZposition.rawValue
+    bridge.name = GameSceneChildName.BridgeName.rawValue
+    bridge.anchorPoint = CGPointMake(0.5, 0)
+    bridge.position = CGPointMake(hero!.position.x + hero!.size.width / 2 + 18, hero!.position.y - hero!.size.height / 2)
+    addChild(bridge)
 
-    return stick
+    return bridge
   }
 
-  func loadStacks(animate: Bool, startLeftPoint: CGFloat) -> SKShapeNode {
-    let max: Int = Int(StackMaxWidth / 10)
-    let min: Int = Int(StackMinWidth / 10)
+  func loadIslands(animate: Bool, startLeftPoint: CGFloat) -> SKShapeNode {
+    let max: Int = Int(IslandMaxWidth / 10)
+    let min: Int = Int(IslandMinWidth / 10)
     let width: CGFloat = CGFloat(randomInRange(min...max) * 10)
-    let height: CGFloat = StackHeight
-    let stack = SKShapeNode(rectOfSize: CGSizeMake(width, height))
-    stack.fillColor = SKColor.blackColor()
-    stack.strokeColor = SKColor.blackColor()
-    stack.zPosition = GameSceneZposition.StackZposition.rawValue
-    stack.name = GameSceneChildName.StackName.rawValue
+    let height: CGFloat = IslandHeight
+    let island = SKShapeNode(rectOfSize: CGSizeMake(width, height))
+    island.fillColor = SKColor.blackColor()
+    island.strokeColor = SKColor.blackColor()
+    island.zPosition = GameSceneZposition.IslandZposition.rawValue
+    island.name = GameSceneChildName.IslandName.rawValue
 
     if animate {
-      stack.position = CGPointMake(DefinedScreenWidth / 2, -DefinedScreenHeight / 2 + height / 2)
+      island.position = CGPointMake(DefinedScreenWidth / 2, -DefinedScreenHeight / 2 + height / 2)
 
-      stack.runAction(SKAction.moveToX(-DefinedScreenWidth / 2 + width / 2 + startLeftPoint, duration: 0.3), completion: {[unowned self] () -> Void in
+      island.runAction(SKAction.moveToX(-DefinedScreenWidth / 2 + width / 2 + startLeftPoint, duration: 0.3), completion: {[unowned self] () -> Void in
         self.isBegin = false
         self.isEnd = false
         })
 
     } else {
-      stack.position = CGPointMake(-DefinedScreenWidth / 2 + width / 2 + startLeftPoint, -DefinedScreenHeight / 2 + height / 2)
+      island.position = CGPointMake(-DefinedScreenWidth / 2 + width / 2 + startLeftPoint, -DefinedScreenHeight / 2 + height / 2)
     }
-    addChild(stack)
-
-    let mid = SKShapeNode(rectOfSize: CGSizeMake(20, 20))
-    mid.fillColor = SKColor.redColor()
-    mid.strokeColor = SKColor.redColor()
-    mid.zPosition = GameSceneZposition.StackMidZposition.rawValue
-    mid.name = GameSceneChildName.StackMidName.rawValue
-    mid.position = CGPointMake(0, height / 2 - 20 / 2)
-    stack.addChild(mid)
+    addChild(island)
 
     nextLeftStartX = width + startLeftPoint
 
-    return stack
+    return island
   }
 
   func loadGameOverLayer() {
