@@ -1,10 +1,10 @@
 import Foundation
 import CoreGraphics
 
-let DefinedScreenWidth:CGFloat = 1536
-let DefinedScreenHeight:CGFloat = 2048
+let DefinedScreenWidth: CGFloat = 1536
+let DefinedScreenHeight: CGFloat = 2048
 
-enum StickHeroGameSceneChildName : String {
+enum StickHeroGameSceneChildName: String {
     case HeroName = "hero"
     case StickName = "stick"
     case StackName = "stack"

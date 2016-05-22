@@ -21,7 +21,7 @@ class MenuScene: SKScene {
     addNewGameTitle()
     addRatingTitle()
   }
-  
+
   private func addNewGameTitle() {
     self.gameLabel = SKLabelNode()
     self.gameLabel?.fontSize = 36
@@ -31,8 +31,6 @@ class MenuScene: SKScene {
     self.gameLabel?.position = CGPoint(x: CGRectGetMidX((self.scene?.frame)!), y: CGRectGetMidY((self.scene?.frame)!) - 50)
     self.addChild(gameLabel!)
   }
-  
-  
 
   private func addRatingTitle() {
     self.ratingLabel = SKLabelNode()
@@ -52,19 +50,18 @@ class MenuScene: SKScene {
     for touch in touches {
       let nodeAtTouch = self.nodeAtPoint(touch.locationInNode(self))
       if nodeAtTouch.name == "game" {
-        let scene = StickHeroGameScene(size:CGSizeMake(DefinedScreenWidth, DefinedScreenHeight))
-        
+        let scene = StickHeroGameScene(size: CGSizeMake(DefinedScreenWidth, DefinedScreenHeight))
+
         // Configure the view.
         let skView = self.view
         skView!.showsFPS = true
         skView!.showsNodeCount = true
-        
         /* Sprite Kit applies additional optimizations to improve rendering performance */
         skView!.ignoresSiblingOrder = true
-        
+
         /* Set the scale mode to scale to fit the window */
         scene.scaleMode = .AspectFill
-        
+
         skView!.presentScene(scene)
       } else if nodeAtTouch.name == "rating" {
 

@@ -18,5 +18,5 @@ extension UIColor {
       alpha: CGFloat(1.0)
     )
   }
-  
+
 }

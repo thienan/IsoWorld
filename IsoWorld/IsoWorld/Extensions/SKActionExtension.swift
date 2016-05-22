@@ -11,7 +11,7 @@ import SpriteKit
 
 extension SKAction {
 
-  class func moveDistance(distance:CGVector, fadeInWithDuration duration:NSTimeInterval) -> SKAction {
+  class func moveDistance(distance: CGVector, fadeInWithDuration duration: NSTimeInterval) -> SKAction {
     let fadeIn = SKAction.fadeInWithDuration(duration)
     let moveIn = SKAction.moveBy(distance, duration: duration)
     return SKAction.group([fadeIn, moveIn])

@@ -25,45 +25,46 @@ class StickHeroGameScene: SKScene, SKPhysicsContactDelegate {
     }
   }
 
-  let StackHeight:CGFloat = 400.0
-  let StackMaxWidth:CGFloat = 300.0
-  let StackMinWidth:CGFloat = 100.0
-  let gravity:CGFloat = -100.0
-  let StackGapMinWidth:Int = 80
-  let HeroSpeed:CGFloat = 760
+  let StackHeight: CGFloat = 400.0
+  let StackMaxWidth: CGFloat = 300.0
+  let StackMinWidth: CGFloat = 100.0
+  let gravity: CGFloat = -100.0
+  let StackGapMinWidth: Int = 80
+  let HeroSpeed: CGFloat = 760
 
   let StoreScoreName = "com.stickHero.score"
 
   var isBegin = false
   var isEnd = false
-  var leftStack:SKShapeNode?
-  var rightStack:SKShapeNode?
+  var leftStack: SKShapeNode?
+  var rightStack: SKShapeNode?
 
-  var nextLeftStartX:CGFloat = 0
-  var stickHeight:CGFloat = 0
+  var nextLeftStartX: CGFloat = 0
+  var stickHeight: CGFloat = 0
 
-  var score:Int = 0 {
+  var score: Int = 0 {
     willSet {
       let scoreBand = childNodeWithName(StickHeroGameSceneChildName.ScoreName.rawValue) as? SKLabelNode
       scoreBand?.text = "\(newValue)"
       scoreBand?.runAction(SKAction.sequence([SKAction.scaleTo(1.5, duration: 0.1), SKAction.scaleTo(1, duration: 0.1)]))
 
-      if (newValue == 1) {
+      if newValue == 1 {
         let tip = childNodeWithName(StickHeroGameSceneChildName.TipName.rawValue) as? SKLabelNode
         tip?.runAction(SKAction.fadeAlphaTo(0, duration: 0.4))
       }
     }
   }
 
-  lazy var playAbleRect:CGRect = {
-    let maxAspectRatio:CGFloat = 16.0/9.0 // iPhone 5"
+  lazy var playAbleRect: CGRect = {
+
+    let maxAspectRatio: CGFloat = 16.0/9.0
     let maxAspectRatioWidth = self.size.height / maxAspectRatio
     let playableMargin = (self.size.width - maxAspectRatioWidth) / 2.0
     return CGRectMake(playableMargin, 0, maxAspectRatioWidth, self.size.height)
   }()
 
-  lazy var walkAction:SKAction = {
-    var textures:[SKTexture] = []
+  lazy var walkAction: SKAction = {
+    var textures: [SKTexture] = []
     for i in 0...1 {
       let texture = SKTexture(imageNamed: "human\(i + 1).png")
       textures.append(texture)
@@ -74,7 +75,7 @@ class StickHeroGameScene: SKScene, SKPhysicsContactDelegate {
     return SKAction.repeatActionForever(action)
   }()
 
-  //MARK: - override
+  // MARK: - override
   override init(size: CGSize) {
     super.init(size: size)
     anchorPoint = CGPointMake(0.5, 0.5)
@@ -85,9 +86,9 @@ class StickHeroGameScene: SKScene, SKPhysicsContactDelegate {
     musicPlayer.play()
   }
 
-  func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer  {
+  func setupAudioPlayerWithFile(file: NSString, type: NSString) -> AVAudioPlayer {
     let url = NSBundle.mainBundle().URLForResource(file as String, withExtension: type as String)
-    var audioPlayer:AVAudioPlayer?
+    var audioPlayer: AVAudioPlayer?
 
     do {
       try audioPlayer = AVAudioPlayer(contentsOfURL: url!)
@@ -110,7 +111,7 @@ class StickHeroGameScene: SKScene, SKPhysicsContactDelegate {
       let retry = gameOverLayer!.nodeAtPoint(location!)
 
 
-      if (retry.name == StickHeroGameSceneChildName.RetryButtonName.rawValue) {
+      if retry.name == StickHeroGameSceneChildName.RetryButtonName.rawValue {
         retry.runAction(SKAction.sequence([SKAction.setTexture(SKTexture(imageNamed: "button_retry_down"), resize: false), SKAction.waitForDuration(0.3)]), completion: {[unowned self] () -> Void in
           self.restart()
           })
@@ -122,15 +123,15 @@ class StickHeroGameScene: SKScene, SKPhysicsContactDelegate {
       isBegin = true
 
       let stick = loadStick()
-      let hero = childNodeWithName(StickHeroGameSceneChildName.HeroName.rawValue) as! SKSpriteNode
+      let hero = childNodeWithName(StickHeroGameSceneChildName.HeroName.rawValue) as? SKSpriteNode
 
       let action = SKAction.resizeToHeight(CGFloat(DefinedScreenHeight - StackHeight), duration: 1.5)
-      stick.runAction(action, withKey:StickHeroGameSceneActionKey.StickGrowAction.rawValue)
+      stick.runAction(action, withKey: StickHeroGameSceneActionKey.StickGrowAction.rawValue)
 
       let scaleAction = SKAction.sequence([SKAction.scaleYTo(0.9, duration: 0.05), SKAction.scaleYTo(1, duration: 0.05)])
       let loopAction = SKAction.group([SKAction.playSoundFileNamed(StickHeroGameSceneEffectAudioName.StickGrowAudioName.rawValue, waitForCompletion: true)])
       stick.runAction(SKAction.repeatActionForever(loopAction), withKey: StickHeroGameSceneActionKey.StickGrowAudioAction.rawValue)
-      hero.runAction(SKAction.repeatActionForever(scaleAction), withKey: StickHeroGameSceneActionKey.HeroScaleAction.rawValue)
+      hero!.runAction(SKAction.repeatActionForever(scaleAction), withKey: StickHeroGameSceneActionKey.HeroScaleAction.rawValue)
 
       return
     }
@@ -141,21 +142,21 @@ class StickHeroGameScene: SKScene, SKPhysicsContactDelegate {
     if isBegin && !isEnd {
       isEnd  = true
 
-      let hero = childNodeWithName(StickHeroGameSceneChildName.HeroName.rawValue) as! SKSpriteNode
-      hero.removeActionForKey(StickHeroGameSceneActionKey.HeroScaleAction.rawValue)
-      hero.runAction(SKAction.scaleYTo(1, duration: 0.04))
+      let hero = childNodeWithName(StickHeroGameSceneChildName.HeroName.rawValue) as? SKSpriteNode
+      hero!.removeActionForKey(StickHeroGameSceneActionKey.HeroScaleAction.rawValue)
+      hero!.runAction(SKAction.scaleYTo(1, duration: 0.04))
 
-      let stick = childNodeWithName(StickHeroGameSceneChildName.StickName.rawValue) as! SKSpriteNode
-      stick.removeActionForKey(StickHeroGameSceneActionKey.StickGrowAction.rawValue)
-      stick.removeActionForKey(StickHeroGameSceneActionKey.StickGrowAudioAction.rawValue)
-      stick.runAction(SKAction.playSoundFileNamed(StickHeroGameSceneEffectAudioName.StickGrowOverAudioName.rawValue, waitForCompletion: false))
+      let stick = childNodeWithName(StickHeroGameSceneChildName.StickName.rawValue) as? SKSpriteNode
+      stick!.removeActionForKey(StickHeroGameSceneActionKey.StickGrowAction.rawValue)
+      stick!.removeActionForKey(StickHeroGameSceneActionKey.StickGrowAudioAction.rawValue)
+      stick!.runAction(SKAction.playSoundFileNamed(StickHeroGameSceneEffectAudioName.StickGrowOverAudioName.rawValue, waitForCompletion: false))
 
-      stickHeight = stick.size.height;
+      stickHeight = stick!.size.height
 
       let action = SKAction.rotateToAngle(CGFloat(-M_PI / 2), duration: 0.4, shortestUnitArc: true)
       let playFall = SKAction.playSoundFileNamed(StickHeroGameSceneEffectAudioName.StickFallAudioName.rawValue, waitForCompletion: false)
 
-      stick.runAction(SKAction.sequence([SKAction.waitForDuration(0.2), action, playFall]), completion: {[unowned self] () -> Void in
+      stick!.runAction(SKAction.sequence([SKAction.waitForDuration(0.2), action, playFall]), completion: {[unowned self] () -> Void in
         self.heroGo(self.checkPass())
         })
     }
@@ -169,7 +170,7 @@ class StickHeroGameScene: SKScene, SKPhysicsContactDelegate {
     loadGameOverLayer()
 
     leftStack = loadStacks(false, startLeftPoint: playAbleRect.origin.x)
-    self.removeMidTouch(false, left:true)
+    self.removeMidTouch(false, left: true)
     loadHero()
 
     let maxGap = Int(playAbleRect.width - StackMaxWidth - (leftStack?.frame.size.width)!)
@@ -189,15 +190,16 @@ class StickHeroGameScene: SKScene, SKPhysicsContactDelegate {
   }
 
   private func checkPass() -> Bool {
-    let stick = childNodeWithName(StickHeroGameSceneChildName.StickName.rawValue) as! SKSpriteNode
+    let stick = childNodeWithName(StickHeroGameSceneChildName.StickName.rawValue) as? SKSpriteNode
 
-    let rightPoint = DefinedScreenWidth / 2 + stick.position.x + self.stickHeight
+    let rightPoint = DefinedScreenWidth / 2 + stick!.position.x + self.stickHeight
 
     guard rightPoint < self.nextLeftStartX else {
       return false
     }
 
-    guard (CGRectIntersectsRect((leftStack?.frame)!, stick.frame) && CGRectIntersectsRect((rightStack?.frame)!, stick.frame)) else {
+    guard CGRectIntersectsRect((leftStack?.frame)!, stick!.frame)
+      && CGRectIntersectsRect((rightStack?.frame)!, stick!.frame) else {
       return false
     }
 
@@ -207,12 +209,13 @@ class StickHeroGameScene: SKScene, SKPhysicsContactDelegate {
   }
 
   private func checkTouchMidStack() {
-    let stick = childNodeWithName(StickHeroGameSceneChildName.StickName.rawValue) as! SKSpriteNode
-    let stackMid = rightStack!.childNodeWithName(StickHeroGameSceneChildName.StackMidName.rawValue) as! SKShapeNode
+    let stick = childNodeWithName(StickHeroGameSceneChildName.StickName.rawValue) as? SKSpriteNode
+    let stackMid = rightStack!.childNodeWithName(StickHeroGameSceneChildName.StackMidName.rawValue) as? SKShapeNode
 
-    let newPoint = stackMid.convertPoint(CGPointMake(-10, 10), toNode: self)
+    let newPoint = stackMid!.convertPoint(CGPointMake(-10, 10), toNode: self)
 
-    if ((stick.position.x + self.stickHeight) >= newPoint.x  && (stick.position.x + self.stickHeight) <= newPoint.x + 20) {
+    if (stick!.position.x + self.stickHeight) >= newPoint.x
+      && (stick!.position.x + self.stickHeight) <= newPoint.x + 20 {
       loadPerfect()
       self.runAction(SKAction.playSoundFileNamed(StickHeroGameSceneEffectAudioName.StickTouchMidAudioName.rawValue, waitForCompletion: false))
       score += 1
@@ -220,35 +223,38 @@ class StickHeroGameScene: SKScene, SKPhysicsContactDelegate {
 
   }
 
-  private func removeMidTouch(animate:Bool, left:Bool) {
+  private func removeMidTouch(animate: Bool, left: Bool) {
+
     let stack = left ? leftStack : rightStack
-    let mid = stack!.childNodeWithName(StickHeroGameSceneChildName.StackMidName.rawValue) as! SKShapeNode
-    if (animate) {
-      mid.runAction(SKAction.fadeAlphaTo(0, duration: 0.3))
+    let mid = stack!.childNodeWithName(StickHeroGameSceneChildName.StackMidName.rawValue) as? SKShapeNode
+    if animate {
+      mid!.runAction(SKAction.fadeAlphaTo(0, duration: 0.3))
     }
     else {
-      mid.removeFromParent()
+      mid!.removeFromParent()
     }
+
   }
 
-  private func heroGo(pass:Bool) {
-    let hero = childNodeWithName(StickHeroGameSceneChildName.HeroName.rawValue) as! SKSpriteNode
+  private func heroGo(pass: Bool) {
+
+    let hero = childNodeWithName(StickHeroGameSceneChildName.HeroName.rawValue) as? SKSpriteNode
 
     guard pass else {
-      let stick = childNodeWithName(StickHeroGameSceneChildName.StickName.rawValue) as! SKSpriteNode
+      let stick = childNodeWithName(StickHeroGameSceneChildName.StickName.rawValue) as? SKSpriteNode
 
-      let dis:CGFloat = stick.position.x + self.stickHeight
-      let disGap = nextLeftStartX - (DefinedScreenWidth / 2 - abs(hero.position.x)) - (rightStack?.frame.size.width)! / 2
+      let dis: CGFloat = stick!.position.x + self.stickHeight
+      let disGap = nextLeftStartX - (DefinedScreenWidth / 2 - abs(hero!.position.x)) - (rightStack?.frame.size.width)! / 2
 
       let move = SKAction.moveToX(dis, duration: NSTimeInterval(abs(disGap / HeroSpeed)))
 
-      hero.runAction(walkAction, withKey: StickHeroGameSceneActionKey.WalkAction.rawValue)
-      hero.runAction(move, completion: {[unowned self] () -> Void in
-        stick.runAction(SKAction.rotateToAngle(CGFloat(-M_PI), duration: 0.4))
+      hero!.runAction(walkAction, withKey: StickHeroGameSceneActionKey.WalkAction.rawValue)
+      hero!.runAction(move, completion: {[unowned self] () -> Void in
+        stick!.runAction(SKAction.rotateToAngle(CGFloat(-M_PI), duration: 0.4))
 
-        hero.physicsBody!.affectedByGravity = true
-        hero.runAction(SKAction.playSoundFileNamed(StickHeroGameSceneEffectAudioName.DeadAudioName.rawValue, waitForCompletion: false))
-        hero.removeActionForKey(StickHeroGameSceneActionKey.WalkAction.rawValue)
+        hero!.physicsBody!.affectedByGravity = true
+        hero!.runAction(SKAction.playSoundFileNamed(StickHeroGameSceneEffectAudioName.DeadAudioName.rawValue, waitForCompletion: false))
+        hero!.removeActionForKey(StickHeroGameSceneActionKey.WalkAction.rawValue)
         self.runAction(SKAction.waitForDuration(0.5), completion: {[unowned self] () -> Void in
           self.gameOver = true
           })
@@ -257,24 +263,24 @@ class StickHeroGameScene: SKScene, SKPhysicsContactDelegate {
       return
     }
 
-    let dis:CGFloat = -DefinedScreenWidth / 2 + nextLeftStartX - hero.size.width / 2 - 20
-    let disGap = nextLeftStartX - (DefinedScreenWidth / 2 - abs(hero.position.x)) - (rightStack?.frame.size.width)! / 2
+    let dis: CGFloat = -DefinedScreenWidth / 2 + nextLeftStartX - hero!.size.width / 2 - 20
+    let disGap = nextLeftStartX - (DefinedScreenWidth / 2 - abs(hero!.position.x)) - (rightStack?.frame.size.width)! / 2
 
     let move = SKAction.moveToX(dis, duration: NSTimeInterval(abs(disGap / HeroSpeed)))
 
-    hero.runAction(walkAction, withKey: StickHeroGameSceneActionKey.WalkAction.rawValue)
-    hero.runAction(move) { [unowned self]() -> Void in
+    hero!.runAction(walkAction, withKey: StickHeroGameSceneActionKey.WalkAction.rawValue)
+    hero!.runAction(move) { [unowned self] () -> Void in
       self.score += 1
 
-      hero.runAction(SKAction.playSoundFileNamed(StickHeroGameSceneEffectAudioName.VictoryAudioName.rawValue, waitForCompletion: false))
-      hero.removeActionForKey(StickHeroGameSceneActionKey.WalkAction.rawValue)
+      hero!.runAction(SKAction.playSoundFileNamed(StickHeroGameSceneEffectAudioName.VictoryAudioName.rawValue, waitForCompletion: false))
+      hero!.removeActionForKey(StickHeroGameSceneActionKey.WalkAction.rawValue)
       self.moveStackAndCreateNew()
     }
   }
 
   private func checkHighScoreAndStore() {
     let highScore = NSUserDefaults.standardUserDefaults().integerForKey(StoreScoreName)
-    if (score > Int(highScore)) {
+    if score > Int(highScore) {
       showHighScore()
 
       NSUserDefaults.standardUserDefaults().setInteger(score, forKey: StoreScoreName)
@@ -306,14 +312,14 @@ class StickHeroGameScene: SKScene, SKPhysicsContactDelegate {
   private func moveStackAndCreateNew() {
     let action = SKAction.moveBy(CGVectorMake(-nextLeftStartX + (rightStack?.frame.size.width)! + playAbleRect.origin.x - 2, 0), duration: 0.3)
     rightStack?.runAction(action)
-    self.removeMidTouch(true, left:false)
+    self.removeMidTouch(true, left: false)
 
-    let hero = childNodeWithName(StickHeroGameSceneChildName.HeroName.rawValue) as! SKSpriteNode
-    let stick = childNodeWithName(StickHeroGameSceneChildName.StickName.rawValue) as! SKSpriteNode
+    let hero = childNodeWithName(StickHeroGameSceneChildName.HeroName.rawValue) as? SKSpriteNode
+    let stick = childNodeWithName(StickHeroGameSceneChildName.StickName.rawValue) as? SKSpriteNode
 
-    hero.runAction(action)
-    stick.runAction(SKAction.group([SKAction.moveBy(CGVectorMake(-DefinedScreenWidth, 0), duration: 0.5), SKAction.fadeAlphaTo(0, duration: 0.3)])) { () -> Void in
-      stick.removeFromParent()
+    hero!.runAction(action)
+    stick!.runAction(SKAction.group([SKAction.moveBy(CGVectorMake(-DefinedScreenWidth, 0), duration: 0.5), SKAction.fadeAlphaTo(0, duration: 0.3)])) { () -> Void in
+      stick!.removeFromParent()
     }
 
     leftStack?.runAction(SKAction.moveBy(CGVectorMake(-DefinedScreenWidth, 0), duration: 0.5), completion: {[unowned self] () -> Void in
@@ -323,7 +329,7 @@ class StickHeroGameScene: SKScene, SKPhysicsContactDelegate {
       let gap = CGFloat(self.randomInRange(self.StackGapMinWidth...maxGap))
 
       self.leftStack = self.rightStack
-      self.rightStack = self.loadStacks(true, startLeftPoint:self.playAbleRect.origin.x + (self.rightStack?.frame.size.width)! + gap)
+      self.rightStack = self.loadStacks(true, startLeftPoint: self.playAbleRect.origin.x + (self.rightStack?.frame.size.width)! + gap)
       })
   }
 
@@ -332,10 +338,12 @@ class StickHeroGameScene: SKScene, SKPhysicsContactDelegate {
   }
 }
 
-//MARK: - load node
+// MARK: - load node
 private extension StickHeroGameScene {
+
   func loadBackground() {
-    guard let _ = childNodeWithName("background") as! SKSpriteNode? else {
+
+    guard let _ = childNodeWithName("background") as? SKSpriteNode else {
       let texture = SKTexture(image: UIImage(named: "stick_background.jpg")!)
       let node = SKSpriteNode(texture: texture)
       node.size = texture.size()
@@ -394,14 +402,15 @@ private extension StickHeroGameScene {
   }
 
   func loadPerfect() {
+
     defer {
-      let perfect = childNodeWithName(StickHeroGameSceneChildName.PerfectName.rawValue) as! SKLabelNode?
+      let perfect = childNodeWithName(StickHeroGameSceneChildName.PerfectName.rawValue) as? SKLabelNode?
       let sequence = SKAction.sequence([SKAction.fadeAlphaTo(1, duration: 0.3), SKAction.fadeAlphaTo(0, duration: 0.3)])
       let scale = SKAction.sequence([SKAction.scaleTo(1.4, duration: 0.3), SKAction.scaleTo(1, duration: 0.3)])
-      perfect!.runAction(SKAction.group([sequence, scale]))
+      perfect!!.runAction(SKAction.group([sequence, scale]))
     }
 
-    guard let _ = childNodeWithName(StickHeroGameSceneChildName.PerfectName.rawValue) as! SKLabelNode? else {
+    guard let _ = childNodeWithName(StickHeroGameSceneChildName.PerfectName.rawValue) as? SKLabelNode? else {
       let perfect = SKLabelNode(fontNamed: "Arial")
       perfect.text = "Perfect +1"
       perfect.name = StickHeroGameSceneChildName.PerfectName.rawValue
@@ -420,30 +429,30 @@ private extension StickHeroGameScene {
   }
 
   func loadStick() -> SKSpriteNode {
-    let hero = childNodeWithName(StickHeroGameSceneChildName.HeroName.rawValue) as! SKSpriteNode
+    let hero = childNodeWithName(StickHeroGameSceneChildName.HeroName.rawValue) as? SKSpriteNode
 
     let stick = SKSpriteNode(color: SKColor.blackColor(), size: CGSizeMake(12, 1))
     stick.zPosition = StickHeroGameSceneZposition.StickZposition.rawValue
     stick.name = StickHeroGameSceneChildName.StickName.rawValue
-    stick.anchorPoint = CGPointMake(0.5, 0);
-    stick.position = CGPointMake(hero.position.x + hero.size.width / 2 + 18, hero.position.y - hero.size.height / 2)
+    stick.anchorPoint = CGPointMake(0.5, 0)
+    stick.position = CGPointMake(hero!.position.x + hero!.size.width / 2 + 18, hero!.position.y - hero!.size.height / 2)
     addChild(stick)
 
     return stick
   }
 
   func loadStacks(animate: Bool, startLeftPoint: CGFloat) -> SKShapeNode {
-    let max:Int = Int(StackMaxWidth / 10)
-    let min:Int = Int(StackMinWidth / 10)
-    let width:CGFloat = CGFloat(randomInRange(min...max) * 10)
-    let height:CGFloat = StackHeight
+    let max: Int = Int(StackMaxWidth / 10)
+    let min: Int = Int(StackMinWidth / 10)
+    let width: CGFloat = CGFloat(randomInRange(min...max) * 10)
+    let height: CGFloat = StackHeight
     let stack = SKShapeNode(rectOfSize: CGSizeMake(width, height))
     stack.fillColor = SKColor.blackColor()
     stack.strokeColor = SKColor.blackColor()
     stack.zPosition = StickHeroGameSceneZposition.StackZposition.rawValue
     stack.name = StickHeroGameSceneChildName.StackName.rawValue
 
-    if (animate) {
+    if animate {
       stack.position = CGPointMake(DefinedScreenWidth / 2, -DefinedScreenHeight / 2 + height / 2)
 
       stack.runAction(SKAction.moveToX(-DefinedScreenWidth / 2 + width / 2 + startLeftPoint, duration: 0.3), completion: {[unowned self] () -> Void in
@@ -451,8 +460,7 @@ private extension StickHeroGameScene {
         self.isEnd = false
         })
 
-    }
-    else {
+    } else {
       stack.position = CGPointMake(-DefinedScreenWidth / 2 + width / 2 + startLeftPoint, -DefinedScreenHeight / 2 + height / 2)
     }
     addChild(stack)
@@ -501,7 +509,7 @@ private extension StickHeroGameScene {
     node.addChild(highScore)
   }
 
-  //MARK: - Action
+  // MARK: - Action
   func starEmitterActionAtPosition(position: CGPoint) -> SKAction {
     let emitter = SKEmitterNode(fileNamed: "StarExplosion")
     emitter?.position = position
@@ -511,9 +519,10 @@ private extension StickHeroGameScene {
 
     let wait = SKAction.waitForDuration(0.15)
 
-    return SKAction.runBlock({ () -> Void in
-      emitter?.runAction(wait)
-    })
+    return SKAction.runBlock {
+        emitter?.runAction(wait)
+    }
+
   }
 
   func randomInRange(range: Range<Int>) -> Int {
@@ -521,6 +530,4 @@ private extension StickHeroGameScene {
     return  Int(arc4random_uniform(count)) + range.startIndex
   }
 
-
 }
-
