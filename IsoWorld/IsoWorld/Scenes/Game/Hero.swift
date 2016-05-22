@@ -17,6 +17,18 @@ struct HeroConstants {
 class Hero {
   private var hero: SKSpriteNode?
 
+  lazy var walkAction: SKAction = {
+    var textures: [SKTexture] = []
+    for i in 0...1 {
+      let texture = SKTexture(imageNamed: "human\(i + 1).png")
+      textures.append(texture)
+    }
+
+    let action = SKAction.animateWithTextures(textures, timePerFrame: 0.15, resize: true, restore: true)
+
+    return SKAction.repeatActionForever(action)
+  }()
+
   func getHeroNode(
     nextLeftStartX nextLeftStartX: CGFloat,
                    islandHeight: CGFloat
@@ -55,6 +67,8 @@ class Hero {
       - 4
     return CGPoint(x: xPosition, y: yPosition)
   }
+
+  
 
   func getHeroNodeFromParent() -> SKSpriteNode {
     return self.hero!

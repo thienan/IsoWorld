@@ -50,18 +50,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     return CGRectMake(playableMargin, 0, maxAspectRatioWidth, self.size.height)
   }()
 
-  lazy var walkAction: SKAction = {
-    var textures: [SKTexture] = []
-    for i in 0...1 {
-      let texture = SKTexture(imageNamed: "human\(i + 1).png")
-      textures.append(texture)
-    }
-
-    let action = SKAction.animateWithTextures(textures, timePerFrame: 0.15, resize: true, restore: true)
-
-    return SKAction.repeatActionForever(action)
-  }()
-
   // MARK: - override
   override init(size: CGSize) {
     super.init(size: size)
@@ -110,15 +98,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       isBegin = true
 
       let bridge = loadBridge()
-      let hero = heroObj.getHeroNodeFromParent()
-
       let action = SKAction.resizeToHeight(CGFloat(DefinedScreenHeight - IslandHeight), duration: 1.5)
       bridge.runAction(action, withKey: GameSceneActionKey.BridgeGrowAction.rawValue)
-
-      let scaleAction = SKAction.sequence([SKAction.scaleYTo(0.9, duration: 0.05), SKAction.scaleYTo(1, duration: 0.05)])
       let loopAction = SKAction.group([SKAction.playSoundFileNamed(GameSceneEffectAudioName.BridgeGrowAudioName.rawValue, waitForCompletion: true)])
       bridge.runAction(SKAction.repeatActionForever(loopAction), withKey: GameSceneActionKey.BridgeGrowAudioAction.rawValue)
-      hero.runAction(SKAction.repeatActionForever(scaleAction), withKey: GameSceneActionKey.HeroScaleAction.rawValue)
 
       return
     }
@@ -151,7 +134,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
   func start() {
     loadBackground()
-    loadTip()
     loadGameOverLayer()
 
     leftIsland = loadIslands(false, startLeftPoint: playAbleRect.origin.x)
@@ -201,7 +183,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
       let move = SKAction.moveToX(dis, duration: NSTimeInterval(abs(disGap / HeroSpeed)))
 
-      hero.runAction(walkAction, withKey: GameSceneActionKey.WalkAction.rawValue)
+      hero.runAction(heroObj.walkAction, withKey: GameSceneActionKey.WalkAction.rawValue)
       hero.runAction(move, completion: {[unowned self] () -> Void in
         bridge!.runAction(SKAction.rotateToAngle(CGFloat(-M_PI), duration: 0.4))
 
@@ -221,7 +203,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     let move = SKAction.moveToX(dis, duration: NSTimeInterval(abs(disGap / HeroSpeed)))
 
-    hero.runAction(walkAction, withKey: GameSceneActionKey.WalkAction.rawValue)
+    hero.runAction(heroObj.walkAction, withKey: GameSceneActionKey.WalkAction.rawValue)
     hero.runAction(move) { [unowned self] () -> Void in
 
       hero.runAction(SKAction.playSoundFileNamed(GameSceneEffectAudioName.VictoryAudioName.rawValue, waitForCompletion: false))
@@ -278,49 +260,9 @@ private extension GameScene {
   func loadHero() {
     let hero = heroObj.getHeroNode(
       nextLeftStartX: self.nextLeftStartX,
-      islandHeight: self.IslandHeight
+      islandHeight: self.leftIsland!.size.height
     )
     addChild(hero)
-  }
-
-  func loadTip() {
-    let tip = SKLabelNode(fontNamed: "HelveticaNeue-Bold")
-    tip.name = GameSceneChildName.TipName.rawValue
-    tip.text = ""
-    tip.position = CGPointMake(0, DefinedScreenHeight / 2 - 350)
-    tip.fontColor = SKColor.blackColor()
-    tip.fontSize = 52
-    tip.zPosition = GameSceneZposition.TipZposition.rawValue
-    tip.horizontalAlignmentMode = .Center
-
-    addChild(tip)
-  }
-
-  func loadPerfect() {
-
-    defer {
-      let perfect = childNodeWithName(GameSceneChildName.PerfectName.rawValue) as? SKLabelNode?
-      let sequence = SKAction.sequence([SKAction.fadeAlphaTo(1, duration: 0.3), SKAction.fadeAlphaTo(0, duration: 0.3)])
-      let scale = SKAction.sequence([SKAction.scaleTo(1.4, duration: 0.3), SKAction.scaleTo(1, duration: 0.3)])
-      perfect!!.runAction(SKAction.group([sequence, scale]))
-    }
-
-    guard let _ = childNodeWithName(GameSceneChildName.PerfectName.rawValue) as? SKLabelNode? else {
-      let perfect = SKLabelNode(fontNamed: "Arial")
-      perfect.text = "Perfect +1"
-      perfect.name = GameSceneChildName.PerfectName.rawValue
-      perfect.position = CGPointMake(0, -100)
-      perfect.fontColor = SKColor.blackColor()
-      perfect.fontSize = 50
-      perfect.zPosition = GameSceneZposition.PerfectZposition.rawValue
-      perfect.horizontalAlignmentMode = .Center
-      perfect.alpha = 0
-
-      addChild(perfect)
-
-      return
-    }
-
   }
 
   func loadBridge() -> SKSpriteNode {
