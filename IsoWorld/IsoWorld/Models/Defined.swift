@@ -5,7 +5,6 @@ let DefinedScreenWidth: CGFloat = 1536
 let DefinedScreenHeight: CGFloat = 2048
 
 enum GameSceneChildName: String {
-    case HeroName = "hero"
     case BridgeName = "bridge"
     case IslandName = "island"
     case IslandMidName = "island_mid"
@@ -40,7 +39,6 @@ enum GameSceneZposition: CGFloat {
     case IslandMidZposition = 35
     case BridgeZposition = 40
     case ScoreBackgroundZposition = 50
-    case HeroZposition, ScoreZposition, TipZposition, PerfectZposition = 100
-    case EmitterZposition
+    case ScoreZposition, TipZposition, PerfectZposition = 100
     case GameOverZposition
 }
