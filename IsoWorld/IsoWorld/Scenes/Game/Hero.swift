@@ -19,12 +19,12 @@ class Hero {
 
   lazy var walkAction: SKAction = {
     var textures: [SKTexture] = []
-    for i in 0...1 {
+    for i in 0...3 {
       let texture = SKTexture(imageNamed: "human\(i + 1).png")
       textures.append(texture)
     }
 
-    let action = SKAction.animateWithTextures(textures, timePerFrame: 0.15, resize: true, restore: true)
+    let action = SKAction.animateWithTextures(textures, timePerFrame: 0.3, resize: true, restore: true)
 
     return SKAction.repeatActionForever(action)
   }()
