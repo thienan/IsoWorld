@@ -17,7 +17,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   var gameOver = false {
     willSet {
       if newValue {
-        checkHighScoreAndStore()
         let gameOverLayer = childNodeWithName(GameSceneChildName.GameOverLayerName.rawValue) as SKNode?
         gameOverLayer?.runAction(SKAction.moveDistance(CGVectorMake(0, 100), fadeInWithDuration: 0.2))
       }
@@ -32,8 +31,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   let StackGapMinWidth: Int = 80
   let HeroSpeed: CGFloat = 760
 
-  let StoreScoreName = "com.stickHero.score"
-
   var isBegin = false
   var isEnd = false
   var leftStack: SKShapeNode?
@@ -41,19 +38,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
   var nextLeftStartX: CGFloat = 0
   var stickHeight: CGFloat = 0
-
-  var score: Int = 0 {
-    willSet {
-      let scoreBand = childNodeWithName(GameSceneChildName.ScoreName.rawValue) as? SKLabelNode
-      scoreBand?.text = "\(newValue)"
-      scoreBand?.runAction(SKAction.sequence([SKAction.scaleTo(1.5, duration: 0.1), SKAction.scaleTo(1, duration: 0.1)]))
-
-      if newValue == 1 {
-        let tip = childNodeWithName(GameSceneChildName.TipName.rawValue) as? SKLabelNode
-        tip?.runAction(SKAction.fadeAlphaTo(0, duration: 0.4))
-      }
-    }
-  }
 
   lazy var playAbleRect: CGRect = {
 
@@ -164,8 +148,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
   func start() {
     loadBackground()
-    loadScoreBackground()
-    loadScore()
     loadTip()
     loadGameOverLayer()
 
@@ -183,7 +165,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   func restart() {
     isBegin = false
     isEnd = false
-    score = 0
     nextLeftStartX = 0
     removeAllChildren()
     start()
@@ -218,7 +199,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       && (stick!.position.x + self.stickHeight) <= newPoint.x + 20 {
       loadPerfect()
       self.runAction(SKAction.playSoundFileNamed(GameSceneEffectAudioName.StickTouchMidAudioName.rawValue, waitForCompletion: false))
-      score += 1
     }
 
   }
@@ -270,43 +250,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     hero!.runAction(walkAction, withKey: GameSceneActionKey.WalkAction.rawValue)
     hero!.runAction(move) { [unowned self] () -> Void in
-      self.score += 1
 
       hero!.runAction(SKAction.playSoundFileNamed(GameSceneEffectAudioName.VictoryAudioName.rawValue, waitForCompletion: false))
       hero!.removeActionForKey(GameSceneActionKey.WalkAction.rawValue)
       self.moveStackAndCreateNew()
     }
-  }
-
-  private func checkHighScoreAndStore() {
-    let highScore = NSUserDefaults.standardUserDefaults().integerForKey(StoreScoreName)
-    if score > Int(highScore) {
-      showHighScore()
-
-      NSUserDefaults.standardUserDefaults().setInteger(score, forKey: StoreScoreName)
-      NSUserDefaults.standardUserDefaults().synchronize()
-    }
-  }
-
-  private func showHighScore() {
-    self.runAction(SKAction.playSoundFileNamed(GameSceneEffectAudioName.HighScoreAudioName.rawValue, waitForCompletion: false))
-
-    let wait = SKAction.waitForDuration(0.4)
-    let grow = SKAction.scaleTo(1.5, duration: 0.4)
-    grow.timingMode = .EaseInEaseOut
-    let explosion = starEmitterActionAtPosition(CGPointMake(0, 300))
-    let shrink = SKAction.scaleTo(1, duration: 0.2)
-
-    let idleGrow = SKAction.scaleTo(1.2, duration: 0.4)
-    idleGrow.timingMode = .EaseInEaseOut
-    let idleShrink = SKAction.scaleTo(1, duration: 0.4)
-    let pulsate = SKAction.repeatActionForever(SKAction.sequence([idleGrow, idleShrink]))
-
-    let gameOverLayer = childNodeWithName(GameSceneChildName.GameOverLayerName.rawValue) as SKNode?
-    let highScoreLabel = gameOverLayer?.childNodeWithName(GameSceneChildName.HighScoreName.rawValue) as SKNode?
-    highScoreLabel?.runAction(SKAction.sequence([wait, explosion, grow, shrink]), completion: { () -> Void in
-      highScoreLabel?.runAction(pulsate)
-    })
   }
 
   private func moveStackAndCreateNew() {
@@ -353,27 +301,6 @@ private extension GameScene {
       addChild(node)
       return
     }
-  }
-
-  func loadScore() {
-    let scoreBand = SKLabelNode(fontNamed: "Arial")
-    scoreBand.name = GameSceneChildName.ScoreName.rawValue
-    scoreBand.text = "0"
-    scoreBand.position = CGPointMake(0, DefinedScreenHeight / 2 - 200)
-    scoreBand.fontColor = SKColor.whiteColor()
-    scoreBand.fontSize = 100
-    scoreBand.zPosition = GameSceneZposition.ScoreZposition.rawValue
-    scoreBand.horizontalAlignmentMode = .Center
-
-    addChild(scoreBand)
-  }
-
-  func loadScoreBackground() {
-    let back = SKShapeNode(rect: CGRectMake(0-120, 1024-200-30, 240, 140), cornerRadius: 20)
-    back.zPosition = GameSceneZposition.ScoreBackgroundZposition.rawValue
-    back.fillColor = SKColor.blackColor().colorWithAlphaComponent(0.3)
-    back.strokeColor = SKColor.blackColor().colorWithAlphaComponent(0.3)
-    addChild(back)
   }
 
   func loadHero() {
@@ -497,32 +424,6 @@ private extension GameScene {
     retry.name = GameSceneChildName.RetryButtonName.rawValue
     retry.position = CGPointMake(0, -200)
     node.addChild(retry)
-
-    let highScore = SKLabelNode(fontNamed: "AmericanTypewriter")
-    highScore.text = "Highscore!"
-    highScore.fontColor = UIColor.whiteColor()
-    highScore.fontSize = 50
-    highScore.name = GameSceneChildName.HighScoreName.rawValue
-    highScore.position = CGPointMake(0, 300)
-    highScore.horizontalAlignmentMode = .Center
-    highScore.setScale(0)
-    node.addChild(highScore)
-  }
-
-  // MARK: - Action
-  func starEmitterActionAtPosition(position: CGPoint) -> SKAction {
-    let emitter = SKEmitterNode(fileNamed: "StarExplosion")
-    emitter?.position = position
-    emitter?.zPosition = GameSceneZposition.EmitterZposition.rawValue
-    emitter?.alpha = 0.6
-    addChild((emitter)!)
-
-    let wait = SKAction.waitForDuration(0.15)
-
-    return SKAction.runBlock {
-        emitter?.runAction(wait)
-    }
-
   }
 
   func randomInRange(range: Range<Int>) -> Int {
