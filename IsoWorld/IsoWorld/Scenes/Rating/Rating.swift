@@ -1,3 +1,11 @@
+//
+//  Rating.swift
+//  IsoWorld
+//
+//  Created by Rinat Muhamedgaliev on 5/22/16.
+//  Copyright © 2016 Rinat Muhamedgaliev. All rights reserved.
+//
+
 import SpriteKit
 
 class Rating: SKScene {
@@ -73,7 +81,6 @@ class Rating: SKScene {
       let row = users[i]
       for j in 0..<row.count {
         let visible = getVisibleIndex(users, indexI: i, indexJ: j)
-//        let tileInt = row[j].score
         let texture = getColumnTexture(row[j])
         let column = getCoumn(row[j])
 
