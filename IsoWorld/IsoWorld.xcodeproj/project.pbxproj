@@ -46,8 +46,6 @@
 		64FF9F4F1CEE3FB9008D94F6 /* human1.png in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F4A1CEE3FB9008D94F6 /* human1.png */; };
 		64FF9F501CEE3FB9008D94F6 /* human2.png in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F4B1CEE3FB9008D94F6 /* human2.png */; };
 		64FF9F511CEE3FB9008D94F6 /* stick_background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F4C1CEE3FB9008D94F6 /* stick_background.jpg */; };
-		64FF9F541CEE3FC2008D94F6 /* StarExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F521CEE3FC2008D94F6 /* StarExplosion.sks */; };
-		64FF9F551CEE3FC2008D94F6 /* starParticle.png in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F531CEE3FC2008D94F6 /* starParticle.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,8 +106,6 @@
 		64FF9F4A1CEE3FB9008D94F6 /* human1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = human1.png; sourceTree = "<group>"; };
 		64FF9F4B1CEE3FB9008D94F6 /* human2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = human2.png; sourceTree = "<group>"; };
 		64FF9F4C1CEE3FB9008D94F6 /* stick_background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = stick_background.jpg; sourceTree = "<group>"; };
-		64FF9F521CEE3FC2008D94F6 /* StarExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StarExplosion.sks; sourceTree = "<group>"; };
-		64FF9F531CEE3FC2008D94F6 /* starParticle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = starParticle.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,7 +243,6 @@
 			isa = PBXGroup;
 			children = (
 				64FF9F471CEE3F94008D94F6 /* Sounds */,
-				64FF9F461CEE3F8D008D94F6 /* Sks */,
 				64FF9F451CEE3F80008D94F6 /* Images */,
 				644029891CDFBE2000961B0D /* UserScores.plist */,
 				6467F2D51CE8FE0E00251B2B /* Localizable.strings */,
@@ -282,16 +277,6 @@
 			);
 			name = Images;
 			path = ../Assets/Images;
-			sourceTree = "<group>";
-		};
-		64FF9F461CEE3F8D008D94F6 /* Sks */ = {
-			isa = PBXGroup;
-			children = (
-				64FF9F521CEE3FC2008D94F6 /* StarExplosion.sks */,
-				64FF9F531CEE3FC2008D94F6 /* starParticle.png */,
-			);
-			name = Sks;
-			path = ../Assets/Sks;
 			sourceTree = "<group>";
 		};
 		64FF9F471CEE3F94008D94F6 /* Sounds */ = {
@@ -407,7 +392,6 @@
 				64C9B81D1CEF5E5500AEA123 /* kick.wav in Resources */,
 				064236951CBCC2C100E05D75 /* LaunchScreen.storyboard in Resources */,
 				64FF9F511CEE3FB9008D94F6 /* stick_background.jpg in Resources */,
-				64FF9F551CEE3FC2008D94F6 /* starParticle.png in Resources */,
 				6467F2D31CE8FE0E00251B2B /* Localizable.strings in Resources */,
 				64FF9F4E1CEE3FB9008D94F6 /* button_retry_up.png in Resources */,
 				064236921CBCC2C100E05D75 /* Assets.xcassets in Resources */,
@@ -416,7 +400,6 @@
 				6440298A1CDFBE2000961B0D /* UserScores.plist in Resources */,
 				64C9B81F1CEF5E5500AEA123 /* touch_mid.wav in Resources */,
 				064236901CBCC2C100E05D75 /* Main.storyboard in Resources */,
-				64FF9F541CEE3FC2008D94F6 /* StarExplosion.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
