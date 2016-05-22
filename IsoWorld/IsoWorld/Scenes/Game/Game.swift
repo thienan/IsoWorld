@@ -14,6 +14,8 @@ import AVFoundation
 class GameScene: SKScene, SKPhysicsContactDelegate {
   var musicPlayer: AVAudioPlayer!
 
+  var backButton: SKSpriteNode!
+
 //  MARK: Objects
   var heroObj =  Hero()
 
@@ -23,7 +25,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let gameOverLayer = childNodeWithName(GameSceneChildName.GameOverLayerName.rawValue) as SKNode?
         gameOverLayer?.runAction(SKAction.moveDistance(CGVectorMake(0, 100), fadeInWithDuration: 0.2))
       }
+    }
+  }
 
+  var score:Int = 0 {
+    willSet {
+      let scoreBand = childNodeWithName(GameSceneChildName.ScoreName.rawValue) as? SKLabelNode
+      scoreBand?.text = "\(newValue)"
+      scoreBand?.runAction(SKAction.sequence([SKAction.scaleTo(1.5, duration: 0.1), SKAction.scaleTo(1, duration: 0.1)]))
+
+      if (newValue == 1) {
+        let tip = childNodeWithName(GameSceneChildName.TipName.rawValue) as? SKLabelNode
+        tip?.runAction(SKAction.fadeAlphaTo(0, duration: 0.4))
+      }
     }
   }
 
@@ -134,6 +148,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
   func start() {
     loadBackground()
+    loadScoreBackground()
+    loadScore()
+    loadTip()
     loadGameOverLayer()
 
     leftIsland = loadIslands(false, startLeftPoint: playAbleRect.origin.x)
@@ -142,6 +159,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let maxGap = Int(playAbleRect.width - IslandMaxWidth - (leftIsland?.frame.size.width)!)
     let gap = CGFloat(randomInRange(IslandGapMinWidth...maxGap))
     rightIsland = loadIslands(false, startLeftPoint: nextLeftStartX + gap)
+    
 
     gameOver = false
   }
@@ -149,6 +167,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   func restart() {
     isBegin = false
     isEnd = false
+    score = 0
     nextLeftStartX = 0
     removeAllChildren()
     start()
@@ -210,6 +229,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       hero.removeActionForKey(GameSceneActionKey.WalkAction.rawValue)
       self.moveIslandAndCreateNew()
     }
+    self.score += 1
   }
 
   private func moveIslandAndCreateNew() {
@@ -325,6 +345,40 @@ private extension GameScene {
     retry.name = GameSceneChildName.RetryButtonName.rawValue
     retry.position = CGPointMake(0, -200)
     node.addChild(retry)
+  }
+
+  func loadScore() {
+    let scoreBand = SKLabelNode(fontNamed: "Arial")
+    scoreBand.name = GameSceneChildName.ScoreName.rawValue
+    scoreBand.text = "0"
+    scoreBand.position = CGPointMake(0, DefinedScreenHeight / 2 - 200)
+    scoreBand.fontColor = SKColor.whiteColor()
+    scoreBand.fontSize = 100
+    scoreBand.zPosition = GameSceneZposition.ScoreZposition.rawValue
+    scoreBand.horizontalAlignmentMode = .Center
+
+    addChild(scoreBand)
+  }
+
+  func loadScoreBackground() {
+    let back = SKShapeNode(rect: CGRectMake(0-120, 1024-200-30, 240, 140), cornerRadius: 20)
+    back.zPosition = GameSceneZposition.ScoreBackgroundZposition.rawValue
+    back.fillColor = SKColor.blackColor().colorWithAlphaComponent(0.3)
+    back.strokeColor = SKColor.blackColor().colorWithAlphaComponent(0.3)
+    addChild(back)
+  }
+
+  func loadTip() {
+    let tip = SKLabelNode(fontNamed: "HelveticaNeue-Bold")
+    tip.name = GameSceneChildName.TipName.rawValue
+    tip.text = ""
+    tip.position = CGPointMake(0, DefinedScreenHeight / 2 - 350)
+    tip.fontColor = SKColor.blackColor()
+    tip.fontSize = 52
+    tip.zPosition = GameSceneZposition.TipZposition.rawValue
+    tip.horizontalAlignmentMode = .Center
+
+    addChild(tip)
   }
 
   func randomInRange(range: Range<Int>) -> Int {

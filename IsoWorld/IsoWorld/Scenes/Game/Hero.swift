@@ -68,8 +68,6 @@ class Hero {
     return CGPoint(x: xPosition, y: yPosition)
   }
 
-  
-
   func getHeroNodeFromParent() -> SKSpriteNode {
     return self.hero!
   }

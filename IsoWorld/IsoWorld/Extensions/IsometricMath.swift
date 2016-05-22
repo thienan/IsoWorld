@@ -37,6 +37,7 @@ func point2DToIso(p: CGPoint) -> CGPoint {
 }
 
 extension CGPoint {
+
   func angleToPoint(comparisonPoint: CGPoint) -> CGFloat {
     let originX = comparisonPoint.x - self.x
     let originY = comparisonPoint.y - self.y
@@ -47,6 +48,7 @@ extension CGPoint {
     }
     return bearingDegrees
   }
+
 }
 
 extension CGFloat {
