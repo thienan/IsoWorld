@@ -1,6 +1,5 @@
 import UIKit
 import SpriteKit
-import SwiftyJSON
 
 class GameViewController: UIViewController {
 
