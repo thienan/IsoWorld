@@ -9,6 +9,7 @@
 import SpriteKit
 
 class MenuScene: SKScene {
+  var logoNode: SKSpriteNode?
   var gameLabel: SKLabelNode?
   var ratingLabel: SKLabelNode?
 
@@ -16,10 +17,23 @@ class MenuScene: SKScene {
 
   override func didMoveToView(view: SKView) {
 
-    self.backgroundColor = UIColor(red: 0.20392156862745106, green: 0.5960784313725489, blue: 0.8588235294117647, alpha: 1)
+    self.backgroundColor = UIColor(red: 243/255, green: 156/255, blue: 18/255, alpha: 1)
 
+    addLogo()
     addNewGameTitle()
     addRatingTitle()
+  }
+  
+  private func addLogo() {
+    let size = CGSize(width: 250, height: 250)
+    self.logoNode = SKSpriteNode(imageNamed: "logo")
+    self.logoNode?.size = size
+    self.logoNode?.position = CGPoint(
+      x: CGRectGetMidX((self.scene?.frame)!),
+      y: CGRectGetHeight((self.scene?.frame)!) - 200
+    )
+    
+    self.addChild(self.logoNode!)
   }
 
   private func addNewGameTitle() {
@@ -28,6 +42,7 @@ class MenuScene: SKScene {
     self.gameLabel?.fontColor = UIColor.whiteColor()
     self.gameLabel?.text = "GAME".localized
     self.gameLabel?.name = "game"
+    self.gameLabel?.fontName = "Cinzel-Regular"
     self.gameLabel?.position = CGPoint(x: CGRectGetMidX((self.scene?.frame)!), y: CGRectGetMidY((self.scene?.frame)!) - 50)
     self.addChild(gameLabel!)
   }
@@ -38,6 +53,7 @@ class MenuScene: SKScene {
     self.ratingLabel?.fontColor = UIColor.whiteColor()
     self.ratingLabel?.text = "RATING".localized
     self.ratingLabel?.name = "rating"
+    self.ratingLabel?.fontName = "Cinzel-Regular"
     self.ratingLabel?.position = CGPoint(x: CGRectGetMidX((self.scene?.frame)!), y: CGRectGetMidY((self.scene?.frame)!) - 100)
     self.addChild(ratingLabel!)
   }
