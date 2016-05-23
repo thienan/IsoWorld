@@ -89,34 +89,12 @@ class MenuScene: SKScene {
         scene.scaleMode = .ResizeFill
         scene.size = (skView?.bounds.size)!
 
-        let recognizer = UIPinchGestureRecognizer(target: self, action: #selector(MenuScene.pinchGesture(_:)))
-        recognizer.delaysTouchesBegan = true
-        skView!.addGestureRecognizer(recognizer)
-
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(MenuScene.onPan(_:)))
-        panGestureRecognizer.delaysTouchesBegan = true
-        skView!.addGestureRecognizer(panGestureRecognizer)
-
         skView!.presentScene(scene)
         self.gameScene = scene
       }
     }
   }
 
-  func pinchGesture(gestureRecognizer: UIPinchGestureRecognizer) {
-    let scale = gestureRecognizer.scale
-    let centroid = gestureRecognizer.locationInView(self.view)
 
-    switch gestureRecognizer.state {
-    case .Began:
-      self.gameScene.onPinchStart(centroid, scale: scale)
-    default:
-      self.gameScene.onPinchMove(centroid, scale: scale)
-    }
-  }
-
-  func onPan(gestureRecognizer: UIPanGestureRecognizer) {
-    self.gameScene.onPan(gestureRecognizer)
-  }
 
 }

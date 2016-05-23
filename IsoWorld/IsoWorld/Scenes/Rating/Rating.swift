@@ -30,7 +30,20 @@ class Rating: SKScene {
     let scores = userService.loadUserRating()
     users = userService.convertUserScoresToMatrix(fromVector: scores)
     
+    
     addUserNameNode()
+  }
+  
+  func pinchGesture(gestureRecognizer: UIPinchGestureRecognizer) {
+    let scale = gestureRecognizer.scale
+    let centroid = gestureRecognizer.locationInView(self.view)
+    
+    switch gestureRecognizer.state {
+    case .Began:
+      self.onPinchStart(centroid, scale: scale)
+    default:
+      self.onPinchMove(centroid, scale: scale)
+    }
   }
   
   func addUserNameNode() {
@@ -57,6 +70,14 @@ class Rating: SKScene {
     addChild(viewIso)
 
     placeAllTilesIso()
+    
+    let recognizer = UIPinchGestureRecognizer(target: self, action: #selector(self.pinchGesture(_:)))
+    recognizer.delaysTouchesBegan = true
+    self.view!.addGestureRecognizer(recognizer)
+    
+    let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(self.onPan(_:)))
+    panGestureRecognizer.delaysTouchesBegan = true
+    self.view!.addGestureRecognizer(panGestureRecognizer)
   }
 
   func placeTileIso(withPosition: CGPoint, withTexture texture: SKTexture) -> SKSpriteNode {
