@@ -375,8 +375,8 @@ private extension GameScene {
     backButton.colorBlendFactor = 1.0
     backButton.alpha = 1.0
     backButton.color = UIColor.whiteColor()
-    backButton.size.height = 90
-    backButton.size.width = 120
+    backButton.size.height = 99
+    backButton.size.width = 99
     addChild(backButton)
     
     let backButtonPlace = SKSpriteNode()

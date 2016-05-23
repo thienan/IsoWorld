@@ -17,7 +17,6 @@ class UserNode: SKSpriteNode {
 
 class UserScore {
   dynamic var name: String = ""
-  dynamic var photo: String = "photo"
   dynamic var score: Int = 0
   dynamic var me: Bool = false
   dynamic var time: Int = 0
@@ -26,7 +25,6 @@ class UserScore {
 
   init(name: String, score: Int, me: Bool) {
     self.name = name
-    self.photo = "photo"
     self.score = score
     self.me = me
   }
@@ -34,10 +32,6 @@ class UserScore {
   init(fromDictionary dictionary: NSDictionary) {
     if let name = dictionary["name"] as? String {
       self.name = name
-    }
-
-    if let photo = dictionary["photo"] as? String {
-      self.photo = photo
     }
 
     if let score = dictionary["score"] as? Int {
