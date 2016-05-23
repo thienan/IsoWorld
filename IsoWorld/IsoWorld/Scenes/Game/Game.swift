@@ -94,38 +94,53 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   }
 
   override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-    guard !gameOver else {
-      let gameOverLayer = childNodeWithName(GameSceneChildName.GameOverLayerName.rawValue) as SKNode?
-
-      let location = touches.first?.locationInNode(gameOverLayer!)
-      let retry = gameOverLayer!.nodeAtPoint(location!)
-
-
-      if retry.name == GameSceneChildName.RetryButtonName.rawValue {
-        retry.runAction(SKAction.sequence([SKAction.setTexture(SKTexture(imageNamed: "button_retry_down"), resize: false), SKAction.waitForDuration(0.3)]), completion: {[unowned self] () -> Void in
-          self.restart()
-          })
+    
+    for touch in touches {
+      let location = (touch as UITouch).locationInNode(self)
+      if let touchNode = self.nodeAtPoint(location) as? SKSpriteNode {
+        if touchNode.name == "back" {
+          
+          let scene = MenuScene()
+          let skView = self.view
+          scene.size = skView!.bounds.size
+          scene.scaleMode = .AspectFill
+          skView!.presentScene(scene)
+          
+        } else {
+          guard !gameOver else {
+            let gameOverLayer = childNodeWithName(GameSceneChildName.GameOverLayerName.rawValue) as SKNode?
+            
+            let location = touches.first?.locationInNode(gameOverLayer!)
+            let retry = gameOverLayer!.nodeAtPoint(location!)
+            
+            
+            if retry.name == GameSceneChildName.RetryButtonName.rawValue {
+              retry.runAction(SKAction.sequence([SKAction.setTexture(SKTexture(imageNamed: "button_retry_down"), resize: false), SKAction.waitForDuration(0.3)]), completion: {[unowned self] () -> Void in
+                self.restart()
+                })
+            }
+            return
+          }
+          
+          if !isBegin && !isEnd {
+            isBegin = true
+            
+            let bridge = loadBridge()
+            let action = SKAction.resizeToHeight(
+              CGFloat(
+                DefinedScreenHeight - IslandConstants.height
+              ),
+              duration: 1.5
+            )
+            bridge.runAction(action, withKey: GameSceneActionKey.BridgeGrowAction.rawValue)
+            let loopAction = SKAction.group([SKAction.playSoundFileNamed(GameSceneEffectAudioName.BridgeGrowAudioName.rawValue, waitForCompletion: true)])
+            bridge.runAction(SKAction.repeatActionForever(loopAction), withKey: GameSceneActionKey.BridgeGrowAudioAction.rawValue)
+            
+            return
+          }
+        }
       }
-      return
     }
-
-    if !isBegin && !isEnd {
-      isBegin = true
-
-      let bridge = loadBridge()
-      let action = SKAction.resizeToHeight(
-        CGFloat(
-          DefinedScreenHeight - IslandConstants.height
-        ),
-        duration: 1.5
-      )
-      bridge.runAction(action, withKey: GameSceneActionKey.BridgeGrowAction.rawValue)
-      let loopAction = SKAction.group([SKAction.playSoundFileNamed(GameSceneEffectAudioName.BridgeGrowAudioName.rawValue, waitForCompletion: true)])
-      bridge.runAction(SKAction.repeatActionForever(loopAction), withKey: GameSceneActionKey.BridgeGrowAudioAction.rawValue)
-
-      return
-    }
-
   }
 
   override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -157,47 +172,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     loadScoreBackground()
     loadScore()
     loadTip()
+    loadBackButton()
     loadGameOverLayer()
     addleftIsland(false)
     loadHero()
-    
+
     let rightIslandStartPosition = islandObj.calculateGap(
       self.playAbleRect.width,
       leftIslandWidth: self.leftIsland!.size.width,
       nextLeftStartX: self.nextLeftStartX
     )
-    
+
     addRightIsland(false, rightIslandStartPosition: rightIslandStartPosition)
 
     gameOver = false
   }
-  
+
   func addleftIsland(animated: Bool) {
     let leftIslandData = islandObj.loadIslands(
       animated,
       startLeftPoint: playAbleRect.origin.x,
-      completition:  {[unowned self] () -> Void in
+      completition: {[unowned self] () -> Void in
         self.isBegin = false
         self.isEnd = false
       }
     )
-    
+
     self.leftIsland = leftIslandData.islandNode
     addChild(self.leftIsland!)
     self.nextLeftStartX = leftIslandData.leftStartX
   }
-  
+
   func addRightIsland(animated: Bool, rightIslandStartPosition: CGFloat) {
-    
+
     let rightIslandData = islandObj.loadIslands(
       animated,
       startLeftPoint: rightIslandStartPosition,
-      completition:  {[unowned self] () -> Void in
+      completition: {[unowned self] () -> Void in
         self.isBegin = false
         self.isEnd = false
       }
     )
-    
+
     self.rightIsland = rightIslandData.islandNode
     self.addChild(self.rightIsland!)
     self.nextLeftStartX = rightIslandData.leftStartX
@@ -214,37 +230,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
   private func checkPass() -> Bool {
     let bridge = childNodeWithName(GameSceneChildName.BridgeName.rawValue) as? SKSpriteNode
-
     let rightPoint = DefinedScreenWidth / 2 + bridge!.position.x + self.bridgeHeight
-
     guard rightPoint < self.nextLeftStartX else {
       return false
     }
-
     guard CGRectIntersectsRect((leftIsland?.frame)!, bridge!.frame)
       && CGRectIntersectsRect((rightIsland?.frame)!, bridge!.frame) else {
       return false
     }
-
     return true
   }
 
   private func heroGo(pass: Bool) {
-
     let hero = heroObj.getHeroNodeFromParent()
-
     guard pass else {
       let bridge = childNodeWithName(GameSceneChildName.BridgeName.rawValue) as? SKSpriteNode
-
       let dis: CGFloat = bridge!.position.x + self.bridgeHeight
       let disGap = nextLeftStartX - (DefinedScreenWidth / 2 - abs(hero.position.x)) - (rightIsland?.frame.size.width)! / 2
-
       let move = SKAction.moveToX(dis, duration: NSTimeInterval(abs(disGap / HeroSpeed)))
-
       hero.runAction(heroObj.walkAction, withKey: GameSceneActionKey.WalkAction.rawValue)
       hero.runAction(move, completion: {[unowned self] () -> Void in
         bridge!.runAction(SKAction.rotateToAngle(CGFloat(-M_PI), duration: 0.4))
-
         hero.physicsBody!.affectedByGravity = true
         hero.runAction(SKAction.playSoundFileNamed(GameSceneEffectAudioName.DeadAudioName.rawValue, waitForCompletion: false))
         hero.removeActionForKey(GameSceneActionKey.WalkAction.rawValue)
@@ -252,18 +258,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
           self.gameOver = true
           })
         })
-
       return
     }
 
     let dis: CGFloat = -DefinedScreenWidth / 2 + nextLeftStartX - hero.size.width / 2 - 20
     let disGap = nextLeftStartX - (DefinedScreenWidth / 2 - abs(hero.position.x)) - (rightIsland?.frame.size.width)! / 2
-
     let move = SKAction.moveToX(dis, duration: NSTimeInterval(abs(disGap / HeroSpeed)))
-
     hero.runAction(heroObj.walkAction, withKey: GameSceneActionKey.WalkAction.rawValue)
     hero.runAction(move) { [unowned self] () -> Void in
-
       hero.runAction(SKAction.playSoundFileNamed(GameSceneEffectAudioName.VictoryAudioName.rawValue, waitForCompletion: false))
       hero.removeActionForKey(GameSceneActionKey.WalkAction.rawValue)
       self.moveIslandAndCreateNew()
@@ -274,25 +276,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   private func moveIslandAndCreateNew() {
     let action = SKAction.moveBy(CGVectorMake(-nextLeftStartX + (rightIsland?.frame.size.width)! + playAbleRect.origin.x - 2, 0), duration: 0.3)
     rightIsland?.runAction(action)
-
     let hero = heroObj.getHeroNodeFromParent()
     let bridge = childNodeWithName(GameSceneChildName.BridgeName.rawValue) as? SKSpriteNode
-
     hero.runAction(action)
     bridge!.runAction(SKAction.group([SKAction.moveBy(CGVectorMake(-DefinedScreenWidth, 0), duration: 0.5), SKAction.fadeAlphaTo(0, duration: 0.3)])) { () -> Void in
       bridge!.removeFromParent()
     }
-
     leftIsland?.runAction(SKAction.moveBy(CGVectorMake(-DefinedScreenWidth, 0), duration: 0.5), completion: {[unowned self] () -> Void in
       self.leftIsland?.removeFromParent()
-
       let maxGap = Int(self.playAbleRect.width - (self.rightIsland?.frame.size.width)! - IslandConstants.maxWidth)
       let gap = CGFloat(randomInRange(IslandConstants.gapMinWidth...maxGap))
-
       self.leftIsland = self.rightIsland
       let rightIslandStartPosition =
         self.playAbleRect.origin.x + (self.rightIsland?.frame.size.width)! + gap
-      
       self.addRightIsland(true, rightIslandStartPosition: rightIslandStartPosition)
     })
   }
@@ -306,7 +302,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 private extension GameScene {
 
   func loadBackground() {
-
     guard let _ = childNodeWithName("background") as? SKSpriteNode else {
       let texture = SKTexture(image: UIImage(named: "background.png")!)
       let node = SKSpriteNode(texture: texture)
@@ -329,7 +324,6 @@ private extension GameScene {
 
   func loadBridge() -> SKSpriteNode {
     let hero = heroObj.getHeroNodeFromParent()
-
     let texture = SKTexture(imageNamed: "bridge")
     let bridge = SKSpriteNode(texture: texture, size: CGSizeMake(12, 1))
     bridge.zPosition = GameSceneZposition.BridgeZposition.rawValue
@@ -341,15 +335,12 @@ private extension GameScene {
     return bridge
   }
 
-
-
   func loadGameOverLayer() {
     let node = SKNode()
     node.alpha = 0
     node.name = GameSceneChildName.GameOverLayerName.rawValue
     node.zPosition = GameSceneZposition.GameOverZposition.rawValue
     addChild(node)
-
     let label = SKLabelNode(fontNamed: "HelveticaNeue-Bold")
     label.text = "Game Over"
     label.fontColor = SKColor.redColor()
@@ -357,7 +348,6 @@ private extension GameScene {
     label.position = CGPointMake(0, 100)
     label.horizontalAlignmentMode = .Center
     node.addChild(label)
-
     let retry = SKSpriteNode(imageNamed: "button_retry_up")
     retry.name = GameSceneChildName.RetryButtonName.rawValue
     retry.position = CGPointMake(0, -200)
@@ -373,20 +363,32 @@ private extension GameScene {
     scoreBand.fontSize = 100
     scoreBand.zPosition = GameSceneZposition.ScoreZposition.rawValue
     scoreBand.horizontalAlignmentMode = .Center
-
+    
     addChild(scoreBand)
-
+  }
+  
+  func loadBackButton() {
     let backButton = SKSpriteNode()
-    backButton.name = "back"
     backButton.position = CGPointMake(-470, DefinedScreenHeight / 2 - 150)
     backButton.texture = SKTexture(imageNamed: "left_arrow")
-    backButton.zPosition = 10000
+    backButton.zPosition = 300
     backButton.colorBlendFactor = 1.0
     backButton.alpha = 1.0
     backButton.color = UIColor.whiteColor()
     backButton.size.height = 90
     backButton.size.width = 120
     addChild(backButton)
+    
+    let backButtonPlace = SKSpriteNode()
+    backButtonPlace.position = CGPointMake(-470, DefinedScreenHeight / 2 - 150)
+    backButtonPlace.zPosition = 10000
+    backButtonPlace.colorBlendFactor = 1.0
+    backButtonPlace.alpha = 1.0
+    backButtonPlace.color = UIColor.clearColor()
+    backButtonPlace.size.height = 200
+    backButtonPlace.size.width = 200
+    backButtonPlace.name = "back"
+    addChild(backButtonPlace)
   }
 
   func loadScoreBackground() {
