@@ -16,8 +16,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
   var backButton: SKSpriteNode!
 
-//  MARK: Objects
+//  MARK: Hero
   var heroObj =  Hero()
+  
+//  MARK: Island
+  var islandObj = Island()
+  var leftIsland: SKSpriteNode?
+  var rightIsland: SKSpriteNode?
 
   var gameOver = false {
     willSet {
@@ -41,17 +46,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
   }
 
-  let IslandHeight: CGFloat = 400.0
-  let IslandMaxWidth: CGFloat = 300.0
-  let IslandMinWidth: CGFloat = 100.0
+
   let gravity: CGFloat = -100.0
-  let IslandGapMinWidth: Int = 80
   let HeroSpeed: CGFloat = 760
 
   var isBegin = false
   var isEnd = false
-  var leftIsland: SKSpriteNode?
-  var rightIsland: SKSpriteNode?
+
 
   var nextLeftStartX: CGFloat = 0
   var bridgeHeight: CGFloat = 0
@@ -112,7 +113,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       isBegin = true
 
       let bridge = loadBridge()
-      let action = SKAction.resizeToHeight(CGFloat(DefinedScreenHeight - IslandHeight), duration: 1.5)
+      let action = SKAction.resizeToHeight(
+        CGFloat(
+          DefinedScreenHeight - IslandConstants.height
+        ),
+        duration: 1.5
+      )
       bridge.runAction(action, withKey: GameSceneActionKey.BridgeGrowAction.rawValue)
       let loopAction = SKAction.group([SKAction.playSoundFileNamed(GameSceneEffectAudioName.BridgeGrowAudioName.rawValue, waitForCompletion: true)])
       bridge.runAction(SKAction.repeatActionForever(loopAction), withKey: GameSceneActionKey.BridgeGrowAudioAction.rawValue)
@@ -152,16 +158,49 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     loadScore()
     loadTip()
     loadGameOverLayer()
-
-    leftIsland = loadIslands(false, startLeftPoint: playAbleRect.origin.x)
+    addleftIsland(false)
     loadHero()
-
-    let maxGap = Int(playAbleRect.width - IslandMaxWidth - (leftIsland?.frame.size.width)!)
-    let gap = CGFloat(randomInRange(IslandGapMinWidth...maxGap))
-    rightIsland = loadIslands(false, startLeftPoint: nextLeftStartX + gap)
     
+    let rightIslandStartPosition = islandObj.calculateGap(
+      self.playAbleRect.width,
+      leftIslandWidth: self.leftIsland!.size.width,
+      nextLeftStartX: self.nextLeftStartX
+    )
+    
+    addRightIsland(false, rightIslandStartPosition: rightIslandStartPosition)
 
     gameOver = false
+  }
+  
+  func addleftIsland(animated: Bool) {
+    let leftIslandData = islandObj.loadIslands(
+      animated,
+      startLeftPoint: playAbleRect.origin.x,
+      completition:  {[unowned self] () -> Void in
+        self.isBegin = false
+        self.isEnd = false
+      }
+    )
+    
+    self.leftIsland = leftIslandData.islandNode
+    addChild(self.leftIsland!)
+    self.nextLeftStartX = leftIslandData.leftStartX
+  }
+  
+  func addRightIsland(animated: Bool, rightIslandStartPosition: CGFloat) {
+    
+    let rightIslandData = islandObj.loadIslands(
+      animated,
+      startLeftPoint: rightIslandStartPosition,
+      completition:  {[unowned self] () -> Void in
+        self.isBegin = false
+        self.isEnd = false
+      }
+    )
+    
+    self.rightIsland = rightIslandData.islandNode
+    self.addChild(self.rightIsland!)
+    self.nextLeftStartX = rightIslandData.leftStartX
   }
 
   func restart() {
@@ -247,12 +286,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     leftIsland?.runAction(SKAction.moveBy(CGVectorMake(-DefinedScreenWidth, 0), duration: 0.5), completion: {[unowned self] () -> Void in
       self.leftIsland?.removeFromParent()
 
-      let maxGap = Int(self.playAbleRect.width - (self.rightIsland?.frame.size.width)! - self.IslandMaxWidth)
-      let gap = CGFloat(self.randomInRange(self.IslandGapMinWidth...maxGap))
+      let maxGap = Int(self.playAbleRect.width - (self.rightIsland?.frame.size.width)! - IslandConstants.maxWidth)
+      let gap = CGFloat(randomInRange(IslandConstants.gapMinWidth...maxGap))
 
       self.leftIsland = self.rightIsland
-      self.rightIsland = self.loadIslands(true, startLeftPoint: self.playAbleRect.origin.x + (self.rightIsland?.frame.size.width)! + gap)
-      })
+      let rightIslandStartPosition =
+        self.playAbleRect.origin.x + (self.rightIsland?.frame.size.width)! + gap
+      
+      self.addRightIsland(true, rightIslandStartPosition: rightIslandStartPosition)
+    })
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -299,32 +341,7 @@ private extension GameScene {
     return bridge
   }
 
-  func loadIslands(animate: Bool, startLeftPoint: CGFloat) -> SKSpriteNode {
-    let max: Int = Int(IslandMaxWidth / 10)
-    let min: Int = Int(IslandMinWidth / 10)
-    let width: CGFloat = CGFloat(randomInRange(min...max) * 10)
-    let height: CGFloat = IslandHeight
-    let texture = SKTexture(imageNamed: "stone")
-    let island = SKSpriteNode(texture: texture)
-    island.size = CGSizeMake(width, height)
-    island.zPosition = GameSceneZposition.IslandZposition.rawValue
-    island.name = GameSceneChildName.IslandName.rawValue
 
-    if animate {
-      island.position = CGPointMake(DefinedScreenWidth / 2, -DefinedScreenHeight / 2 + height / 2)
-      island.runAction(
-        SKAction.moveToX(-DefinedScreenWidth / 2 + width / 2 + startLeftPoint, duration: 0.3),
-        completion: {[unowned self] () -> Void in
-        self.isBegin = false
-        self.isEnd = false
-      })
-    } else {
-      island.position = CGPointMake(-DefinedScreenWidth / 2 + width / 2 + startLeftPoint, -DefinedScreenHeight / 2 + height / 2)
-    }
-    addChild(island)
-    nextLeftStartX = width + startLeftPoint
-    return island
-  }
 
   func loadGameOverLayer() {
     let node = SKNode()
@@ -391,11 +408,6 @@ private extension GameScene {
     tip.horizontalAlignmentMode = .Center
 
     addChild(tip)
-  }
-
-  func randomInRange(range: Range<Int>) -> Int {
-    let count = UInt32(range.endIndex - range.startIndex)
-    return  Int(arc4random_uniform(count)) + range.startIndex
   }
 
 }
