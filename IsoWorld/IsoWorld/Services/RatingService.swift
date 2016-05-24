@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Firebase
 
 protocol UserServiceDelegate {
   /**
@@ -17,9 +18,12 @@ protocol UserServiceDelegate {
   func loadUserRating() -> [UserScore]
 
   func convertUserScoresToMatrix(fromVector vector: [UserScore]) -> [[UserScore]]
+  
+  func saveCurrentUserScore(score: UserScore)
 }
 
 class UserService: UserServiceDelegate {
+
 
   func loadUserRating() -> [UserScore] {
 
@@ -71,6 +75,10 @@ class UserService: UserServiceDelegate {
       }
     }
     return arrayx
+  }
+  
+  func saveCurrentUserScore(score: UserScore) {
+    <#code#>
   }
 
 }

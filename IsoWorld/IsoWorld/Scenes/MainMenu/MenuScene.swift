@@ -7,11 +7,16 @@
 //
 
 import SpriteKit
+import FBSDKLoginKit
+import FirebaseAuth
 
 class MenuScene: SKScene {
   var logoNode: SKSpriteNode?
   var gameLabel: SKLabelNode?
   var ratingLabel: SKLabelNode?
+  var facebokLogin: SKSpriteNode?
+  
+  var controller: UIViewController?
 
   var gameScene: Rating!
 
@@ -22,6 +27,7 @@ class MenuScene: SKScene {
     addLogo()
     addNewGameTitle()
     addRatingTitle()
+    addFacebookButton()
   }
   
   private func addLogo() {
@@ -57,6 +63,18 @@ class MenuScene: SKScene {
     self.ratingLabel?.position = CGPoint(x: CGRectGetMidX((self.scene?.frame)!), y: CGRectGetMidY((self.scene?.frame)!) - 100)
     self.addChild(ratingLabel!)
   }
+  
+  private func addFacebookButton() {
+    let size = CGSize(width: (self.scene?.size.width)!, height: 50)
+    self.facebokLogin = SKSpriteNode(imageNamed: "facebook_login")
+    self.facebokLogin?.size = size
+    self.facebokLogin?.position = CGPoint(
+      x: size.width / 2,
+      y: 25
+    )
+    self.facebokLogin?.name = "facebook"
+    self.addChild(self.facebokLogin!)
+  }
 
   override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
     self.menuHelper(touches)
@@ -91,7 +109,34 @@ class MenuScene: SKScene {
 
         skView!.presentScene(scene)
         self.gameScene = scene
+      } else if nodeAtTouch.name == "facebook" {
+        
+        let loginManager = FBSDKLoginManager()
+        loginManager.loginBehavior = FBSDKLoginBehavior.SystemAccount
+        
+        loginManager.logInWithReadPermissions(
+          ["public_profile", "email", "user_friends"],
+          fromViewController: controller,
+          handler: {
+            (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
+            if error != nil {
+              FBSDKLoginManager().logOut()
+            } else if result.isCancelled {
+              FBSDKLoginManager().logOut()
+            } else {
+              if FBSDKAccessToken.currentAccessToken() != nil {
+                let accessToken = FBSDKAccessToken.currentAccessToken().tokenString
+                let credential = FIRFacebookAuthProvider.credentialWithAccessToken(accessToken)
+                FIRAuth.auth()?.signInWithCredential(credential) { (user, error) in
+                  print(user?.uid)
+                }
+              } else {
+                
+              }
+            }
+        })
       }
+      
     }
   }
 
