@@ -18,7 +18,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
 //  MARK: Hero
   var heroObj =  Hero()
-  
 //  MARK: Island
   var islandObj = Island()
   var leftIsland: SKSpriteNode?
@@ -33,13 +32,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
   }
 
-  var score:Int = 0 {
+  var score: Int = 0 {
     willSet {
       let scoreBand = childNodeWithName(GameSceneChildName.ScoreName.rawValue) as? SKLabelNode
       scoreBand?.text = "\(newValue)"
       scoreBand?.runAction(SKAction.sequence([SKAction.scaleTo(1.5, duration: 0.1), SKAction.scaleTo(1, duration: 0.1)]))
 
-      if (newValue == 1) {
+      if newValue == 1 {
         let tip = childNodeWithName(GameSceneChildName.TipName.rawValue) as? SKLabelNode
         tip?.runAction(SKAction.fadeAlphaTo(0, duration: 0.4))
       }
@@ -112,8 +111,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             let location = touches.first?.locationInNode(gameOverLayer!)
             let retry = gameOverLayer!.nodeAtPoint(location!)
-            
-            
             if retry.name == GameSceneChildName.RetryButtonName.rawValue {
               retry.runAction(SKAction.sequence([SKAction.setTexture(SKTexture(imageNamed: "button_retry_down"), resize: false), SKAction.waitForDuration(0.3)]), completion: {[unowned self] () -> Void in
                 self.restart()
@@ -375,8 +372,8 @@ private extension GameScene {
     backButton.colorBlendFactor = 1.0
     backButton.alpha = 1.0
     backButton.color = UIColor.whiteColor()
-    backButton.size.height = 90
-    backButton.size.width = 120
+    backButton.size.height = 99
+    backButton.size.width = 99
     addChild(backButton)
     
     let backButtonPlace = SKSpriteNode()

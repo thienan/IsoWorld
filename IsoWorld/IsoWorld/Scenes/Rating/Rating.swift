@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import RxSwift
 
 class Rating: SKScene {
 
@@ -19,7 +20,7 @@ class Rating: SKScene {
   var users = Array<Array<UserScore>>()
 
   var userName: SKLabelNode!
-  var userAvatar: SKSpriteNode!
+  var disposeBag = DisposeBag()
 
   let tileSize = (width: 32, height: 32)
 
@@ -28,8 +29,24 @@ class Rating: SKScene {
     super.init(size: size)
     self.view?.ignoresSiblingOrder = true
     self.backgroundColor = UIColor.whiteColor()
-    let scores = userService.loadUserRating()
-    users = userService.convertUserScoresToMatrix(fromVector: scores)
+
+    addUserNameNode()
+    addBackButton()
+  }
+  
+  func pinchGesture(gestureRecognizer: UIPinchGestureRecognizer) {
+    let scale = gestureRecognizer.scale
+    let centroid = gestureRecognizer.locationInView(self.view)
+    
+    switch gestureRecognizer.state {
+    case .Began:
+      self.onPinchStart(centroid, scale: scale)
+    default:
+      self.onPinchMove(centroid, scale: scale)
+    }
+  }
+  
+  func addUserNameNode() {
     self.userName = SKLabelNode()
     self.userName.fontColor = UIColor.blackColor()
     self.userName.fontSize = 30
@@ -39,17 +56,30 @@ class Rating: SKScene {
     )
     self.userName.zPosition = 200
     self.addChild(userName)
+  }
 
-    self.userAvatar = SKSpriteNode()
-    self.userAvatar.position = CGPoint(
-      x: 60,
-      y: size.height - 70
-    )
-    userAvatar.size.height = 80
-    userAvatar.size.width = 90
-    userAvatar.color = UIColor.redColor()
-    userAvatar.zPosition = 200
-    self.addChild(userAvatar)
+  func addBackButton() {
+    let backButton = SKSpriteNode()
+    backButton.position = CGPointMake(35, size.height - 35)
+    backButton.texture = SKTexture(imageNamed: "left_arrow")
+    backButton.zPosition = 300
+    backButton.colorBlendFactor = 1.0
+    backButton.alpha = 1.0
+    backButton.color = UIColor.whiteColor()
+    backButton.size.height = 33
+    backButton.size.width = 33
+    addChild(backButton)
+
+    let backButtonPlace = SKSpriteNode()
+    backButtonPlace.position = CGPointMake(35, size.height - 35)
+    backButtonPlace.zPosition = 10000
+    backButtonPlace.colorBlendFactor = 1.0
+    backButtonPlace.alpha = 1.0
+    backButtonPlace.color = UIColor.clearColor()
+    backButtonPlace.size.height = 100
+    backButtonPlace.size.width = 100
+    backButtonPlace.name = "back"
+    addChild(backButtonPlace)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -63,7 +93,22 @@ class Rating: SKScene {
     viewIso.yScale = deviceScale
     addChild(viewIso)
 
-    placeAllTilesIso()
+    scores.asObservable().subscribe {
+      score in
+      self.viewIso.removeAllChildren()
+      self.users = self.userService.convertUserScoresToMatrix(fromVector: score.element!)
+      self.placeAllTilesIso()
+    }
+    .addDisposableTo(disposeBag)
+
+    let recognizer = UIPinchGestureRecognizer(target: self, action: #selector(self.pinchGesture(_:)))
+    recognizer.delaysTouchesBegan = true
+    self.view!.addGestureRecognizer(recognizer)
+
+    let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(self.onPan(_:)))
+    panGestureRecognizer.delaysTouchesBegan = true
+    self.view!.addGestureRecognizer(panGestureRecognizer)
+
   }
 
   func placeTileIso(withPosition: CGPoint, withTexture texture: SKTexture) -> SKSpriteNode {
@@ -77,6 +122,7 @@ class Rating: SKScene {
   }
 
   func placeAllTilesIso() {
+
     for i in 0..<users.count {
       let row = users[i]
       for j in 0..<row.count {
@@ -109,7 +155,7 @@ class Rating: SKScene {
   }
 
   func getDrawableNodeIndex(startIndex: Int, score: Int, visible: Int) -> Array<Int> {
-    let rangeArray = Array(startIndex..<score + 2)
+    let rangeArray = Array(startIndex..<score + 1)
     if visible > 0 {
       let index = rangeArray.indexOf(visible)!..<rangeArray.count
       return Array(index)
@@ -186,11 +232,20 @@ class Rating: SKScene {
   override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
     for touch in touches {
       let nodeAtTouch = self.nodeAtPoint(touch.locationInNode(self))
-      if let parent = nodeAtTouch.parent as? UserNode {
-        if let name = parent.name {
-          if Int(name) != nil {
-            deselectColumn()
-            selectColumn(parent)
+
+      if nodeAtTouch.name == "back" {
+        let scene = MenuScene()
+        let skView = self.view
+        scene.size = skView!.bounds.size
+        scene.scaleMode = .AspectFill
+        skView!.presentScene(scene)
+      } else {
+        if let parent = nodeAtTouch.parent as? UserNode {
+          if let name = parent.name {
+            if Int(name) != nil {
+              deselectColumn()
+              selectColumn(parent)
+            }
           }
         }
       }
@@ -210,8 +265,6 @@ class Rating: SKScene {
     for element in (column.children as? [SKSpriteNode])! {
       element.color = UIColor.cyanColor()
       self.userName.text = column.userObj?.name
-      let texture = SKTexture(imageNamed: (column.userObj?.photo)!)
-      self.userAvatar.texture = texture
     }
   }
 
