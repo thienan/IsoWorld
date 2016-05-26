@@ -6,6 +6,8 @@ target 'IsoWorld' do
   use_frameworks!
 
   # Pods for IsoWorld
+  pod 'RxSwift'
+  pod 'RxCocoa'
   pod 'Firebase'
   pod 'Firebase/Auth'
   pod 'FBSDKCoreKit'

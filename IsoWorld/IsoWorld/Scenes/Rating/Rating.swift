@@ -29,8 +29,6 @@ class Rating: SKScene {
     self.backgroundColor = UIColor.whiteColor()
     let scores = userService.loadUserRating()
     users = userService.convertUserScoresToMatrix(fromVector: scores)
-    
-    
     addUserNameNode()
   }
   
