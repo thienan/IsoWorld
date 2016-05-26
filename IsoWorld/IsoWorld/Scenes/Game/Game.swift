@@ -111,8 +111,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             let location = touches.first?.locationInNode(gameOverLayer!)
             let retry = gameOverLayer!.nodeAtPoint(location!)
-            
-            
             if retry.name == GameSceneChildName.RetryButtonName.rawValue {
               retry.runAction(SKAction.sequence([SKAction.setTexture(SKTexture(imageNamed: "button_retry_down"), resize: false), SKAction.waitForDuration(0.3)]), completion: {[unowned self] () -> Void in
                 self.restart()
