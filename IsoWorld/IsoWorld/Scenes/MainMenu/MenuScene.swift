@@ -115,7 +115,7 @@ class MenuScene: SKScene {
         
         let loginManager = FBSDKLoginManager()
         loginManager.loginBehavior = FBSDKLoginBehavior.SystemAccount
-        
+
         loginManager.logInWithReadPermissions(
           ["basic_info", "public_profile", "email", "user_friends"],
           fromViewController: controller,
