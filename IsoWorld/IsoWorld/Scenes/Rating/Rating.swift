@@ -30,8 +30,8 @@ class Rating: SKScene {
     self.view?.ignoresSiblingOrder = true
     self.backgroundColor = UIColor.whiteColor()
 
-//    users = userService.convertUserScoresToMatrix(fromVector: scores)
     addUserNameNode()
+    addBackButton()
   }
   
   func pinchGesture(gestureRecognizer: UIPinchGestureRecognizer) {
@@ -56,6 +56,30 @@ class Rating: SKScene {
     )
     self.userName.zPosition = 200
     self.addChild(userName)
+  }
+
+  func addBackButton() {
+    let backButton = SKSpriteNode()
+    backButton.position = CGPointMake(35, size.height - 35)
+    backButton.texture = SKTexture(imageNamed: "left_arrow")
+    backButton.zPosition = 300
+    backButton.colorBlendFactor = 1.0
+    backButton.alpha = 1.0
+    backButton.color = UIColor.whiteColor()
+    backButton.size.height = 33
+    backButton.size.width = 33
+    addChild(backButton)
+
+    let backButtonPlace = SKSpriteNode()
+    backButtonPlace.position = CGPointMake(35, size.height - 35)
+    backButtonPlace.zPosition = 10000
+    backButtonPlace.colorBlendFactor = 1.0
+    backButtonPlace.alpha = 1.0
+    backButtonPlace.color = UIColor.clearColor()
+    backButtonPlace.size.height = 100
+    backButtonPlace.size.width = 100
+    backButtonPlace.name = "back"
+    addChild(backButtonPlace)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -98,6 +122,7 @@ class Rating: SKScene {
   }
 
   func placeAllTilesIso() {
+
     for i in 0..<users.count {
       let row = users[i]
       for j in 0..<row.count {
@@ -207,11 +232,20 @@ class Rating: SKScene {
   override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
     for touch in touches {
       let nodeAtTouch = self.nodeAtPoint(touch.locationInNode(self))
-      if let parent = nodeAtTouch.parent as? UserNode {
-        if let name = parent.name {
-          if Int(name) != nil {
-            deselectColumn()
-            selectColumn(parent)
+
+      if nodeAtTouch.name == "back" {
+        let scene = MenuScene()
+        let skView = self.view
+        scene.size = skView!.bounds.size
+        scene.scaleMode = .AspectFill
+        skView!.presentScene(scene)
+      } else {
+        if let parent = nodeAtTouch.parent as? UserNode {
+          if let name = parent.name {
+            if Int(name) != nil {
+              deselectColumn()
+              selectColumn(parent)
+            }
           }
         }
       }

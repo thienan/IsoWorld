@@ -18,7 +18,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
 //  MARK: Hero
   var heroObj =  Hero()
-  
 //  MARK: Island
   var islandObj = Island()
   var leftIsland: SKSpriteNode?
@@ -33,13 +32,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
   }
 
-  var score:Int = 0 {
+  var score: Int = 0 {
     willSet {
       let scoreBand = childNodeWithName(GameSceneChildName.ScoreName.rawValue) as? SKLabelNode
       scoreBand?.text = "\(newValue)"
       scoreBand?.runAction(SKAction.sequence([SKAction.scaleTo(1.5, duration: 0.1), SKAction.scaleTo(1, duration: 0.1)]))
 
-      if (newValue == 1) {
+      if newValue == 1 {
         let tip = childNodeWithName(GameSceneChildName.TipName.rawValue) as? SKLabelNode
         tip?.runAction(SKAction.fadeAlphaTo(0, duration: 0.4))
       }

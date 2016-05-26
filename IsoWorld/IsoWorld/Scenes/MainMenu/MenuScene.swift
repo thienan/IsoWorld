@@ -30,11 +30,6 @@ class MenuScene: SKScene {
     addNewGameTitle()
     addRatingTitle()
     addFacebookButton()
-
-    for i in (0...1000) {
-      let score = UserScore(name: "User-\(i)", score: randomInRange(0...10), time: randomInRange(1...60), me: false)
-      self.userService.saveUserScore(userId: "\(i)", score: score)
-    }
   }
 
   private func addLogo() {
@@ -45,7 +40,6 @@ class MenuScene: SKScene {
       x: CGRectGetMidX((self.scene?.frame)!),
       y: CGRectGetHeight((self.scene?.frame)!) - 200
     )
-    
     self.addChild(self.logoNode!)
   }
 
@@ -70,7 +64,7 @@ class MenuScene: SKScene {
     self.ratingLabel?.position = CGPoint(x: CGRectGetMidX((self.scene?.frame)!), y: CGRectGetMidY((self.scene?.frame)!) - 100)
     self.addChild(ratingLabel!)
   }
-  
+
   private func addFacebookButton() {
     let size = CGSize(width: (self.scene?.size.width)!, height: 50)
     self.facebokLogin = SKSpriteNode(imageNamed: "facebook_login")
@@ -136,7 +130,7 @@ class MenuScene: SKScene {
                 FBSDKGraphRequest(
                   graphPath: "me",
                   parameters: ["fields": "id, name, first_name, last_name, email"]
-                ).startWithCompletionHandler({ (connection, result, error) -> Void in
+                ).startWithCompletionHandler {(connection, result, error) -> Void in
                   if error == nil {
                     let dict = result as? NSDictionary
                     let accessToken = FBSDKAccessToken.currentAccessToken().tokenString
@@ -144,16 +138,15 @@ class MenuScene: SKScene {
                     FIRAuth.auth()?.signInWithCredential(credential) { (user, error) in
                       self.userService.saveCurrentUserId(userId: user!.uid)
 
-                      let score = UserScore(name: dict!["name"] as! String, score: 0, time: 0, me: false)
+                      let score = UserScore(name: (dict!["name"] as? String)!, score: 0, time: 0, me: false)
                       self.userService.saveCurrentUserScore(score)
                     }
                   }
-                })
+                }
               }
             }
         })
       }
-      
     }
   }
 
