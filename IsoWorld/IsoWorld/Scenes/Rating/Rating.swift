@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import RxSwift
 
 class Rating: SKScene {
 
@@ -19,6 +20,7 @@ class Rating: SKScene {
   var users = Array<Array<UserScore>>()
 
   var userName: SKLabelNode!
+  var disposeBag = DisposeBag()
 
   let tileSize = (width: 32, height: 32)
 
@@ -27,8 +29,8 @@ class Rating: SKScene {
     super.init(size: size)
     self.view?.ignoresSiblingOrder = true
     self.backgroundColor = UIColor.whiteColor()
-    let scores = userService.loadUserRating()
-    users = userService.convertUserScoresToMatrix(fromVector: scores)
+
+//    users = userService.convertUserScoresToMatrix(fromVector: scores)
     addUserNameNode()
   }
   
@@ -67,15 +69,22 @@ class Rating: SKScene {
     viewIso.yScale = deviceScale
     addChild(viewIso)
 
-    placeAllTilesIso()
-    
+    scores.asObservable().subscribe {
+      score in
+      self.viewIso.removeAllChildren()
+      self.users = self.userService.convertUserScoresToMatrix(fromVector: score.element!)
+      self.placeAllTilesIso()
+    }
+    .addDisposableTo(disposeBag)
+
     let recognizer = UIPinchGestureRecognizer(target: self, action: #selector(self.pinchGesture(_:)))
     recognizer.delaysTouchesBegan = true
     self.view!.addGestureRecognizer(recognizer)
-    
+
     let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(self.onPan(_:)))
     panGestureRecognizer.delaysTouchesBegan = true
     self.view!.addGestureRecognizer(panGestureRecognizer)
+
   }
 
   func placeTileIso(withPosition: CGPoint, withTexture texture: SKTexture) -> SKSpriteNode {
@@ -121,7 +130,7 @@ class Rating: SKScene {
   }
 
   func getDrawableNodeIndex(startIndex: Int, score: Int, visible: Int) -> Array<Int> {
-    let rangeArray = Array(startIndex..<score + 2)
+    let rangeArray = Array(startIndex..<score + 1)
     if visible > 0 {
       let index = rangeArray.indexOf(visible)!..<rangeArray.count
       return Array(index)

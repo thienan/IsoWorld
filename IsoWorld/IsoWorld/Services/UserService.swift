@@ -9,6 +9,9 @@
 import Foundation
 import Firebase
 import FirebaseDatabase
+import RxSwift
+
+let scores = Variable([UserScore]())
 
 protocol UserServiceDelegate {
   /**
@@ -16,7 +19,7 @@ protocol UserServiceDelegate {
 
    - returns: array object with scores models
    */
-  func loadUserRating() -> [UserScore]
+  func loadUserRating()
 
   /**
    Convert vector of UserScore objcts to square matrix
@@ -41,13 +44,12 @@ class UserService: UserServiceDelegate {
     static let userIdKey = "userId"
   }
 
-  func loadUserRating() -> [UserScore] {
+  func loadUserRating() {
     let userRef = FIRDatabase.database().reference().child("user")
     userRef.keepSynced(true)
 
-    var scores = [UserScore]()
-
     userRef.observeEventType(.Value, withBlock: { data in
+      var scoresx = [UserScore]()
       for scoreData in data.children.enumerate() {
         let score = scoreData.element
         let userScore = UserScore(
@@ -56,13 +58,13 @@ class UserService: UserServiceDelegate {
           time: score.value["time"] as! Int,
           me: false
         )
-
-        scores.append(userScore)
+        scoresx.append(userScore)
       }
-    })
 
-    scores = scores.sort {$0.score > $1.score}
-    return scores
+      scoresx = scoresx.sort {$0.score > $1.score}
+      scores.value = scoresx
+
+    })
   }
 
   func convertUserScoresToMatrix(fromVector vector: [UserScore]) -> [[UserScore]] {
@@ -99,6 +101,18 @@ class UserService: UserServiceDelegate {
   func saveCurrentUserScore(score: UserScore) {
     let userRef = FIRDatabase.database().reference().child("user")
     let userId = getCurrentUserId()
+
+    var userDic = [String: AnyObject]()
+    userDic["name"] = score.name
+    userDic["time"] = score.time
+    userDic["score"] = score.score
+    userDic["me"] = score.me
+
+    userRef.child(userId).setValue(userDic)
+  }
+
+  func saveUserScore(userId userId: String, score: UserScore) {
+    let userRef = FIRDatabase.database().reference().child("user")
 
     var userDic = [String: AnyObject]()
     userDic["name"] = score.name

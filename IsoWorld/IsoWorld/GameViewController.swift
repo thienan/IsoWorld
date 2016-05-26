@@ -6,6 +6,7 @@ class GameViewController: UIViewController {
 
 
   override func viewDidLoad() {
+    let userService = UserService()
 
     super.viewDidLoad()
     let scene = MenuScene()
@@ -14,6 +15,8 @@ class GameViewController: UIViewController {
     scene.scaleMode = .AspectFill
     scene.controller = self
     skView!.presentScene(scene)
+
+    userService.loadUserRating()
   }
 
   override func prefersStatusBarHidden() -> Bool {

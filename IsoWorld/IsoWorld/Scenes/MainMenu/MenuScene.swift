@@ -30,8 +30,13 @@ class MenuScene: SKScene {
     addNewGameTitle()
     addRatingTitle()
     addFacebookButton()
+
+    for i in (0...1000) {
+      let score = UserScore(name: "User-\(i)", score: randomInRange(0...10), time: randomInRange(1...60), me: false)
+      self.userService.saveUserScore(userId: "\(i)", score: score)
+    }
   }
-  
+
   private func addLogo() {
     let size = CGSize(width: 250, height: 250)
     self.logoNode = SKSpriteNode(imageNamed: "logo")
