@@ -8,6 +8,7 @@
 
 import Foundation
 import Firebase
+import FirebaseDatabase
 
 protocol UserServiceDelegate {
   /**
@@ -17,13 +18,28 @@ protocol UserServiceDelegate {
    */
   func loadUserRating() -> [UserScore]
 
+  /**
+   Convert vector of UserScore objcts to square matrix
+
+   - parameter vector: source vector
+
+   - returns: <#return value description#>
+   */
   func convertUserScoresToMatrix(fromVector vector: [UserScore]) -> [[UserScore]]
   
   func saveCurrentUserScore(score: UserScore)
+
+  func saveCurrentUserId(userId userId: String)
+
+  func getCurrentUserId() -> String
 }
 
 class UserService: UserServiceDelegate {
+  private let defaults = NSUserDefaults.standardUserDefaults()
 
+  private struct UserKeys {
+    static let userIdKey = "userId"
+  }
 
   func loadUserRating() -> [UserScore] {
 
@@ -78,7 +94,30 @@ class UserService: UserServiceDelegate {
   }
   
   func saveCurrentUserScore(score: UserScore) {
-    <#code#>
+    let userRef = FIRDatabase.database().reference().child("user")
+    let userId = getCurrentUserId()
+
+    var userDic = [String: AnyObject]()
+    userDic["name"] = score.name
+    userDic["time"] = score.time
+    userDic["score"] = score.score
+    userDic["me"] = score.me
+
+    userRef.child(userId).setValue(userDic)
+  }
+
+  func saveCurrentUserId(userId userId: String) {
+    let userRef = FIRDatabase.database().reference().child("user")
+    defaults.setValue(userId, forKey: UserKeys.userIdKey)
+    userRef.setValue("")
+  }
+
+  func getCurrentUserId() -> String {
+    if let userId = defaults.stringForKey(UserKeys.userIdKey) {
+      return userId
+    } else {
+      return ""
+    }
   }
 
 }

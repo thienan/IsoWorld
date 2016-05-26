@@ -20,6 +20,8 @@ class MenuScene: SKScene {
 
   var gameScene: Rating!
 
+  let userService = UserService()
+
   override func didMoveToView(view: SKView) {
 
     self.backgroundColor = UIColor(red: 243/255, green: 156/255, blue: 18/255, alpha: 1)
@@ -115,7 +117,7 @@ class MenuScene: SKScene {
         loginManager.loginBehavior = FBSDKLoginBehavior.SystemAccount
         
         loginManager.logInWithReadPermissions(
-          ["public_profile", "email", "user_friends"],
+          ["basic_info", "public_profile", "email", "user_friends"],
           fromViewController: controller,
           handler: {
             (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
@@ -125,13 +127,23 @@ class MenuScene: SKScene {
               FBSDKLoginManager().logOut()
             } else {
               if FBSDKAccessToken.currentAccessToken() != nil {
-                let accessToken = FBSDKAccessToken.currentAccessToken().tokenString
-                let credential = FIRFacebookAuthProvider.credentialWithAccessToken(accessToken)
-                FIRAuth.auth()?.signInWithCredential(credential) { (user, error) in
-                  print(user?.uid)
-                }
-              } else {
-                
+
+                FBSDKGraphRequest(
+                  graphPath: "me",
+                  parameters: ["fields": "id, name, first_name, last_name, email"]
+                ).startWithCompletionHandler({ (connection, result, error) -> Void in
+                  if error == nil {
+                    let dict = result as? NSDictionary
+                    let accessToken = FBSDKAccessToken.currentAccessToken().tokenString
+                    let credential = FIRFacebookAuthProvider.credentialWithAccessToken(accessToken)
+                    FIRAuth.auth()?.signInWithCredential(credential) { (user, error) in
+                      self.userService.saveCurrentUserId(userId: user!.uid)
+
+                      let score = UserScore(name: dict!["name"] as! String, score: 0, time: 0, me: false)
+                      self.userService.saveCurrentUserScore(score)
+                    }
+                  }
+                })
               }
             }
         })

@@ -23,10 +23,11 @@ class UserScore {
 
   init() {}
 
-  init(name: String, score: Int, me: Bool) {
+  init(name: String, score: Int, time: Int, me: Bool) {
     self.name = name
     self.score = score
     self.me = me
+    self.time = time
   }
 
   init(fromDictionary dictionary: NSDictionary) {

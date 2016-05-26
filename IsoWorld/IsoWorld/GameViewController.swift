@@ -2,12 +2,13 @@ import UIKit
 import SpriteKit
 
 class GameViewController: UIViewController {
+  let userService = UserService()
 
-  var scene = MenuScene()
 
   override func viewDidLoad() {
-    super.viewDidLoad()
 
+    super.viewDidLoad()
+    let scene = MenuScene()
     let skView = self.view as? SKView
     scene.size = skView!.bounds.size
     scene.scaleMode = .AspectFill

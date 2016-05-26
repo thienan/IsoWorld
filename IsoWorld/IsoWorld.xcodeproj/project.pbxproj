@@ -24,7 +24,7 @@
 		644029851CDFADE200961B0D /* IsometricMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644029841CDFADE200961B0D /* IsometricMath.swift */; };
 		644029871CDFADFC00961B0D /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644029861CDFADFC00961B0D /* Tile.swift */; };
 		6440298A1CDFBE2000961B0D /* UserScores.plist in Resources */ = {isa = PBXBuildFile; fileRef = 644029891CDFBE2000961B0D /* UserScores.plist */; };
-		644029901CDFD18D00961B0D /* RatingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6440298F1CDFD18D00961B0D /* RatingService.swift */; };
+		644029901CDFD18D00961B0D /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6440298F1CDFD18D00961B0D /* UserService.swift */; };
 		6467DB731CE8FB650056866A /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6467DB721CE8FB650056866A /* MenuScene.swift */; };
 		6467F2CE1CE8FDA200251B2B /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6467F2CD1CE8FDA200251B2B /* StringExtension.swift */; };
 		6467F2D31CE8FE0E00251B2B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6467F2D51CE8FE0E00251B2B /* Localizable.strings */; };
@@ -88,7 +88,7 @@
 		644029841CDFADE200961B0D /* IsometricMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsometricMath.swift; sourceTree = "<group>"; };
 		644029861CDFADFC00961B0D /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		644029891CDFBE2000961B0D /* UserScores.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserScores.plist; sourceTree = "<group>"; };
-		6440298F1CDFD18D00961B0D /* RatingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingService.swift; sourceTree = "<group>"; };
+		6440298F1CDFD18D00961B0D /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		6467DB721CE8FB650056866A /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuScene.swift; path = IsoWorld/Scenes/MainMenu/MenuScene.swift; sourceTree = SOURCE_ROOT; };
 		6467F2CD1CE8FDA200251B2B /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		6467F2CF1CE8FDC400251B2B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
@@ -287,7 +287,7 @@
 		6440298E1CDFD17700961B0D /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				6440298F1CDFD18D00961B0D /* RatingService.swift */,
+				6440298F1CDFD18D00961B0D /* UserService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -604,7 +604,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				644029901CDFD18D00961B0D /* RatingService.swift in Sources */,
+				644029901CDFD18D00961B0D /* UserService.swift in Sources */,
 				64B8B1861CF1943A00BD6E5D /* UIColorExtension.swift in Sources */,
 				644029851CDFADE200961B0D /* IsometricMath.swift in Sources */,
 				06B00BCD1CDC843000DD7C47 /* Rating.swift in Sources */,
