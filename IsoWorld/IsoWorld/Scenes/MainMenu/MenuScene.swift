@@ -11,21 +11,18 @@ import FBSDKLoginKit
 import FirebaseAuth
 
 class MenuScene: SKScene {
-  var logoNode: SKSpriteNode?
-  var gameLabel: SKLabelNode?
-  var ratingLabel: SKLabelNode?
-  var facebokLogin: SKSpriteNode?
+  private var logoNode: SKSpriteNode?
+  private var gameLabel: SKLabelNode?
+  private var ratingLabel: SKLabelNode?
+  private var facebokLoginButton: SKSpriteNode?
   
-  var controller: UIViewController?
+  var rootController: UIViewController?
+  private var gameScene: Rating!
 
-  var gameScene: Rating!
-
-  let userService = UserService()
+  private let userService = UserService()
 
   override func didMoveToView(view: SKView) {
-
     self.backgroundColor = UIColor(red: 243/255, green: 156/255, blue: 18/255, alpha: 1)
-
     addLogo()
     addNewGameTitle()
     addRatingTitle()
@@ -67,14 +64,14 @@ class MenuScene: SKScene {
 
   private func addFacebookButton() {
     let size = CGSize(width: (self.scene?.size.width)!, height: 50)
-    self.facebokLogin = SKSpriteNode(imageNamed: "facebook_login")
-    self.facebokLogin?.size = size
-    self.facebokLogin?.position = CGPoint(
+    self.facebokLoginButton = SKSpriteNode(imageNamed: "facebook_login")
+    self.facebokLoginButton?.size = size
+    self.facebokLoginButton?.position = CGPoint(
       x: size.width / 2,
       y: 25
     )
-    self.facebokLogin?.name = "facebook"
-    self.addChild(self.facebokLogin!)
+    self.facebokLoginButton?.name = "facebook"
+    self.addChild(self.facebokLoginButton!)
   }
 
   override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -117,7 +114,7 @@ class MenuScene: SKScene {
 
         loginManager.logInWithReadPermissions(
           ["basic_info", "public_profile", "email", "user_friends"],
-          fromViewController: controller,
+          fromViewController: rootController,
           handler: {
             (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
             if error != nil {
@@ -149,7 +146,4 @@ class MenuScene: SKScene {
       }
     }
   }
-
-
-
 }

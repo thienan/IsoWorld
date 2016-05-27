@@ -12,18 +12,30 @@ import SpriteKit
 import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-  var musicPlayer: AVAudioPlayer!
-
-  var backButton: SKSpriteNode!
+  private var musicPlayer: AVAudioPlayer!
+  private var backButton: SKSpriteNode!
 
 //  MARK: Hero
-  var heroObj =  Hero()
+  private var heroObj =  Hero()
 //  MARK: Island
-  var islandObj = Island()
-  var leftIsland: SKSpriteNode?
-  var rightIsland: SKSpriteNode?
+  private var islandObj = Island()
+  private var leftIsland: SKSpriteNode?
+  private var rightIsland: SKSpriteNode?
+  private let gravity: CGFloat = -100.0
+  private let HeroSpeed: CGFloat = 760
+  private var isBegin = false
+  private var isEnd = false
+  private var nextLeftStartX: CGFloat = 0
+  private var bridgeHeight: CGFloat = 0
 
-  var gameOver = false {
+  private lazy var playAbleRect: CGRect = {
+    let maxAspectRatio: CGFloat = 16.0/9.0
+    let maxAspectRatioWidth = self.size.height / maxAspectRatio
+    let playableMargin = (self.size.width - maxAspectRatioWidth) / 2.0
+    return CGRectMake(playableMargin, 0, maxAspectRatioWidth, self.size.height)
+  }()
+
+  private var gameOver = false {
     willSet {
       if newValue {
         let gameOverLayer = childNodeWithName(GameSceneChildName.GameOverLayerName.rawValue) as SKNode?
@@ -32,7 +44,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
   }
 
-  var score: Int = 0 {
+  private var score: Int = 0 {
     willSet {
       let scoreBand = childNodeWithName(GameSceneChildName.ScoreName.rawValue) as? SKLabelNode
       scoreBand?.text = "\(newValue)"
@@ -45,25 +57,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
   }
 
-
-  let gravity: CGFloat = -100.0
-  let HeroSpeed: CGFloat = 760
-
-  var isBegin = false
-  var isEnd = false
-
-
-  var nextLeftStartX: CGFloat = 0
-  var bridgeHeight: CGFloat = 0
-
-  lazy var playAbleRect: CGRect = {
-
-    let maxAspectRatio: CGFloat = 16.0/9.0
-    let maxAspectRatioWidth = self.size.height / maxAspectRatio
-    let playableMargin = (self.size.width - maxAspectRatioWidth) / 2.0
-    return CGRectMake(playableMargin, 0, maxAspectRatioWidth, self.size.height)
-  }()
-
   // MARK: - override
   override init(size: CGSize) {
     super.init(size: size)
@@ -75,40 +68,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     musicPlayer.play()
   }
 
-  func setupAudioPlayerWithFile(file: NSString, type: NSString) -> AVAudioPlayer {
-    let url = NSBundle.mainBundle().URLForResource(file as String, withExtension: type as String)
-    var audioPlayer: AVAudioPlayer?
-
-    do {
-      try audioPlayer = AVAudioPlayer(contentsOfURL: url!)
-    } catch {
-      print("NO AUDIO PLAYER")
-    }
-
-    return audioPlayer!
-  }
-
   override func didMoveToView(view: SKView) {
     start()
   }
 
   override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-    
     for touch in touches {
       let location = (touch as UITouch).locationInNode(self)
       if let touchNode = self.nodeAtPoint(location) as? SKSpriteNode {
         if touchNode.name == "back" {
-          
           let scene = MenuScene()
           let skView = self.view
           scene.size = skView!.bounds.size
           scene.scaleMode = .AspectFill
           skView!.presentScene(scene)
-          
         } else {
           guard !gameOver else {
             let gameOverLayer = childNodeWithName(GameSceneChildName.GameOverLayerName.rawValue) as SKNode?
-            
             let location = touches.first?.locationInNode(gameOverLayer!)
             let retry = gameOverLayer!.nodeAtPoint(location!)
             if retry.name == GameSceneChildName.RetryButtonName.rawValue {
@@ -118,10 +94,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             return
           }
-          
           if !isBegin && !isEnd {
             isBegin = true
-            
             let bridge = loadBridge()
             let action = SKAction.resizeToHeight(
               CGFloat(
@@ -132,9 +106,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             bridge.runAction(action, withKey: GameSceneActionKey.BridgeGrowAction.rawValue)
             let loopAction = SKAction.group([SKAction.playSoundFileNamed(GameSceneEffectAudioName.BridgeGrowAudioName.rawValue, waitForCompletion: true)])
             bridge.runAction(SKAction.repeatActionForever(loopAction), withKey: GameSceneActionKey.BridgeGrowAudioAction.rawValue)
-
-            print(bridge.size.height)
-            
             return
           }
         }
@@ -166,7 +137,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
   }
 
-  func start() {
+//  MARK: Audio player
+  func setupAudioPlayerWithFile(file: NSString, type: NSString) -> AVAudioPlayer {
+    let url = NSBundle.mainBundle().URLForResource(file as String, withExtension: type as String)
+    var audioPlayer: AVAudioPlayer?
+    do {
+      try audioPlayer = AVAudioPlayer(contentsOfURL: url!)
+    } catch {
+      print("NO AUDIO PLAYER")
+    }
+
+    return audioPlayer!
+  }
+
+  private func start() {
     loadBackground()
     loadScoreBackground()
     loadScore()
@@ -183,11 +167,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     )
 
     addRightIsland(false, rightIslandStartPosition: rightIslandStartPosition)
-
     gameOver = false
   }
 
-  func addleftIsland(animated: Bool) {
+  private func addleftIsland(animated: Bool) {
     let leftIslandData = islandObj.loadIslands(
       animated,
       startLeftPoint: playAbleRect.origin.x,
@@ -202,7 +185,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     self.nextLeftStartX = leftIslandData.leftStartX
   }
 
-  func addRightIsland(animated: Bool, rightIslandStartPosition: CGFloat) {
+  private func addRightIsland(animated: Bool, rightIslandStartPosition: CGFloat) {
 
     let rightIslandData = islandObj.loadIslands(
       animated,
@@ -218,7 +201,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     self.nextLeftStartX = rightIslandData.leftStartX
   }
 
-  func restart() {
+  private func restart() {
     isBegin = false
     isEnd = false
     score = 0
@@ -300,7 +283,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 // MARK: - load node
 private extension GameScene {
 
-  func loadBackground() {
+  private func loadBackground() {
     guard let _ = childNodeWithName("background") as? SKSpriteNode else {
       let texture = SKTexture(image: UIImage(named: "background.png")!)
       let node = SKSpriteNode(texture: texture)
@@ -313,7 +296,7 @@ private extension GameScene {
     }
   }
 
-  func loadHero() {
+  private func loadHero() {
     let hero = heroObj.getHeroNode(
       nextLeftStartX: self.nextLeftStartX,
       islandHeight: self.leftIsland!.size.height
@@ -321,7 +304,7 @@ private extension GameScene {
     addChild(hero)
   }
 
-  func loadBridge() -> SKSpriteNode {
+  private func loadBridge() -> SKSpriteNode {
     let hero = heroObj.getHeroNodeFromParent()
     let texture = SKTexture(imageNamed: "bridge")
     let bridge = SKSpriteNode(texture: texture, size: CGSizeMake(12, 1))
@@ -336,7 +319,7 @@ private extension GameScene {
     return bridge
   }
 
-  func loadGameOverLayer() {
+  private func loadGameOverLayer() {
     let node = SKNode()
     node.alpha = 0
     node.name = GameSceneChildName.GameOverLayerName.rawValue
@@ -355,7 +338,7 @@ private extension GameScene {
     node.addChild(retry)
   }
 
-  func loadScore() {
+  private func loadScore() {
     let scoreBand = SKLabelNode(fontNamed: "Arial")
     scoreBand.name = GameSceneChildName.ScoreName.rawValue
     scoreBand.text = "0"
@@ -368,7 +351,7 @@ private extension GameScene {
     addChild(scoreBand)
   }
   
-  func loadBackButton() {
+  private func loadBackButton() {
     let backButton = SKSpriteNode()
     backButton.position = CGPointMake(-470, DefinedScreenHeight / 2 - 150)
     backButton.texture = SKTexture(imageNamed: "left_arrow")
@@ -392,7 +375,7 @@ private extension GameScene {
     addChild(backButtonPlace)
   }
 
-  func loadScoreBackground() {
+  private func loadScoreBackground() {
     let back = SKShapeNode(rect: CGRectMake(0-120, 1024-200-30, 240, 140), cornerRadius: 20)
     back.zPosition = GameSceneZposition.ScoreBackgroundZposition.rawValue
     back.fillColor = SKColor.blackColor().colorWithAlphaComponent(0.3)
@@ -400,7 +383,7 @@ private extension GameScene {
     addChild(back)
   }
 
-  func loadTip() {
+  private func loadTip() {
     let tip = SKLabelNode(fontNamed: "HelveticaNeue-Bold")
     tip.name = GameSceneChildName.TipName.rawValue
     tip.text = ""

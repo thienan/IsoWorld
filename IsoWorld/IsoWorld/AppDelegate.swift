@@ -41,16 +41,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
   }
     
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
-      //Even though the Facebook SDK can make this determinitaion on its own,
-      //let's make sure that the facebook SDK only sees urls intended for it,
-      //facebook has enough info already!
-      let isFacebookURL = url.scheme.hasPrefix("fb\(FBSDKSettings.appID())") && url.host == "authorize"
-      if isFacebookURL {
-        return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
-      }
-      return false
+  func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+    //Even though the Facebook SDK can make this determinitaion on its own,
+    //let's make sure that the facebook SDK only sees urls intended for it,
+    //facebook has enough info already!
+    let isFacebookURL = url.scheme.hasPrefix("fb\(FBSDKSettings.appID())") && url.host == "authorize"
+    if isFacebookURL {
+      return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
+    return false
+  }
 
   func applicationDidBecomeActive(application: UIApplication) {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
