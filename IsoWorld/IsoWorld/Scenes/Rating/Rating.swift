@@ -9,23 +9,23 @@
 import SpriteKit
 import RxSwift
 
-class Rating: SKScene {
+class RatingScene: SKScene {
 
   private var scaleOffset: CGFloat = 1.0
   private var panOffset = CGPointZero
   private let viewIso: SKSpriteNode
 
-  var selectedObj: UserNode?
-  let userService = UserService()
-  var users = Array<Array<UserScore>>()
+  private var selectedObj: UserNode?
+  private let userService = UserService()
+  private var users = Array<Array<UserScore>>()
 
-  var userName: SKLabelNode!
-  var disposeBag = DisposeBag()
+  private var userName: SKLabelNode!
+  private var disposeBag = DisposeBag()
 
-  let tileSize = (width: 32, height: 32)
+  private let tileSize = (width: 32, height: 32)
 
-  var pinchRecognizer: UIPinchGestureRecognizer?
-  var panGestureRecognizer: UIPanGestureRecognizer?
+  private var pinchRecognizer: UIPinchGestureRecognizer?
+  private var panGestureRecognizer: UIPanGestureRecognizer?
 
   override init(size: CGSize) {
     viewIso = SKSpriteNode()
@@ -38,7 +38,7 @@ class Rating: SKScene {
   }
 
   
-  func pinchGesture(gestureRecognizer: UIPinchGestureRecognizer) {
+  @objc private func pinchGesture(gestureRecognizer: UIPinchGestureRecognizer) {
     let scale = gestureRecognizer.scale
     let centroid = gestureRecognizer.locationInView(self.view)
     
@@ -50,7 +50,7 @@ class Rating: SKScene {
     }
   }
   
-  func addUserNameNode() {
+  private func addUserNameNode() {
     self.userName = SKLabelNode()
     self.userName.fontColor = UIColor.blackColor()
     self.userName.fontSize = 30
@@ -62,7 +62,7 @@ class Rating: SKScene {
     self.addChild(userName)
   }
 
-  func addBackButton() {
+  private func addBackButton() {
     let backButton = SKSpriteNode()
     backButton.position = CGPointMake(35, size.height - 35)
     backButton.texture = SKTexture(imageNamed: "left_arrow")
@@ -114,7 +114,7 @@ class Rating: SKScene {
     self.view!.addGestureRecognizer(panGestureRecognizer!)
   }
 
-  func placeTileIso(withPosition: CGPoint, withTexture texture: SKTexture) -> SKSpriteNode {
+  private func placeTileIso(withPosition: CGPoint, withTexture texture: SKTexture) -> SKSpriteNode {
     let tileSprite = SKSpriteNode(texture: texture)
     tileSprite.position = withPosition
     tileSprite.alpha = 1.0
@@ -124,7 +124,7 @@ class Rating: SKScene {
     return tileSprite
   }
 
-  func placeAllTilesIso() {
+  private func placeAllTilesIso() {
 
     for i in 0..<users.count {
       let row = users[i]
@@ -157,7 +157,7 @@ class Rating: SKScene {
     }
   }
 
-  func getDrawableNodeIndex(startIndex: Int, score: Int, visible: Int) -> Array<Int> {
+  private func getDrawableNodeIndex(startIndex: Int, score: Int, visible: Int) -> Array<Int> {
     let rangeArray = Array(startIndex..<score + 1)
     if visible > 0 {
       let index = rangeArray.indexOf(visible)!..<rangeArray.count
@@ -168,7 +168,7 @@ class Rating: SKScene {
     }
   }
 
-  func getColumnTexture(userScore: UserScore) -> SKTexture {
+  private func getColumnTexture(userScore: UserScore) -> SKTexture {
     var texture = SKTexture(imageNamed: "iso_wall_blue")
     if userScore.me {
       texture = SKTexture(imageNamed: "iso_wall_yellow")
@@ -188,7 +188,7 @@ class Rating: SKScene {
     return texture
   }
 
-  func getCoumn(userScore: UserScore) -> UserNode {
+  private func getCoumn(userScore: UserScore) -> UserNode {
     let column = UserNode()
     column.name =  String(userScore.score)
     column.colorBlendFactor = 1.0
@@ -196,7 +196,7 @@ class Rating: SKScene {
     return column
   }
 
-  func isColumn(value: Int) -> Bool {
+  private func isColumn(value: Int) -> Bool {
     var status = false
     if value > 0 {
       status = true
@@ -204,7 +204,7 @@ class Rating: SKScene {
     return status
   }
 
-  func getCoordinatesByIndex(indexI: Int, indexJ: Int, index: Int, inversed: Bool) -> CGPoint {
+  private func getCoordinatesByIndex(indexI: Int, indexJ: Int, index: Int, inversed: Bool) -> CGPoint {
     var x = 0
     var y = 0
     if !inversed {
@@ -218,7 +218,7 @@ class Rating: SKScene {
     return point2DToIso(point)
   }
 
-  func getVisibleIndex(userScores: Array<Array<UserScore>>, indexI: Int, indexJ: Int) -> Int {
+  private func getVisibleIndex(userScores: Array<Array<UserScore>>, indexI: Int, indexJ: Int) -> Int {
     var right = 0
     if userScores.indices.contains(indexI + 1) {
       right = userScores[indexI + 1][indexJ].score
@@ -259,7 +259,7 @@ class Rating: SKScene {
     }
   }
 
-  func deselectColumn() {
+  private func deselectColumn() {
     if let selected = selectedObj {
       for element in (selected.children as? [SKSpriteNode])! {
         element.color = UIColor.whiteColor()
@@ -267,7 +267,7 @@ class Rating: SKScene {
     }
   }
 
-  func selectColumn(column: UserNode) {
+  private func selectColumn(column: UserNode) {
     self.selectedObj = column
     for element in (column.children as? [SKSpriteNode])! {
       element.color = UIColor.cyanColor()
@@ -275,11 +275,11 @@ class Rating: SKScene {
     }
   }
 
-  func onPinchStart(centroid: CGPoint, scale: CGFloat) {
+  private func onPinchStart(centroid: CGPoint, scale: CGFloat) {
     scaleOffset = viewIso.xScale
   }
 
-  func onPinchMove(centroid: CGPoint, scale: CGFloat) {
+  private func onPinchMove(centroid: CGPoint, scale: CGFloat) {
     let xScale = (scale - 1.0) + scaleOffset
     let yScale = (scale - 1.0) + scaleOffset
     if xScale > 0 && yScale > 0 {
@@ -288,7 +288,7 @@ class Rating: SKScene {
     }
   }
 
-  func onPan(gestureRecognizer: UIPanGestureRecognizer) {
+  @objc private func onPan(gestureRecognizer: UIPanGestureRecognizer) {
     let y = -(gestureRecognizer.locationInView(self.view).y - self.view!.frame.height)
     let x = gestureRecognizer.locationInView(self.view).x
 

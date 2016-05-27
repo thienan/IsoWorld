@@ -17,7 +17,6 @@ class MenuScene: SKScene {
   private var facebokLoginButton: SKSpriteNode?
   
   var rootController: UIViewController?
-  private var gameScene: Rating!
 
   private let userService = UserService()
 
@@ -97,7 +96,7 @@ class MenuScene: SKScene {
         skView!.presentScene(scene)
       } else if nodeAtTouch.name == "rating" {
 
-        let scene = Rating(size: view!.bounds.size)
+        let scene = RatingScene(size: view!.bounds.size)
         let skView = self.view
         skView!.showsFPS = true
         skView!.showsNodeCount = true
@@ -106,7 +105,6 @@ class MenuScene: SKScene {
         scene.size = (skView?.bounds.size)!
 
         skView!.presentScene(scene)
-        self.gameScene = scene
       } else if nodeAtTouch.name == "facebook" {
         
         let loginManager = FBSDKLoginManager()

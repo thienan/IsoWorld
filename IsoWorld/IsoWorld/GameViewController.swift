@@ -2,12 +2,10 @@ import UIKit
 import SpriteKit
 
 class GameViewController: UIViewController {
-  let userService = UserService()
-
-
+  private let userService = UserService()
+  
   override func viewDidLoad() {
     let userService = UserService()
-
     super.viewDidLoad()
     let scene = MenuScene()
     let skView = self.view as? SKView
