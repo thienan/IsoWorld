@@ -35,7 +35,7 @@ enum GameSceneEffectAudioName: String {
 enum GameSceneZposition: CGFloat {
     case BackgroundZposition = 0
     case IslandMidZposition = 35
-    case BridgeZposition = 200
+    case BridgeZposition = 1000
     case ScoreBackgroundZposition = 50
     case ScoreZposition, TipZposition, PerfectZposition = 100
     case GameOverZposition

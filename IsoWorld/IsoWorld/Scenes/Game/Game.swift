@@ -132,6 +132,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             bridge.runAction(action, withKey: GameSceneActionKey.BridgeGrowAction.rawValue)
             let loopAction = SKAction.group([SKAction.playSoundFileNamed(GameSceneEffectAudioName.BridgeGrowAudioName.rawValue, waitForCompletion: true)])
             bridge.runAction(SKAction.repeatActionForever(loopAction), withKey: GameSceneActionKey.BridgeGrowAudioAction.rawValue)
+
+            print(bridge.size.height)
             
             return
           }
@@ -328,6 +330,8 @@ private extension GameScene {
     bridge.anchorPoint = CGPointMake(0.5, 0)
     bridge.position = CGPointMake(hero.position.x + hero.size.width / 2 + 18, hero.position.y - hero.size.height / 2)
     addChild(bridge)
+
+    print(bridge.size.height)
 
     return bridge
   }

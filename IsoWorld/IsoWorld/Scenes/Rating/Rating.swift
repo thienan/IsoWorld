@@ -24,6 +24,9 @@ class Rating: SKScene {
 
   let tileSize = (width: 32, height: 32)
 
+  var pinchRecognizer: UIPinchGestureRecognizer?
+  var panGestureRecognizer: UIPanGestureRecognizer?
+
   override init(size: CGSize) {
     viewIso = SKSpriteNode()
     super.init(size: size)
@@ -33,6 +36,7 @@ class Rating: SKScene {
     addUserNameNode()
     addBackButton()
   }
+
   
   func pinchGesture(gestureRecognizer: UIPinchGestureRecognizer) {
     let scale = gestureRecognizer.scale
@@ -101,14 +105,13 @@ class Rating: SKScene {
     }
     .addDisposableTo(disposeBag)
 
-    let recognizer = UIPinchGestureRecognizer(target: self, action: #selector(self.pinchGesture(_:)))
-    recognizer.delaysTouchesBegan = true
-    self.view!.addGestureRecognizer(recognizer)
+    pinchRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(self.pinchGesture(_:)))
+    self.pinchRecognizer!.delaysTouchesBegan = true
+    self.view!.addGestureRecognizer(pinchRecognizer!)
 
-    let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(self.onPan(_:)))
-    panGestureRecognizer.delaysTouchesBegan = true
-    self.view!.addGestureRecognizer(panGestureRecognizer)
-
+    panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(self.onPan(_:)))
+    panGestureRecognizer!.delaysTouchesBegan = true
+    self.view!.addGestureRecognizer(panGestureRecognizer!)
   }
 
   func placeTileIso(withPosition: CGPoint, withTexture texture: SKTexture) -> SKSpriteNode {
@@ -238,6 +241,10 @@ class Rating: SKScene {
         let skView = self.view
         scene.size = skView!.bounds.size
         scene.scaleMode = .AspectFill
+
+        self.view?.removeGestureRecognizer(pinchRecognizer!)
+        self.view?.removeGestureRecognizer(panGestureRecognizer!)
+
         skView!.presentScene(scene)
       } else {
         if let parent = nodeAtTouch.parent as? UserNode {
