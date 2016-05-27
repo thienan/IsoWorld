@@ -36,19 +36,6 @@ class RatingScene: SKScene {
     addUserNameNode()
     addBackButton()
   }
-
-  
-  @objc private func pinchGesture(gestureRecognizer: UIPinchGestureRecognizer) {
-    let scale = gestureRecognizer.scale
-    let centroid = gestureRecognizer.locationInView(self.view)
-    
-    switch gestureRecognizer.state {
-    case .Began:
-      self.onPinchStart(centroid, scale: scale)
-    default:
-      self.onPinchMove(centroid, scale: scale)
-    }
-  }
   
   private func addUserNameNode() {
     self.userName = SKLabelNode()
@@ -285,6 +272,18 @@ class RatingScene: SKScene {
     if xScale > 0 && yScale > 0 {
       self.viewIso.xScale = xScale
       self.viewIso.yScale = yScale
+    }
+  }
+  
+  @objc private func pinchGesture(gestureRecognizer: UIPinchGestureRecognizer) {
+    let scale = gestureRecognizer.scale
+    let centroid = gestureRecognizer.locationInView(self.view)
+    
+    switch gestureRecognizer.state {
+    case .Began:
+      self.onPinchStart(centroid, scale: scale)
+    default:
+      self.onPinchMove(centroid, scale: scale)
     }
   }
 
