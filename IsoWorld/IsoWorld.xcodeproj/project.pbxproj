@@ -15,17 +15,16 @@
 		0642369D1CBCDE8900E05D75 /* sprites.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 0642369C1CBCDE8900E05D75 /* sprites.atlas */; };
 		06B00BCD1CDC843000DD7C47 /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B00BCC1CDC843000DD7C47 /* Rating.swift */; };
 		06B00BD01CDCA57E00DD7C47 /* UserScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B00BCF1CDCA57E00DD7C47 /* UserScore.swift */; };
-		06B00BD51CDCAEC700DD7C47 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06B00BD41CDCAEC700DD7C47 /* SwiftyJSON.framework */; };
 		06B00BDE1CDCBD4F00DD7C47 /* IsoWorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B00BDD1CDCBD4F00DD7C47 /* IsoWorldTests.swift */; };
+		188638DF4E59A68DFC034DFC /* Pods_IsoWorldTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0603104E53796A541561053C /* Pods_IsoWorldTests.framework */; };
+		643BD0CB1CF336A600CF4564 /* Cinzel-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 643BD0C71CF336A600CF4564 /* Cinzel-Black.ttf */; };
+		643BD0CC1CF336A600CF4564 /* Cinzel-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 643BD0C81CF336A600CF4564 /* Cinzel-Bold.ttf */; };
+		643BD0CD1CF336A600CF4564 /* Cinzel-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 643BD0C91CF336A600CF4564 /* Cinzel-Regular.ttf */; };
+		643BD0CE1CF336A600CF4564 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 643BD0CA1CF336A600CF4564 /* OFL.txt */; };
 		644029851CDFADE200961B0D /* IsometricMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644029841CDFADE200961B0D /* IsometricMath.swift */; };
 		644029871CDFADFC00961B0D /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644029861CDFADFC00961B0D /* Tile.swift */; };
 		6440298A1CDFBE2000961B0D /* UserScores.plist in Resources */ = {isa = PBXBuildFile; fileRef = 644029891CDFBE2000961B0D /* UserScores.plist */; };
-		644029901CDFD18D00961B0D /* RatingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6440298F1CDFD18D00961B0D /* RatingService.swift */; };
-		644029961CE07ACD00961B0D /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 644029911CE07ACD00961B0D /* Realm.framework */; };
-		644029971CE07ACD00961B0D /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 644029921CE07ACD00961B0D /* RealmSwift.framework */; };
-		644029981CE07ACD00961B0D /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 644029931CE07ACD00961B0D /* RxBlocking.framework */; };
-		644029991CE07ACD00961B0D /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 644029941CE07ACD00961B0D /* RxCocoa.framework */; };
-		6440299A1CE07ACD00961B0D /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 644029951CE07ACD00961B0D /* RxSwift.framework */; };
+		644029901CDFD18D00961B0D /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6440298F1CDFD18D00961B0D /* UserService.swift */; };
 		6467DB731CE8FB650056866A /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6467DB721CE8FB650056866A /* MenuScene.swift */; };
 		6467F2CE1CE8FDA200251B2B /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6467F2CD1CE8FDA200251B2B /* StringExtension.swift */; };
 		6467F2D31CE8FE0E00251B2B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6467F2D51CE8FE0E00251B2B /* Localizable.strings */; };
@@ -41,6 +40,7 @@
 		64B8B1821CF1934E00BD6E5D /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B8B1811CF1934E00BD6E5D /* Game.swift */; };
 		64B8B1841CF1940400BD6E5D /* SKActionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B8B1831CF1940400BD6E5D /* SKActionExtension.swift */; };
 		64B8B1861CF1943A00BD6E5D /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B8B1851CF1943A00BD6E5D /* UIColorExtension.swift */; };
+		64BC4D4B1CF3560C00335756 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 64BC4D4A1CF3560C00335756 /* GoogleService-Info.plist */; };
 		64C9B8191CEF5E5500AEA123 /* bg_country.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 64C9B8111CEF5E5500AEA123 /* bg_country.mp3 */; };
 		64C9B81A1CEF5E5500AEA123 /* dead.wav in Resources */ = {isa = PBXBuildFile; fileRef = 64C9B8121CEF5E5500AEA123 /* dead.wav */; };
 		64C9B81B1CEF5E5500AEA123 /* fall.wav in Resources */ = {isa = PBXBuildFile; fileRef = 64C9B8131CEF5E5500AEA123 /* fall.wav */; };
@@ -53,6 +53,7 @@
 		64FF9F4E1CEE3FB9008D94F6 /* button_retry_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F491CEE3FB9008D94F6 /* button_retry_up.png */; };
 		64FF9F4F1CEE3FB9008D94F6 /* human1.png in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F4A1CEE3FB9008D94F6 /* human1.png */; };
 		64FF9F501CEE3FB9008D94F6 /* human2.png in Resources */ = {isa = PBXBuildFile; fileRef = 64FF9F4B1CEE3FB9008D94F6 /* human2.png */; };
+		9AA987AD1297BBF00041E33E /* Pods_IsoWorld.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCA95FBE263CAFFC642A4BC6 /* Pods_IsoWorld.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0603104E53796A541561053C /* Pods_IsoWorldTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IsoWorldTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		064236831CBCC2C100E05D75 /* IsoWorld.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IsoWorld.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		064236861CBCC2C100E05D75 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0642368C1CBCC2C100E05D75 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -76,19 +78,17 @@
 		0642369C1CBCDE8900E05D75 /* sprites.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = sprites.atlas; sourceTree = "<group>"; };
 		06B00BCC1CDC843000DD7C47 /* Rating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
 		06B00BCF1CDCA57E00DD7C47 /* UserScore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserScore.swift; sourceTree = "<group>"; };
-		06B00BD41CDCAEC700DD7C47 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		06B00BDB1CDCBD4E00DD7C47 /* IsoWorldTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IsoWorldTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		06B00BDD1CDCBD4F00DD7C47 /* IsoWorldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoWorldTests.swift; sourceTree = "<group>"; };
 		06B00BDF1CDCBD4F00DD7C47 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		643BD0C71CF336A600CF4564 /* Cinzel-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cinzel-Black.ttf"; sourceTree = "<group>"; };
+		643BD0C81CF336A600CF4564 /* Cinzel-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cinzel-Bold.ttf"; sourceTree = "<group>"; };
+		643BD0C91CF336A600CF4564 /* Cinzel-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cinzel-Regular.ttf"; sourceTree = "<group>"; };
+		643BD0CA1CF336A600CF4564 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
 		644029841CDFADE200961B0D /* IsometricMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsometricMath.swift; sourceTree = "<group>"; };
 		644029861CDFADFC00961B0D /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		644029891CDFBE2000961B0D /* UserScores.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserScores.plist; sourceTree = "<group>"; };
-		6440298F1CDFD18D00961B0D /* RatingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingService.swift; sourceTree = "<group>"; };
-		644029911CE07ACD00961B0D /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
-		644029921CE07ACD00961B0D /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
-		644029931CE07ACD00961B0D /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
-		644029941CE07ACD00961B0D /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
-		644029951CE07ACD00961B0D /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
+		6440298F1CDFD18D00961B0D /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		6467DB721CE8FB650056866A /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuScene.swift; path = IsoWorld/Scenes/MainMenu/MenuScene.swift; sourceTree = SOURCE_ROOT; };
 		6467F2CD1CE8FDA200251B2B /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		6467F2CF1CE8FDC400251B2B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
@@ -108,6 +108,7 @@
 		64B8B1811CF1934E00BD6E5D /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Game.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		64B8B1831CF1940400BD6E5D /* SKActionExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKActionExtension.swift; sourceTree = "<group>"; };
 		64B8B1851CF1943A00BD6E5D /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		64BC4D4A1CF3560C00335756 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		64C9B8111CEF5E5500AEA123 /* bg_country.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bg_country.mp3; sourceTree = "<group>"; };
 		64C9B8121CEF5E5500AEA123 /* dead.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dead.wav; sourceTree = "<group>"; };
 		64C9B8131CEF5E5500AEA123 /* fall.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fall.wav; sourceTree = "<group>"; };
@@ -120,6 +121,11 @@
 		64FF9F491CEE3FB9008D94F6 /* button_retry_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_retry_up.png; sourceTree = "<group>"; };
 		64FF9F4A1CEE3FB9008D94F6 /* human1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = human1.png; sourceTree = "<group>"; };
 		64FF9F4B1CEE3FB9008D94F6 /* human2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = human2.png; sourceTree = "<group>"; };
+		8839B9273002289685ECEAD6 /* Pods-IsoWorldTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IsoWorldTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-IsoWorldTests/Pods-IsoWorldTests.release.xcconfig"; sourceTree = "<group>"; };
+		B319DEFDC2C8EC8C67744D98 /* Pods-IsoWorld.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IsoWorld.release.xcconfig"; path = "Pods/Target Support Files/Pods-IsoWorld/Pods-IsoWorld.release.xcconfig"; sourceTree = "<group>"; };
+		B5952C89FB59EF728CCC596A /* Pods-IsoWorld.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IsoWorld.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IsoWorld/Pods-IsoWorld.debug.xcconfig"; sourceTree = "<group>"; };
+		DCA95FBE263CAFFC642A4BC6 /* Pods_IsoWorld.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IsoWorld.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6335BC7AA2F904189F3EBD3 /* Pods-IsoWorldTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IsoWorldTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IsoWorldTests/Pods-IsoWorldTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,12 +133,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				644029961CE07ACD00961B0D /* Realm.framework in Frameworks */,
-				06B00BD51CDCAEC700DD7C47 /* SwiftyJSON.framework in Frameworks */,
-				6440299A1CE07ACD00961B0D /* RxSwift.framework in Frameworks */,
-				644029971CE07ACD00961B0D /* RealmSwift.framework in Frameworks */,
-				644029991CE07ACD00961B0D /* RxCocoa.framework in Frameworks */,
-				644029981CE07ACD00961B0D /* RxBlocking.framework in Frameworks */,
+				9AA987AD1297BBF00041E33E /* Pods_IsoWorld.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				188638DF4E59A68DFC034DFC /* Pods_IsoWorldTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,6 +155,7 @@
 				06B00BDC1CDCBD4F00DD7C47 /* IsoWorldTests */,
 				064236841CBCC2C100E05D75 /* Products */,
 				06B00BD11CDCAD7D00DD7C47 /* Frameworks */,
+				CBBF32005923AB7436456861 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -168,6 +171,7 @@
 		064236851CBCC2C100E05D75 /* IsoWorld */ = {
 			isa = PBXGroup;
 			children = (
+				64BC4D4A1CF3560C00335756 /* GoogleService-Info.plist */,
 				6440298E1CDFD17700961B0D /* Services */,
 				644029881CDFBDCC00961B0D /* Supporting Files */,
 				644029831CDFADC300961B0D /* Extensions */,
@@ -222,12 +226,8 @@
 		06B00BD11CDCAD7D00DD7C47 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				644029911CE07ACD00961B0D /* Realm.framework */,
-				644029921CE07ACD00961B0D /* RealmSwift.framework */,
-				644029931CE07ACD00961B0D /* RxBlocking.framework */,
-				644029941CE07ACD00961B0D /* RxCocoa.framework */,
-				644029951CE07ACD00961B0D /* RxSwift.framework */,
-				06B00BD41CDCAEC700DD7C47 /* SwiftyJSON.framework */,
+				DCA95FBE263CAFFC642A4BC6 /* Pods_IsoWorld.framework */,
+				0603104E53796A541561053C /* Pods_IsoWorldTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -239,6 +239,25 @@
 				06B00BDF1CDCBD4F00DD7C47 /* Info.plist */,
 			);
 			path = IsoWorldTests;
+			sourceTree = "<group>";
+		};
+		643BD0C51CF335E000CF4564 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				643BD0C61CF3369800CF4564 /* Cinzel */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		643BD0C61CF3369800CF4564 /* Cinzel */ = {
+			isa = PBXGroup;
+			children = (
+				643BD0C71CF336A600CF4564 /* Cinzel-Black.ttf */,
+				643BD0C81CF336A600CF4564 /* Cinzel-Bold.ttf */,
+				643BD0C91CF336A600CF4564 /* Cinzel-Regular.ttf */,
+				643BD0CA1CF336A600CF4564 /* OFL.txt */,
+			);
+			name = Cinzel;
 			sourceTree = "<group>";
 		};
 		644029831CDFADC300961B0D /* Extensions */ = {
@@ -256,6 +275,7 @@
 		644029881CDFBDCC00961B0D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				643BD0C51CF335E000CF4564 /* Fonts */,
 				64FF9F471CEE3F94008D94F6 /* Sounds */,
 				64FF9F451CEE3F80008D94F6 /* Images */,
 				644029891CDFBE2000961B0D /* UserScores.plist */,
@@ -267,7 +287,7 @@
 		6440298E1CDFD17700961B0D /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				6440298F1CDFD18D00961B0D /* RatingService.swift */,
+				6440298F1CDFD18D00961B0D /* UserService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -316,6 +336,17 @@
 			path = ../Assets/Sound;
 			sourceTree = "<group>";
 		};
+		CBBF32005923AB7436456861 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B5952C89FB59EF728CCC596A /* Pods-IsoWorld.debug.xcconfig */,
+				B319DEFDC2C8EC8C67744D98 /* Pods-IsoWorld.release.xcconfig */,
+				E6335BC7AA2F904189F3EBD3 /* Pods-IsoWorldTests.debug.xcconfig */,
+				8839B9273002289685ECEAD6 /* Pods-IsoWorldTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -323,12 +354,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 064236991CBCC2C100E05D75 /* Build configuration list for PBXNativeTarget "IsoWorld" */;
 			buildPhases = (
+				D5531568759561CD784054E0 /* 📦 Check Pods Manifest.lock */,
 				06B00BC81CDC7BBD00DD7C47 /* Increment build number */,
-				06B00BD61CDCB00000DD7C47 /* Carthage */,
 				0642367F1CBCC2C100E05D75 /* Sources */,
 				064236801CBCC2C100E05D75 /* Frameworks */,
 				064236811CBCC2C100E05D75 /* Resources */,
 				55FE15A19C0CECF20611EFCA /* Tailor */,
+				75C7C5AEA5F2F94D61007C6A /* 📦 Embed Pods Frameworks */,
+				5DCFDB51AE089F52B1636720 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -343,9 +376,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 06B00BE21CDCBD4F00DD7C47 /* Build configuration list for PBXNativeTarget "IsoWorldTests" */;
 			buildPhases = (
+				C52931A4C8F11B88B30CA433 /* 📦 Check Pods Manifest.lock */,
 				06B00BD71CDCBD4E00DD7C47 /* Sources */,
 				06B00BD81CDCBD4E00DD7C47 /* Frameworks */,
 				06B00BD91CDCBD4E00DD7C47 /* Resources */,
+				F14E2EB3F71C39C6DB2364B7 /* 📦 Embed Pods Frameworks */,
+				27B93E9D4C7E53374FD7C230 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -402,15 +438,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				643BD0CC1CF336A600CF4564 /* Cinzel-Bold.ttf in Resources */,
 				64C9B81A1CEF5E5500AEA123 /* dead.wav in Resources */,
 				64C9B8191CEF5E5500AEA123 /* bg_country.mp3 in Resources */,
 				64C9B8201CEF5E5500AEA123 /* victory.wav in Resources */,
+				643BD0CB1CF336A600CF4564 /* Cinzel-Black.ttf in Resources */,
 				64FF9F501CEE3FB9008D94F6 /* human2.png in Resources */,
 				64C9B81E1CEF5E5500AEA123 /* grow_loop.wav in Resources */,
 				64C9B81B1CEF5E5500AEA123 /* fall.wav in Resources */,
 				64A56FCA1CF22A4A005FCC3D /* human4.png in Resources */,
 				64FF9F4F1CEE3FB9008D94F6 /* human1.png in Resources */,
+				643BD0CD1CF336A600CF4564 /* Cinzel-Regular.ttf in Resources */,
 				64A56FC81CF22A0E005FCC3D /* human3.png in Resources */,
+				643BD0CE1CF336A600CF4564 /* OFL.txt in Resources */,
+				64BC4D4B1CF3560C00335756 /* GoogleService-Info.plist in Resources */,
 				64FF9F4D1CEE3FB9008D94F6 /* button_retry_down.png in Resources */,
 				64C9B81D1CEF5E5500AEA123 /* kick.wav in Resources */,
 				064236951CBCC2C100E05D75 /* LaunchScreen.storyboard in Resources */,
@@ -452,25 +493,20 @@
 			shellPath = /bin/sh;
 			shellScript = "status=$(git status --porcelain)\nplist=${INFOPLIST_FILE}\nif [[ \"${#status}\" != 0 ]] && [[ $status != *\"M ${plist}\"* ]]; then\n    buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${plist}\")\n    buildNumber=$(($buildNumber + 1))\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${plist}\"\nfi";
 		};
-		06B00BD61CDCB00000DD7C47 /* Carthage */ = {
+		27B93E9D4C7E53374FD7C230 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxBlocking.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
 			);
-			name = Carthage;
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IsoWorldTests/Pods-IsoWorldTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		55FE15A19C0CECF20611EFCA /* Tailor */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -486,6 +522,81 @@
 			shellPath = /bin/sh;
 			shellScript = "if hash tailor 2>/dev/null; then\n  tailor\nelse\n  echo \"warning: Please install Tailor from https://tailor.sh\"\nfi";
 		};
+		5DCFDB51AE089F52B1636720 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IsoWorld/Pods-IsoWorld-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		75C7C5AEA5F2F94D61007C6A /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IsoWorld/Pods-IsoWorld-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C52931A4C8F11B88B30CA433 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D5531568759561CD784054E0 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F14E2EB3F71C39C6DB2364B7 /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IsoWorldTests/Pods-IsoWorldTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -493,7 +604,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				644029901CDFD18D00961B0D /* RatingService.swift in Sources */,
+				644029901CDFD18D00961B0D /* UserService.swift in Sources */,
 				64B8B1861CF1943A00BD6E5D /* UIColorExtension.swift in Sources */,
 				644029851CDFADE200961B0D /* IsometricMath.swift in Sources */,
 				06B00BCD1CDC843000DD7C47 /* Rating.swift in Sources */,
@@ -586,6 +697,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -633,6 +745,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -651,17 +764,15 @@
 		};
 		0642369A1CBCC2C100E05D75 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B5952C89FB59EF728CCC596A /* Pods-IsoWorld.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = IsoWorld/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
+				OTHER_SWIFT_FLAGS = "$(inherited) -Xfrontend -debug-time-function-bodies";
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.rmuhamedgaliev.IsoWorld;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -670,17 +781,15 @@
 		};
 		0642369B1CBCC2C100E05D75 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B319DEFDC2C8EC8C67744D98 /* Pods-IsoWorld.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = IsoWorld/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
+				OTHER_SWIFT_FLAGS = "$(inherited) -Xfrontend -debug-time-function-bodies";
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.rmuhamedgaliev.IsoWorld;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -689,6 +798,7 @@
 		};
 		06B00BE31CDCBD4F00DD7C47 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E6335BC7AA2F904189F3EBD3 /* Pods-IsoWorldTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -702,6 +812,7 @@
 		};
 		06B00BE41CDCBD4F00DD7C47 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8839B9273002289685ECEAD6 /* Pods-IsoWorldTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = IsoWorldTests/Info.plist;

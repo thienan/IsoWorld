@@ -1,0 +1,23 @@
+# Uncomment this line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'IsoWorld' do
+  # Comment this line if you're not using Swift and don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for IsoWorld
+  pod 'RxSwift'
+  pod 'RxCocoa'
+  pod 'Firebase'
+  pod 'Firebase/Auth'
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKShareKit'
+  pod 'FBSDKLoginKit'
+  pod 'Firebase/Database'
+
+  target 'IsoWorldTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end

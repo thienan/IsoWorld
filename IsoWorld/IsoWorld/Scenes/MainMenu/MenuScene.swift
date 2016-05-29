@@ -7,19 +7,36 @@
 //
 
 import SpriteKit
+import FBSDKLoginKit
+import FirebaseAuth
 
 class MenuScene: SKScene {
-  var gameLabel: SKLabelNode?
-  var ratingLabel: SKLabelNode?
+  private var logoNode: SKSpriteNode?
+  private var gameLabel: SKLabelNode?
+  private var ratingLabel: SKLabelNode?
+  private var facebokLoginButton: SKSpriteNode?
+  
+  var rootController: UIViewController?
 
-  var gameScene: Rating!
+  private let userService = UserService()
 
   override func didMoveToView(view: SKView) {
-
-    self.backgroundColor = UIColor(red: 0.20392156862745106, green: 0.5960784313725489, blue: 0.8588235294117647, alpha: 1)
-
+    self.backgroundColor = UIColor(red: 243/255, green: 156/255, blue: 18/255, alpha: 1)
+    addLogo()
     addNewGameTitle()
     addRatingTitle()
+    addFacebookButton()
+  }
+
+  private func addLogo() {
+    let size = CGSize(width: 250, height: 250)
+    self.logoNode = SKSpriteNode(imageNamed: "logo")
+    self.logoNode?.size = size
+    self.logoNode?.position = CGPoint(
+      x: CGRectGetMidX((self.scene?.frame)!),
+      y: CGRectGetHeight((self.scene?.frame)!) - 200
+    )
+    self.addChild(self.logoNode!)
   }
 
   private func addNewGameTitle() {
@@ -28,6 +45,7 @@ class MenuScene: SKScene {
     self.gameLabel?.fontColor = UIColor.whiteColor()
     self.gameLabel?.text = "GAME".localized
     self.gameLabel?.name = "game"
+    self.gameLabel?.fontName = "Cinzel-Regular"
     self.gameLabel?.position = CGPoint(x: CGRectGetMidX((self.scene?.frame)!), y: CGRectGetMidY((self.scene?.frame)!) - 50)
     self.addChild(gameLabel!)
   }
@@ -38,8 +56,21 @@ class MenuScene: SKScene {
     self.ratingLabel?.fontColor = UIColor.whiteColor()
     self.ratingLabel?.text = "RATING".localized
     self.ratingLabel?.name = "rating"
+    self.ratingLabel?.fontName = "Cinzel-Regular"
     self.ratingLabel?.position = CGPoint(x: CGRectGetMidX((self.scene?.frame)!), y: CGRectGetMidY((self.scene?.frame)!) - 100)
     self.addChild(ratingLabel!)
+  }
+
+  private func addFacebookButton() {
+    let size = CGSize(width: (self.scene?.size.width)!, height: 50)
+    self.facebokLoginButton = SKSpriteNode(imageNamed: "facebook_login")
+    self.facebokLoginButton?.size = size
+    self.facebokLoginButton?.position = CGPoint(
+      x: size.width / 2,
+      y: 25
+    )
+    self.facebokLoginButton?.name = "facebook"
+    self.addChild(self.facebokLoginButton!)
   }
 
   override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -65,7 +96,7 @@ class MenuScene: SKScene {
         skView!.presentScene(scene)
       } else if nodeAtTouch.name == "rating" {
 
-        let scene = Rating(size: view!.bounds.size)
+        let scene = RatingScene(size: view!.bounds.size)
         let skView = self.view
         skView!.showsFPS = true
         skView!.showsNodeCount = true
@@ -73,34 +104,44 @@ class MenuScene: SKScene {
         scene.scaleMode = .ResizeFill
         scene.size = (skView?.bounds.size)!
 
-        let recognizer = UIPinchGestureRecognizer(target: self, action: #selector(MenuScene.pinchGesture(_:)))
-        recognizer.delaysTouchesBegan = true
-        skView!.addGestureRecognizer(recognizer)
-
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(MenuScene.onPan(_:)))
-        panGestureRecognizer.delaysTouchesBegan = true
-        skView!.addGestureRecognizer(panGestureRecognizer)
-
         skView!.presentScene(scene)
-        self.gameScene = scene
+      } else if nodeAtTouch.name == "facebook" {
+        
+        let loginManager = FBSDKLoginManager()
+        loginManager.loginBehavior = FBSDKLoginBehavior.SystemAccount
+
+        loginManager.logInWithReadPermissions(
+          ["basic_info", "public_profile", "email", "user_friends"],
+          fromViewController: rootController,
+          handler: {
+            (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
+            if error != nil {
+              FBSDKLoginManager().logOut()
+            } else if result.isCancelled {
+              FBSDKLoginManager().logOut()
+            } else {
+              if FBSDKAccessToken.currentAccessToken() != nil {
+
+                FBSDKGraphRequest(
+                  graphPath: "me",
+                  parameters: ["fields": "id, name, first_name, last_name, email"]
+                ).startWithCompletionHandler {(connection, result, error) -> Void in
+                  if error == nil {
+                    let dict = result as? NSDictionary
+                    let accessToken = FBSDKAccessToken.currentAccessToken().tokenString
+                    let credential = FIRFacebookAuthProvider.credentialWithAccessToken(accessToken)
+                    FIRAuth.auth()?.signInWithCredential(credential) { (user, error) in
+                      self.userService.saveCurrentUserId(userId: user!.uid)
+
+                      let score = UserScore(name: (dict!["name"] as? String)!, score: 0, time: 0, me: false)
+                      self.userService.saveCurrentUserScore(score)
+                    }
+                  }
+                }
+              }
+            }
+        })
       }
     }
   }
-
-  func pinchGesture(gestureRecognizer: UIPinchGestureRecognizer) {
-    let scale = gestureRecognizer.scale
-    let centroid = gestureRecognizer.locationInView(self.view)
-
-    switch gestureRecognizer.state {
-    case .Began:
-      self.gameScene.onPinchStart(centroid, scale: scale)
-    default:
-      self.gameScene.onPinchMove(centroid, scale: scale)
-    }
-  }
-
-  func onPan(gestureRecognizer: UIPanGestureRecognizer) {
-    self.gameScene.onPan(gestureRecognizer)
-  }
-
 }

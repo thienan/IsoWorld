@@ -1,18 +1,20 @@
 import UIKit
 import SpriteKit
-import SwiftyJSON
 
 class GameViewController: UIViewController {
-
-  var scene = MenuScene()
-
+  private let userService = UserService()
+  
   override func viewDidLoad() {
+    let userService = UserService()
     super.viewDidLoad()
-
+    let scene = MenuScene()
     let skView = self.view as? SKView
     scene.size = skView!.bounds.size
     scene.scaleMode = .AspectFill
+    scene.rootController = self
     skView!.presentScene(scene)
+
+    userService.loadUserRating()
   }
 
   override func prefersStatusBarHidden() -> Bool {
