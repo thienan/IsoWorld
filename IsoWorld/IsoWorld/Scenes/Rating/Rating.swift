@@ -43,6 +43,7 @@ class RatingScene: SKScene {
     self.userName = SKLabelNode()
     self.userName.fontColor = UIColor.blackColor()
     self.userName.fontSize = 30
+    self.userName.horizontalAlignmentMode = .Left
     self.userName.position = CGPoint(
       x: 200,
       y: size.height - 35
