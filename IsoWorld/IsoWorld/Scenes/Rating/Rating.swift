@@ -20,7 +20,8 @@ class RatingScene: SKScene {
   private var users = Array<Array<UserScore>>()
 
   private var userName: SKLabelNode!
-  private var circle: SKShapeNode!
+  private var timeCircle: SKShapeNode!
+  private var timeLabel: SKLabelNode!
   private var disposeBag = DisposeBag()
 
   private let tileSize = (width: 32, height: 32)
@@ -43,7 +44,7 @@ class RatingScene: SKScene {
     self.userName = SKLabelNode()
     self.userName.fontColor = UIColor.blackColor()
     self.userName.fontSize = 30
-    self.userName.horizontalAlignmentMode = .Left
+    self.userName.horizontalAlignmentMode = .Center
     self.userName.position = CGPoint(
       x: 200,
       y: size.height - 35
@@ -77,16 +78,29 @@ class RatingScene: SKScene {
   }
   
   func addTimeCircle() {
-    circle = SKShapeNode(circleOfRadius: 25)
-    circle.position = CGPoint(
+    self.timeCircle = SKShapeNode(circleOfRadius: 25)
+    self.timeCircle.position = CGPoint(
       x: size.width - 50,
       y: size.height - 35
     )
-    circle.strokeColor = SKColor.blackColor()
-    circle.glowWidth = 0.01
-    circle.fillColor = SKColor.orangeColor()
-    circle.alpha = 0.0
-    self.addChild(circle)
+    self.timeCircle.strokeColor = SKColor.blackColor()
+    self.timeCircle.glowWidth = 0.01
+    self.timeCircle.fillColor = SKColor.orangeColor()
+    self.timeCircle.alpha = 0.0
+    self.addChild(timeCircle)
+    
+    self.timeLabel = SKLabelNode()
+    self.timeLabel.fontColor = UIColor.whiteColor()
+    self.timeLabel.fontName = self.timeLabel.fontName! + "-Bold"
+    self.timeLabel.fontSize = 30
+    self.timeLabel.horizontalAlignmentMode = .Center
+    self.timeLabel.position = CGPoint(
+      x: size.width - 50,
+      y: size.height - 45
+    )
+    self.timeLabel.zPosition = 200
+    self.addChild(timeLabel)
+    
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -284,15 +298,16 @@ class RatingScene: SKScene {
     for element in (column.children as? [SKSpriteNode])! {
       element.color = UIColor.cyanColor()
       self.userName.text = column.userObj?.name
-      circle.alpha = 1.0
+      self.timeCircle.alpha = 1.0
       
       if column.userObj?.time > 0 && column.userObj?.time < 21 {
-        circle.fillColor = SKColor.blueColor()
+        self.timeCircle.fillColor = SKColor.blueColor()
       } else if column.userObj?.time > 20 && column.userObj?.time < 41 {
-        self.circle.fillColor = SKColor.greenColor()
+        self.timeCircle.fillColor = SKColor.greenColor()
       } else if column.userObj?.time > 40 {
-        circle.fillColor = SKColor.redColor()
+        self.timeCircle.fillColor = SKColor.redColor()
       }
+      self.timeLabel.text = "\(column.userObj!.time)"
       
       
     }
