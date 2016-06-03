@@ -82,15 +82,10 @@ class MenuScene: SKScene {
       let nodeAtTouch = self.nodeAtPoint(touch.locationInNode(self))
       if nodeAtTouch.name == "game" {
         let scene = GameScene(size: CGSizeMake(DefinedScreenWidth, DefinedScreenHeight))
-
-        // Configure the view.
         let skView = self.view
         skView!.showsFPS = true
         skView!.showsNodeCount = true
-        /* Sprite Kit applies additional optimizations to improve rendering performance */
         skView!.ignoresSiblingOrder = true
-
-        /* Set the scale mode to scale to fit the window */
         scene.scaleMode = .AspectFill
 
         skView!.presentScene(scene)

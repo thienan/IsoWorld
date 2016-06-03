@@ -19,7 +19,12 @@ struct IslandConstants {
 
 class Island {
   
-  func loadIslands(animate: Bool, startLeftPoint: CGFloat, completition: () -> Void) -> (islandNode: SKSpriteNode, leftStartX: CGFloat) {
+  func loadIslands(
+    animate: Bool,
+    startLeftPoint: CGFloat,
+    completition: () -> Void) ->
+    (islandNode: SKSpriteNode, leftStartX: CGFloat) {
+      
     let width = calculateWidth()
     let texture = SKTexture(imageNamed: "stone")
     let island = SKSpriteNode(texture: texture)
@@ -54,7 +59,9 @@ class Island {
     return CGFloat(randomInRange(min...max) * 10)
   }
 
-  func calculateGap(playAbleRectWidth: CGFloat, leftIslandWidth: CGFloat, nextLeftStartX: CGFloat) -> CGFloat {
+  func calculateGap(playAbleRectWidth: CGFloat,
+                    leftIslandWidth: CGFloat,
+                    nextLeftStartX: CGFloat) -> CGFloat {
     let maxGap = Int(
       playAbleRectWidth
         - IslandConstants.maxWidth

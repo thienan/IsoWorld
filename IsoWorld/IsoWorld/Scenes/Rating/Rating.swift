@@ -112,7 +112,6 @@ class RatingScene: SKScene {
   }
 
   private func placeAllTilesIso() {
-
     for i in 0..<users.count {
       let row = users[i]
       for j in 0..<row.count {
@@ -144,7 +143,10 @@ class RatingScene: SKScene {
     }
   }
 
-  private func getDrawableNodeIndex(startIndex: Int, score: Int, visible: Int) -> Array<Int> {
+  private func getDrawableNodeIndex(
+    startIndex: Int,
+    score: Int,
+    visible: Int) -> Array<Int> {
     let rangeArray = Array(startIndex..<score + 1)
     if visible > 0 {
       let index = rangeArray.indexOf(visible)!..<rangeArray.count
@@ -191,7 +193,11 @@ class RatingScene: SKScene {
     return status
   }
 
-  private func getCoordinatesByIndex(indexI: Int, indexJ: Int, index: Int, inversed: Bool) -> CGPoint {
+  private func getCoordinatesByIndex(
+    indexI: Int,
+    indexJ: Int,
+    index: Int,
+    inversed: Bool) -> CGPoint {
     var x = 0
     var y = 0
     if !inversed {
@@ -205,7 +211,10 @@ class RatingScene: SKScene {
     return point2DToIso(point)
   }
 
-  private func getVisibleIndex(userScores: Array<Array<UserScore>>, indexI: Int, indexJ: Int) -> Int {
+  private func getVisibleIndex(
+    userScores: Array<Array<UserScore>>,
+    indexI: Int,
+    indexJ: Int) -> Int {
     var right = 0
     if userScores.indices.contains(indexI + 1) {
       right = userScores[indexI + 1][indexJ].score
