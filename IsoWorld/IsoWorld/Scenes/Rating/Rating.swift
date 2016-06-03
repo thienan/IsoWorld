@@ -20,6 +20,7 @@ class RatingScene: SKScene {
   private var users = Array<Array<UserScore>>()
 
   private var userName: SKLabelNode!
+  private var circle: SKShapeNode!
   private var disposeBag = DisposeBag()
 
   private let tileSize = (width: 32, height: 32)
@@ -35,6 +36,7 @@ class RatingScene: SKScene {
 
     addUserNameNode()
     addBackButton()
+    addTimeCircle()
   }
   
   private func addUserNameNode() {
@@ -71,6 +73,19 @@ class RatingScene: SKScene {
     backButtonPlace.size.width = 100
     backButtonPlace.name = "back"
     addChild(backButtonPlace)
+  }
+  
+  func addTimeCircle() {
+    circle = SKShapeNode(circleOfRadius: 25)
+    circle.position = CGPoint(
+      x: size.width - 50,
+      y: size.height - 35
+    )
+    circle.strokeColor = SKColor.blackColor()
+    circle.glowWidth = 0.01
+    circle.fillColor = SKColor.orangeColor()
+    circle.alpha = 0.0
+    self.addChild(circle)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -268,6 +283,17 @@ class RatingScene: SKScene {
     for element in (column.children as? [SKSpriteNode])! {
       element.color = UIColor.cyanColor()
       self.userName.text = column.userObj?.name
+      circle.alpha = 1.0
+      
+      if column.userObj?.time > 0 && column.userObj?.time < 21 {
+        circle.fillColor = SKColor.blueColor()
+      } else if column.userObj?.time > 20 && column.userObj?.time < 41 {
+        self.circle.fillColor = SKColor.greenColor()
+      } else if column.userObj?.time > 40 {
+        circle.fillColor = SKColor.redColor()
+      }
+      
+      
     }
   }
 
