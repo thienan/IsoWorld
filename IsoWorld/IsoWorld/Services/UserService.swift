@@ -42,6 +42,7 @@ class UserService: UserServiceDelegate {
 
   private struct UserKeys {
     static let userIdKey = "userId"
+    static let userName = "userName"
   }
 
   func loadUserRating() {
@@ -135,6 +136,18 @@ class UserService: UserServiceDelegate {
   func getCurrentUserId() -> String {
     if let userId = defaults.stringForKey(UserKeys.userIdKey) {
       return userId
+    } else {
+      return ""
+    }
+  }
+
+  func saveCurrentUserName(userName userName: String) {
+    defaults.setValue(userName, forKey: UserKeys.userName)
+  }
+
+  func getCurrentUserName() -> String {
+    if let userName = defaults.stringForKey(UserKeys.userName) {
+      return userName
     } else {
       return ""
     }

@@ -22,6 +22,7 @@ class RatingScene: SKScene {
   private var userName: SKLabelNode!
   private var timeCircle: SKShapeNode!
   private var timeLabel: SKLabelNode!
+  private var scoreLabel: SKLabelNode!
   private var disposeBag = DisposeBag()
 
   private let tileSize = (width: 32, height: 32)
@@ -38,6 +39,7 @@ class RatingScene: SKScene {
     addUserNameNode()
     addBackButton()
     addTimeCircle()
+    addScoreLabel()
   }
   
   private func addUserNameNode() {
@@ -101,6 +103,19 @@ class RatingScene: SKScene {
     self.timeLabel.zPosition = 200
     self.addChild(timeLabel)
     
+  }
+
+  private func addScoreLabel() {
+    self.scoreLabel = SKLabelNode()
+    self.scoreLabel.fontColor = UIColor.blackColor()
+    self.scoreLabel.fontSize = 30
+    self.scoreLabel.horizontalAlignmentMode = .Center
+    self.scoreLabel.position = CGPoint(
+      x: 200,
+      y: size.height - 75
+    )
+    self.scoreLabel.zPosition = 200
+    self.addChild(scoreLabel)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -308,6 +323,7 @@ class RatingScene: SKScene {
         self.timeCircle.fillColor = SKColor.redColor()
       }
       self.timeLabel.text = "\(column.userObj!.time)"
+      self.scoreLabel.text = "\(column.userObj!.score)"
       
       
     }

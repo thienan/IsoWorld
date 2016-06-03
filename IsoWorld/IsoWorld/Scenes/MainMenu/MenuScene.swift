@@ -133,6 +133,7 @@ class MenuScene: SKScene {
                     let credential = FIRFacebookAuthProvider.credentialWithAccessToken(accessToken)
                     FIRAuth.auth()?.signInWithCredential(credential) { (user, error) in
                       self.userService.saveCurrentUserId(userId: user!.uid)
+                      self.userService.saveCurrentUserName(userName: (dict!["name"] as? String)!)
 
                       let score = UserScore(name: (dict!["name"] as? String)!, score: 0, time: 0, me: false)
                       self.userService.saveCurrentUserScore(score)

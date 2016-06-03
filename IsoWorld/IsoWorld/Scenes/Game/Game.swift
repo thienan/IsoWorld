@@ -14,6 +14,8 @@ import AVFoundation
 class GameScene: SKScene, SKPhysicsContactDelegate {
   private var musicPlayer: AVAudioPlayer!
   private var backButton: SKSpriteNode!
+  private let stopWatch = Stopwatch()
+  private let userService = UserService()
 
 //  MARK: Hero
   private var heroObj =  Hero()
@@ -188,6 +190,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     addRightIsland(false, rightIslandStartPosition: rightIslandStartPosition)
     gameOver = false
+    stopWatch.start()
   }
 
   private func addleftIsland(animated: Bool) {
@@ -224,6 +227,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   }
 
   private func restart() {
+
+    let userScore = UserScore(
+      name: userService.getCurrentUserName(),
+      score: self.score,
+      time: lround(stopWatch.elapsedTime),
+      me: false
+    )
+    self.userService.saveCurrentUserScore(userScore)
+
+    self.stopWatch.stop()
+
     isBegin = false
     isEnd = false
     score = 0
