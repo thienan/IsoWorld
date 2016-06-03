@@ -147,7 +147,7 @@ class RatingScene: SKScene {
     startIndex: Int,
     score: Int,
     visible: Int) -> Array<Int> {
-    let rangeArray = Array(startIndex..<score + 1)
+    let rangeArray = Array(startIndex..<score + 2)
     if visible > 0 {
       let index = rangeArray.indexOf(visible)!..<rangeArray.count
       return Array(index)

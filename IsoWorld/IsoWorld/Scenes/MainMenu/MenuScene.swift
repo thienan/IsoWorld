@@ -26,6 +26,12 @@ class MenuScene: SKScene {
     addNewGameTitle()
     addRatingTitle()
     addFacebookButton()
+    
+//    for i in (0...100) {
+//      let score = UserScore(name: "User-\(i)", score: randomInRange(0...10), time: randomInRange(1...60), me: false)
+//      self.userService.saveUserScore(userId: "\(i)", score: score)
+//    }
+
   }
 
   private func addLogo() {

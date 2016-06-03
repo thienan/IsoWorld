@@ -51,13 +51,18 @@ class UserService: UserServiceDelegate {
     userRef.observeEventType(.Value, withBlock: { data in
       var scoresx = [UserScore]()
       for scoreData in data.children.enumerate() {
-        let score = scoreData.element
+        let score = scoreData.element as! FIRDataSnapshot
         let userScore = UserScore(
-          name: score.value["name"] as! String,
-          score: score.value["score"] as! Int,
-          time: score.value["time"] as! Int,
+          name: score.value!["name"] as! String,
+          score: score.value!["score"] as! Int,
+          time: score.value!["time"] as! Int,
           me: false
         )
+        
+        if score.key == self.getCurrentUserId() {
+          userScore.me = true
+        }
+        
         scoresx.append(userScore)
       }
 
@@ -108,7 +113,7 @@ class UserService: UserServiceDelegate {
     userDic["score"] = score.score
     userDic["me"] = score.me
 
-    userRef.child(userId).setValue(userDic)
+    userRef.child(userId).updateChildValues(userDic)
   }
 
   func saveUserScore(userId userId: String, score: UserScore) {
@@ -120,13 +125,11 @@ class UserService: UserServiceDelegate {
     userDic["score"] = score.score
     userDic["me"] = score.me
 
-    userRef.child(userId).setValue(userDic)
+    userRef.child(userId).updateChildValues(userDic)
   }
 
   func saveCurrentUserId(userId userId: String) {
-    let userRef = FIRDatabase.database().reference().child("user")
     defaults.setValue(userId, forKey: UserKeys.userIdKey)
-    userRef.setValue("")
   }
 
   func getCurrentUserId() -> String {
