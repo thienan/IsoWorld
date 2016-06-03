@@ -104,8 +104,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
               duration: 1.5
             )
             bridge.runAction(action, withKey: GameSceneActionKey.BridgeGrowAction.rawValue)
-            let loopAction = SKAction.group([SKAction.playSoundFileNamed(GameSceneEffectAudioName.BridgeGrowAudioName.rawValue, waitForCompletion: true)])
-            bridge.runAction(SKAction.repeatActionForever(loopAction), withKey: GameSceneActionKey.BridgeGrowAudioAction.rawValue)
+            let loopAction = SKAction.group(
+              [SKAction.playSoundFileNamed(
+                GameSceneEffectAudioName.BridgeGrowAudioName.rawValue,
+                waitForCompletion: true)]
+            )
+            bridge.runAction(
+              SKAction.repeatActionForever(loopAction),
+              withKey: GameSceneActionKey.BridgeGrowAudioAction.rawValue
+            )
             return
           }
         }
@@ -124,14 +131,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       let bridge = childNodeWithName(GameSceneChildName.BridgeName.rawValue) as? SKSpriteNode
       bridge!.removeActionForKey(GameSceneActionKey.BridgeGrowAction.rawValue)
       bridge!.removeActionForKey(GameSceneActionKey.BridgeGrowAudioAction.rawValue)
-      bridge!.runAction(SKAction.playSoundFileNamed(GameSceneEffectAudioName.BridgeGrowOverAudioName.rawValue, waitForCompletion: false))
+      bridge!.runAction(
+        SKAction.playSoundFileNamed(
+          GameSceneEffectAudioName.BridgeGrowOverAudioName.rawValue, waitForCompletion: false
+        )
+      )
 
       bridgeHeight = bridge!.size.height
 
-      let action = SKAction.rotateToAngle(CGFloat(-M_PI / 2), duration: 0.4, shortestUnitArc: true)
-      let playFall = SKAction.playSoundFileNamed(GameSceneEffectAudioName.BridgeFallAudioName.rawValue, waitForCompletion: false)
-
-      bridge!.runAction(SKAction.sequence([SKAction.waitForDuration(0.2), action, playFall]), completion: {[unowned self] () -> Void in
+      let action = SKAction.rotateToAngle(
+        CGFloat(-M_PI / 2),
+        duration: 0.4,
+        shortestUnitArc: true
+      )
+      let playFall = SKAction.playSoundFileNamed(
+        GameSceneEffectAudioName.BridgeFallAudioName.rawValue,
+        waitForCompletion: false
+      )
+      bridge!.runAction(
+        SKAction.sequence(
+          [SKAction.waitForDuration(0.2), action, playFall]),
+        completion: {[unowned self] () -> Void in
         self.heroGo(self.checkPass())
         })
     }
@@ -185,7 +205,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     self.nextLeftStartX = leftIslandData.leftStartX
   }
 
-  private func addRightIsland(animated: Bool, rightIslandStartPosition: CGFloat) {
+  private func addRightIsland(
+    animated: Bool,
+    rightIslandStartPosition: CGFloat) {
 
     let rightIslandData = islandObj.loadIslands(
       animated,
@@ -226,15 +248,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   private func heroGo(pass: Bool) {
     let hero = heroObj.getHeroNodeFromParent()
     guard pass else {
-      let bridge = childNodeWithName(GameSceneChildName.BridgeName.rawValue) as? SKSpriteNode
+      let bridge = childNodeWithName(
+        GameSceneChildName.BridgeName.rawValue) as? SKSpriteNode
       let dis: CGFloat = bridge!.position.x + self.bridgeHeight
-      let disGap = nextLeftStartX - (DefinedScreenWidth / 2 - abs(hero.position.x)) - (rightIsland?.frame.size.width)! / 2
+      let disGap = nextLeftStartX
+        - (DefinedScreenWidth / 2
+        - abs(hero.position.x))
+        - (rightIsland?.frame.size.width)! / 2
       let move = SKAction.moveToX(dis, duration: NSTimeInterval(abs(disGap / HeroSpeed)))
       hero.runAction(heroObj.walkAction, withKey: GameSceneActionKey.WalkAction.rawValue)
       hero.runAction(move, completion: {[unowned self] () -> Void in
         bridge!.runAction(SKAction.rotateToAngle(CGFloat(-M_PI), duration: 0.4))
         hero.physicsBody!.affectedByGravity = true
-        hero.runAction(SKAction.playSoundFileNamed(GameSceneEffectAudioName.DeadAudioName.rawValue, waitForCompletion: false))
+        hero.runAction(
+          SKAction.playSoundFileNamed(
+            GameSceneEffectAudioName.DeadAudioName.rawValue, waitForCompletion: false
+          )
+        )
         hero.removeActionForKey(GameSceneActionKey.WalkAction.rawValue)
         self.runAction(SKAction.waitForDuration(0.5), completion: {[unowned self] () -> Void in
           self.gameOver = true
@@ -244,11 +274,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     let dis: CGFloat = -DefinedScreenWidth / 2 + nextLeftStartX - hero.size.width / 2 - 20
-    let disGap = nextLeftStartX - (DefinedScreenWidth / 2 - abs(hero.position.x)) - (rightIsland?.frame.size.width)! / 2
+    let disGap = nextLeftStartX
+      - (DefinedScreenWidth / 2
+      - abs(hero.position.x))
+      - (rightIsland?.frame.size.width)! / 2
     let move = SKAction.moveToX(dis, duration: NSTimeInterval(abs(disGap / HeroSpeed)))
     hero.runAction(heroObj.walkAction, withKey: GameSceneActionKey.WalkAction.rawValue)
     hero.runAction(move) { [unowned self] () -> Void in
-      hero.runAction(SKAction.playSoundFileNamed(GameSceneEffectAudioName.VictoryAudioName.rawValue, waitForCompletion: false))
+      hero.runAction(
+        SKAction.playSoundFileNamed(
+          GameSceneEffectAudioName.VictoryAudioName.rawValue, waitForCompletion: false
+        )
+      )
       hero.removeActionForKey(GameSceneActionKey.WalkAction.rawValue)
       self.moveIslandAndCreateNew()
     }
@@ -256,17 +293,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   }
 
   private func moveIslandAndCreateNew() {
-    let action = SKAction.moveBy(CGVectorMake(-nextLeftStartX + (rightIsland?.frame.size.width)! + playAbleRect.origin.x - 2, 0), duration: 0.3)
+    let action = SKAction.moveBy(
+      CGVectorMake(
+        -nextLeftStartX
+        + (rightIsland?.frame.size.width)!
+        + playAbleRect.origin.x - 2,
+        0
+      ),
+      duration: 0.3
+    )
     rightIsland?.runAction(action)
     let hero = heroObj.getHeroNodeFromParent()
     let bridge = childNodeWithName(GameSceneChildName.BridgeName.rawValue) as? SKSpriteNode
     hero.runAction(action)
-    bridge!.runAction(SKAction.group([SKAction.moveBy(CGVectorMake(-DefinedScreenWidth, 0), duration: 0.5), SKAction.fadeAlphaTo(0, duration: 0.3)])) { () -> Void in
+    bridge!.runAction(
+      SKAction.group(
+      [SKAction.moveBy(
+        CGVectorMake(-DefinedScreenWidth, 0),
+        duration: 0.5
+        ),
+        SKAction.fadeAlphaTo(0, duration: 0.3)
+        ])) { () -> Void in
       bridge!.removeFromParent()
     }
-    leftIsland?.runAction(SKAction.moveBy(CGVectorMake(-DefinedScreenWidth, 0), duration: 0.5), completion: {[unowned self] () -> Void in
+    leftIsland?.runAction(SKAction.moveBy(
+      CGVectorMake(-DefinedScreenWidth, 0), duration: 0.5),
+                          completion: {[unowned self] () -> Void in
       self.leftIsland?.removeFromParent()
-      let maxGap = Int(self.playAbleRect.width - (self.rightIsland?.frame.size.width)! - IslandConstants.maxWidth)
+      let maxGap = Int(self.playAbleRect.width
+        - (self.rightIsland?.frame.size.width)!
+        - IslandConstants.maxWidth)
       let gap = CGFloat(randomInRange(IslandConstants.gapMinWidth...maxGap))
       self.leftIsland = self.rightIsland
       let rightIslandStartPosition =
