@@ -183,6 +183,7 @@ class RatingScene: SKScene {
           column.addChild(placeTileIso(point, withTexture: texture))
         }
         column.userObj = row[j]
+
         viewIso.addChild(column)
       }
     }
@@ -315,12 +316,16 @@ class RatingScene: SKScene {
       self.userName.text = column.userObj?.name
       self.timeCircle.alpha = 1.0
       
-      if column.userObj?.time > 0 && column.userObj?.time < 21 {
-        self.timeCircle.fillColor = SKColor.blueColor()
-      } else if column.userObj?.time > 20 && column.userObj?.time < 41 {
-        self.timeCircle.fillColor = SKColor.greenColor()
-      } else if column.userObj?.time > 40 {
-        self.timeCircle.fillColor = SKColor.redColor()
+      if column.userObj?.me == true {
+        self.timeCircle.fillColor = SKColor.orangeColor()
+      } else {
+        if column.userObj?.time > 0 && column.userObj?.time < 21 {
+          self.timeCircle.fillColor = SKColor.blueColor()
+        } else if column.userObj?.time > 20 && column.userObj?.time < 41 {
+          self.timeCircle.fillColor = SKColor.greenColor()
+        } else if column.userObj?.time > 40 {
+          self.timeCircle.fillColor = SKColor.redColor()
+        }
       }
       self.timeLabel.text = "\(column.userObj!.time)"
       self.scoreLabel.text = "\(column.userObj!.score)"
